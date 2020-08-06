@@ -1,0 +1,19 @@
+<idea-plugin>
+  <version>1.0-SNAPSHOT</version>
+  <change-notes>
+      Add change notes here.&lt;br&gt;
+      &lt;em&gt;most HTML tags may be used&lt;/em&gt;</change-notes>
+  <idea-version since-build="202.6397" until-build="202.*"/>
+  <id>cz.cuni.mff.kyjovsm.robocop</id>
+  <name>Robocop</name>
+  <vendor email="michalkyjovsky98@gmail.com" url="">Michal Kyjovsky</vendor>
+  <description>
+    Basic Robot Framework support for PyCharm.
+    </description>
+  <depends>com.intellij.modules.platform</depends>
+  <depends>com.intellij.modules.python</depends>
+  <extensions defaultExtensionNs="com.intellij">
+    <fileType name="Robot File" implementationClass="cz.cuni.mff.kyjovsm.robocop.RobotFrameworkFileType" fieldName="INSTANCE" language="RobotFramework" extensions="robot"/>
+  </extensions>
+  <actions/>
+</idea-plugin>
