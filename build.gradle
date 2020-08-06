@@ -3,7 +3,7 @@ plugins {
     id 'org.jetbrains.intellij' version '0.4.21'
 }
 
-group 'cz.cuni.mff.kyjovsm'
+group 'cz.cuni.mff.kyjovsm.robocop'
 version '1.0-SNAPSHOT'
 sourceCompatibility = 1.8
 
@@ -17,8 +17,19 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version '2020.2'
+    version = '2020.2'
+    downloadSources = false
+    type = 'PY'
 }
+
+buildSearchableOptions {
+    enabled = false
+}
+
+runIde {
+    ideDirectory 'C:\\Program Files\\JetBrains\\PyCharm 2020.2\\'
+}
+
 patchPluginXml {
     changeNotes """
       Add change notes here.<br>
