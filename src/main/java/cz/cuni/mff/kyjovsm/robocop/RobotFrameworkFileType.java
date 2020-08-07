@@ -1,6 +1,7 @@
 package cz.cuni.mff.kyjovsm.robocop;
 
 import com.intellij.openapi.fileTypes.LanguageFileType;
+import cz.cuni.mff.kyjovsm.robocop.icons.RobotFrameworkIcons;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -34,6 +35,6 @@ public class RobotFrameworkFileType extends LanguageFileType {
     @Nullable
     @Override
     public Icon getIcon() {
-        return RobotFrameworkIcon.FILE;
+        return RobotFrameworkIcons.FILE;
     }
 }
