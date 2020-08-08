@@ -2,7 +2,7 @@ package cz.cuni.mff.kyjovsm.robocop.runConfiguration;
 
 import com.intellij.execution.configurations.ConfigurationFactory;
 import com.intellij.execution.configurations.ConfigurationType;
-import com.intellij.icons.AllIcons;
+
 import cz.cuni.mff.kyjovsm.robocop.icons.RobotFrameworkIcons;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,12 +11,12 @@ import javax.swing.*;
 public class RobotFrameworkConfigurationType implements ConfigurationType {
   @Override
   public @NotNull String getDisplayName() {
-    return "Robot Framework Test Case.";
+    return "Robot Framework TC";
   }
 
   @Override
   public String getConfigurationTypeDescription() {
-    return "Creates configuration for execution of Robot Framework Test Suite.";
+    return "Creates configuration for execution of robot framework test suite.";
   }
 
   @Override

@@ -2,58 +2,58 @@ package cz.cuni.mff.kyjovsm.robocop.runConfiguration;
 
 import com.intellij.execution.ExecutionException;
 import com.intellij.execution.Executor;
-import com.intellij.execution.configurations.ConfigurationFactory;
-import com.intellij.execution.configurations.RunConfiguration;
-import com.intellij.execution.configurations.RunProfileState;
+import com.intellij.execution.configurations.*;
+import com.intellij.execution.process.OSProcessHandler;
+import com.intellij.execution.process.ProcessHandler;
+import com.intellij.execution.process.ProcessHandlerFactory;
+import com.intellij.execution.process.ProcessTerminatedListener;
 import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.project.Project;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.swing.*;
 
-public class RobotFrameworkRunConfiguration implements RunConfiguration {
-  public RobotFrameworkRunConfiguration(@NotNull Project project, RobotFrameworkConfigurationFactory robotFrameworkConfigurationFactory, String robot_framework) {
+public class RobotFrameworkRunConfiguration extends RunConfigurationBase {
+
+  protected RobotFrameworkRunConfiguration(@NotNull Project project, @Nullable ConfigurationFactory factory, @Nullable String name) {
+    super(project, factory, name);
   }
 
+  @NotNull
   @Override
-  public @Nullable ConfigurationFactory getFactory() {
-    return null;
+  protected RobotFrameworkRunConfigurationOptions getOptions() {
+    return (RobotFrameworkRunConfigurationOptions) super.getOptions();
   }
 
-  @Override
-  public void setName(String name) {
+  public String getScriptName() {
+    return getOptions().getScriptName();
+  }
 
+  public void setScriptName(String scriptName) {
+    getOptions().setScriptName(scriptName);
   }
 
   @Override
   public @NotNull SettingsEditor<? extends RunConfiguration> getConfigurationEditor() {
-    return null;
+    return new RobotFrameworkSettingsEditor();
   }
 
   @Override
-  public Project getProject() {
-    return null;
+  public void checkConfiguration() throws RuntimeConfigurationException {
+
   }
 
   @Override
-  public RunConfiguration clone() {
-    return null;
-  }
-
-  @Override
-  public @Nullable RunProfileState getState(@NotNull Executor executor, @NotNull ExecutionEnvironment environment) throws ExecutionException {
-    return null;
-  }
-
-  @Override
-  public @NotNull String getName() {
-    return null;
-  }
-
-  @Override
-  public @Nullable Icon getIcon() {
-    return null;
+  public @Nullable RunProfileState getState(@NotNull Executor executor, @NotNull ExecutionEnvironment environment) {
+    return new CommandLineState(environment) {
+      @Override
+      protected @NotNull ProcessHandler startProcess() throws ExecutionException {
+        GeneralCommandLine commandLine = new GeneralCommandLine(getOptions().getScriptName());
+        OSProcessHandler processHandler = ProcessHandlerFactory.getInstance().createColoredProcessHandler(commandLine);
+        ProcessTerminatedListener.attach(processHandler);
+        return processHandler;
+      }
+    };
   }
 }
