@@ -1,0 +1,22 @@
+*** Settings ***
+Documentation  Here comes the documentation.
+...  ${\n}Purpose of this template is to create a
+...  ${\n}basis for Robot Framework Teset Suite.
+Library  Some Library
+
+*** Variables ***
+${MESSAGE}  Two white spaces are fair enough!
+
+*** Test Cases ***
+My Test
+    [Documentation]  Example test.
+    Log  ${MESSAGE}
+    My Keyword  ${CURDIR}
+
+Another Test
+    Should Be Equal  ${MESSAGE}  Two white spaces are fair enough!
+
+*** Keywords ***
+My Keyword
+    [Arguments]  ${path}
+    Directory Should Exist  ${path}

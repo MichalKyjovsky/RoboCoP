@@ -1,0 +1,16 @@
+*** Settings ***
+Documentation  Here comes the documentation.
+...  ${\n}Purpose of this template is to create a
+...  ${\n}basis for Robot Framework Keywords Resource.
+Library  Some Library
+
+*** Variables ***
+${MESSAGE}  Two white spaces are fair enough!
+
+*** Keywords ***
+My First Keyword
+    [Arguments]  ${path}
+    Directory Should Exist  ${path}
+
+My Second Keyword
+    Set Log Level  TRACE
