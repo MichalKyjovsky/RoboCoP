@@ -7,13 +7,14 @@ import com.intellij.openapi.ui.TextBrowseFolderListener;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import org.jetbrains.annotations.NotNull;
 
-import javax.swing.JComponent;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class RobotFrameworkSettingsEditor extends SettingsEditor<RobotFrameworkRunConfiguration> {
   private JPanel myPanel;
   private static TextFieldWithBrowseButton textFieldWithBrowseButton = new TextFieldWithBrowseButton();
   private LabeledComponent<TextFieldWithBrowseButton> myScriptName;
+  private JLabel paramsLabel;
+  private JTextField testParams;
 
   @Override
   protected void resetEditorFrom(RobotFrameworkRunConfiguration robotFrameworkRunConfiguration) {
@@ -33,7 +34,14 @@ public class RobotFrameworkSettingsEditor extends SettingsEditor<RobotFrameworkR
 
   private void createUIComponents() {
     myScriptName = new LabeledComponent<>();
-    FileChooserDescriptor descriptor = new FileChooserDescriptor(true, false, false, false, false, false).withShowHiddenFiles(false);
+//    testParams = new JTextField();
+    FileChooserDescriptor descriptor = new FileChooserDescriptor(
+            true,
+            false,
+            false,
+            false,
+            false,
+            false).withShowHiddenFiles(false);
     descriptor.withFileFilter(virtualFile -> {
       if (virtualFile.getExtension() == null) {
         return false;
