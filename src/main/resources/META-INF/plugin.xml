@@ -10,7 +10,7 @@
     <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
     <depends>com.intellij.modules.platform</depends>
-    <depends>com.intellij.modules.python</depends>
+    <depends>com.intellij.modules.lang</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <fileType name="Robot File" implementationClass="cz.cuni.mff.kyjovsm.robocop.RobotFrameworkFileType" fieldName="INSTANCE"
@@ -21,5 +21,10 @@
         <!-- Add your actions here -->
 
 
+        <action id="cz.cuni.mff.kyjovsm.robocop.actions.NewRobotFrameworkFileAction"
+                class="cz.cuni.mff.kyjovsm.robocop.actions.NewRobotFrameworkFileAction" text="New Robot File"
+                description="Creates either a new Robot Framework Test Suite or Keywords definition file">
+            <add-to-group group-id="NewXml" anchor="last"/>
+        </action>
     </actions>
 </idea-plugin>

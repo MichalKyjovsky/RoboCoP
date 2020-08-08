@@ -12,7 +12,7 @@ import javax.swing.*;
 
 public class NewRobotFrameworkFileAction extends CreateFileFromTemplateAction {
     public NewRobotFrameworkFileAction() {
-        super("NewRobotFrameworkFile.robot", "Create a new robot test case file.", RobotFrameworkIcons.FILE);
+        super("New Robot file", "Creates either a new Robot Framework Test Suite file or Keywords definition file.", RobotFrameworkIcons.FILE);
     }
 
     public NewRobotFrameworkFileAction(String text, String description, Icon icon) {
@@ -23,8 +23,8 @@ public class NewRobotFrameworkFileAction extends CreateFileFromTemplateAction {
     protected void buildDialog(@NotNull Project project, @NotNull PsiDirectory directory, CreateFileFromTemplateDialog.@NotNull Builder builder) {
         builder
                 .setTitle("New Robot Framework File")
-                .addKind("Robot Test Case File", RobotFrameworkIcons.FILE, "RobotFrameworkTestCaseFile")
-                .addKind("Robot Framework Keywords File", RobotFrameworkIcons.FILE, "RobotFrameworkKeywordsFile");
+                .addKind("Robot Framework Test Case File", RobotFrameworkIcons.FILE, "RobotFrameworkTestCasesFile")
+                .addKind("Robot Framework Keywords Definition File", RobotFrameworkIcons.FILE, "RobotFrameworkKeywordsDefinitionFile");
     }
 
     @Override
