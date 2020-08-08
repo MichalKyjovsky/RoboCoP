@@ -6,29 +6,59 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.NlsContexts;
 import com.intellij.psi.PsiDirectory;
 import cz.cuni.mff.kyjovsm.robocop.icons.RobotFrameworkIcons;
+import javax.swing.Icon;
 import org.jetbrains.annotations.NotNull;
 
-import javax.swing.*;
-
 public class NewRobotFrameworkFileAction extends CreateFileFromTemplateAction {
-    public NewRobotFrameworkFileAction() {
-        super("New Robot file", "Creates either a new Robot Framework Test Suite file or Keywords definition file.", RobotFrameworkIcons.FILE);
-    }
 
-    public NewRobotFrameworkFileAction(String text, String description, Icon icon) {
-        super(text, description, icon);
-    }
+  /**
+   *
+   */
+  public NewRobotFrameworkFileAction() {
+    super("New Robot File",
+            "Creates either a new Robot Framework "
+                    + "Test Suite file or Keywords definition file.",
+            RobotFrameworkIcons.FILE);
+  }
 
-    @Override
-    protected void buildDialog(@NotNull Project project, @NotNull PsiDirectory directory, CreateFileFromTemplateDialog.@NotNull Builder builder) {
-        builder
-                .setTitle("New Robot Framework File")
-                .addKind("Robot Framework Test Case File", RobotFrameworkIcons.FILE, "RobotFrameworkTestCasesFile")
-                .addKind("Robot Framework Keywords Definition File", RobotFrameworkIcons.FILE, "RobotFrameworkKeywordsDefinitionFile");
-    }
+  /**
+   * @param text
+   * @param description
+   * @param icon
+   */
+  public NewRobotFrameworkFileAction(String text, String description, Icon icon) {
+    super(text, description, icon);
+  }
 
-    @Override
-    protected @NlsContexts.Command String getActionName(PsiDirectory directory, @NotNull String newName, String templateName) {
-        return String.format("Create Robot file %s", newName);
-    }
+  /**
+   * @param project
+   * @param directory
+   * @param builder
+   */
+  @Override
+  protected void buildDialog(@NotNull Project project,
+                             @NotNull PsiDirectory directory,
+                             CreateFileFromTemplateDialog.@NotNull Builder builder) {
+    builder
+            .setTitle("New Robot Framework File")
+            .addKind("Robot Framework Test Case File",
+                    RobotFrameworkIcons.FILE,
+                    "RobotFrameworkTestCasesFile")
+            .addKind("Robot Framework Keywords Definition File",
+                    RobotFrameworkIcons.FILE,
+                    "RobotFrameworkKeywordsDefinitionFile");
+  }
+
+  /**
+   * @param directory
+   * @param newName
+   * @param templateName
+   * @return
+   */
+  @Override
+  protected @NlsContexts.Command String getActionName(PsiDirectory directory,
+                                                      @NotNull String newName,
+                                                      String templateName) {
+    return String.format("Create Robot file %s", newName);
+  }
 }
