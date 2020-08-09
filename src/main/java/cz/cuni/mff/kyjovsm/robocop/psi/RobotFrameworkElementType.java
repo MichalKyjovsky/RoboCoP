@@ -5,8 +5,17 @@ import cz.cuni.mff.kyjovsm.robocop.RobotFrameworkLanguage;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * TODO: Add class description
+ */
 public class RobotFrameworkElementType extends IElementType {
-    public RobotFrameworkElementType(@NotNull @NonNls String debugName) {
-        super(debugName, RobotFrameworkLanguage.INSTANCE);
-    }
+  /**
+   * Public constructor method called upon to super class.
+   * Creates and registers a new element type for the specified language.
+   *
+   * @param debugName the name of the element type, used for debugging purposes.
+   */
+  public RobotFrameworkElementType(@NotNull @NonNls String debugName) {
+    super(debugName, RobotFrameworkLanguage.INSTANCE);
+  }
 }

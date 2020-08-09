@@ -16,7 +16,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <fileType name="Robot Framework File" implementationClass="cz.cuni.mff.kyjovsm.robocop.RobotFrameworkFileType" fieldName="INSTANCE"
                   language="RobotFramework" extensions="robot"/>
-        <configurationType implementation="cz.cuni.mff.kyjovsm.robocop.runConfiguration.RobotFrameworkConfigurationType"/>
+        <configurationType implementation="cz.cuni.mff.kyjovsm.robocop.run.configuration.RobotFrameworkConfigurationType"/>
     </extensions>
 
     <actions>
