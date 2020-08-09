@@ -14,7 +14,7 @@
     <depends>com.intellij.modules.python</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <fileType name="Robot File" implementationClass="cz.cuni.mff.kyjovsm.robocop.RobotFrameworkFileType" fieldName="INSTANCE"
+        <fileType name="Robot Framework File" implementationClass="cz.cuni.mff.kyjovsm.robocop.RobotFrameworkFileType" fieldName="INSTANCE"
                   language="RobotFramework" extensions="robot"/>
         <configurationType implementation="cz.cuni.mff.kyjovsm.robocop.runConfiguration.RobotFrameworkConfigurationType"/>
     </extensions>

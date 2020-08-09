@@ -17,7 +17,7 @@ public class RobotFrameworkFileType extends LanguageFileType {
     @NotNull
     @Override
     public String getName() {
-        return "RobotFramework File";
+        return "Robot Framework File";
     }
 
     @NotNull
@@ -35,6 +35,6 @@ public class RobotFrameworkFileType extends LanguageFileType {
     @Nullable
     @Override
     public Icon getIcon() {
-        return RobotFrameworkIcons.FILE;
+        return RobotFrameworkIcons.ICON_MAIN;
     }
 }
