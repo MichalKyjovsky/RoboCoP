@@ -30,6 +30,38 @@ public class RobotFrameworkRunConfiguration extends RunConfigurationBase {
     return getOptions().getScriptName();
   }
 
+  public String getExecutionParameters() {
+    return getOptions().getTestParams();
+  }
+
+  public void setExecutionParameters(String parameters) {
+    getOptions().setTestParams(parameters);
+  }
+
+  public String getExternalListener() {
+    return getOptions().getExternalListener();
+  }
+
+  public void setExternalListener(String listeners) {
+    getOptions().setExternalListener(listeners);
+  }
+
+  public boolean getDryRunMode() {
+    return getOptions().getDryRunModeCheckBox();
+  }
+
+  public void setDryRunMode(boolean dryRunIsEnabled) {
+    getOptions().setDryRunModeCheckBox(dryRunIsEnabled);
+  }
+
+  public boolean getExternalListenersCheckBox() {
+    return getOptions().getAddListenerCheckBox();
+  }
+
+  public void setExternalListenersCheckBox(boolean externalListenersAreAdded) {
+    getOptions().setAddListenerCheckBox(externalListenersAreAdded);
+  }
+
   public void setScriptName(String scriptName) {
     getOptions().setScriptName(scriptName);
   }

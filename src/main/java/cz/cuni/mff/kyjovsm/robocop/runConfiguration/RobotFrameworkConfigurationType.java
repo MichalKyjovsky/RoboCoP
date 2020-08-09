@@ -21,7 +21,7 @@ public class RobotFrameworkConfigurationType implements ConfigurationType {
 
   @Override
   public Icon getIcon() {
-    return RobotFrameworkIcons.FILE;
+    return RobotFrameworkIcons.ICON_MAIN;
   }
 
   @Override

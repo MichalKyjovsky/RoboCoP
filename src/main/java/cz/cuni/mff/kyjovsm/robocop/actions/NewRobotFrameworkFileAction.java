@@ -18,7 +18,7 @@ public class NewRobotFrameworkFileAction extends CreateFileFromTemplateAction {
     super("New Robot File",
             "Creates either a new Robot Framework "
                     + "Test Suite file or Keywords definition file.",
-            RobotFrameworkIcons.FILE);
+            RobotFrameworkIcons.ICON_MAIN);
   }
 
   /**
@@ -42,10 +42,10 @@ public class NewRobotFrameworkFileAction extends CreateFileFromTemplateAction {
     builder
             .setTitle("New Robot Framework File")
             .addKind("Robot Framework Test Case File",
-                    RobotFrameworkIcons.FILE,
+                    RobotFrameworkIcons.ICON_MAIN,
                     "RobotFrameworkTestCasesFile")
             .addKind("Robot Framework Keywords Definition File",
-                    RobotFrameworkIcons.FILE,
+                    RobotFrameworkIcons.ICON_MAIN,
                     "RobotFrameworkKeywordsDefinitionFile");
   }
 

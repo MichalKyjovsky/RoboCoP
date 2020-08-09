@@ -20,6 +20,11 @@ public class RobotFrameworkConfigurationFactory extends ConfigurationFactory {
   }
 
   @Override
+  public @NotNull String getId() {
+    return super.getId();
+  }
+
+  @Override
   public @NotNull String getName() {
     return FACTORY_NAME;
   }

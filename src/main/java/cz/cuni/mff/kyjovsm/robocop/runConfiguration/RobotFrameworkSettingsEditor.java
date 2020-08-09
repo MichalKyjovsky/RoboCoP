@@ -5,36 +5,93 @@ import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.ui.LabeledComponent;
 import com.intellij.openapi.ui.TextBrowseFolderListener;
 import com.intellij.openapi.ui.TextFieldWithBrowseButton;
+import com.intellij.ui.components.fields.ExpandableTextField;
 import org.jetbrains.annotations.NotNull;
 
-import javax.swing.*;
+import javax.swing.JCheckBox;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import java.awt.event.ItemEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class RobotFrameworkSettingsEditor extends SettingsEditor<RobotFrameworkRunConfiguration> {
+
+  private static final Logger logger = Logger.getLogger(RobotFrameworkSettingsEditor.class.getName());
   private JPanel myPanel;
-  private static TextFieldWithBrowseButton textFieldWithBrowseButton = new TextFieldWithBrowseButton();
+  private static final TextFieldWithBrowseButton textFieldWithBrowseButton = new TextFieldWithBrowseButton();
   private LabeledComponent<TextFieldWithBrowseButton> myScriptName;
-  private JLabel paramsLabel;
-  private JTextField testParams;
+  private LabeledComponent<ExpandableTextField> testParams;
+  private LabeledComponent<ExpandableTextField> externalListener;
+  private JCheckBox dryRunModeCheckBox;
+  private JCheckBox addListenerCheckBox;
+  private static boolean dryRunMode = false;
+
+
+  public static boolean isDryRunMode() {
+    return dryRunMode;
+  }
+
+  private static void setDryRunMode(boolean isEnabled) {
+    dryRunMode = isEnabled;
+  }
 
   @Override
   protected void resetEditorFrom(RobotFrameworkRunConfiguration robotFrameworkRunConfiguration) {
     myScriptName.getComponent().setText(robotFrameworkRunConfiguration.getScriptName());
+    testParams.getComponent().setText(robotFrameworkRunConfiguration.getExecutionParameters());
+    externalListener.getComponent().setText(robotFrameworkRunConfiguration.getExternalListener());
+    dryRunModeCheckBox.setSelected(robotFrameworkRunConfiguration.getDryRunMode());
+    addListenerCheckBox.setSelected(robotFrameworkRunConfiguration.getExternalListenersCheckBox());
   }
 
   @Override
   protected void applyEditorTo(@NotNull RobotFrameworkRunConfiguration robotFrameworkRunConfiguration) {
     robotFrameworkRunConfiguration.setScriptName(myScriptName.getComponent().getText());
+    robotFrameworkRunConfiguration.setExecutionParameters(testParams.getComponent().getText());
+    robotFrameworkRunConfiguration.setExternalListener(externalListener.getComponent().getText());
+    robotFrameworkRunConfiguration.setDryRunMode(dryRunModeCheckBox.isSelected());
+    robotFrameworkRunConfiguration.setExternalListenersCheckBox(addListenerCheckBox.isSelected());
   }
 
   @NotNull
   @Override
   protected JComponent createEditor() {
-    return myPanel;
+    return this.myPanel;
+  }
+
+  private void setDryRunBinding() {
+    this.dryRunModeCheckBox.addItemListener(e -> setDryRunMode(e.getStateChange() == ItemEvent.SELECTED));
+  }
+
+  private void setExternalListenerBinding() {
+    this.addListenerCheckBox.addItemListener(e -> this.externalListener.setEnabled(e.getStateChange() == ItemEvent.SELECTED));
+  }
+
+  private void setUpExternalListener() {
+    this.externalListener.setComponent(new ExpandableTextField());
+    this.externalListener.setEnabled(false);
+  }
+
+  private void setUpTestParams() {
+    this.testParams.setComponent(new ExpandableTextField());
   }
 
   private void createUIComponents() {
-    myScriptName = new LabeledComponent<>();
-//    testParams = new JTextField();
+    this.myScriptName = new LabeledComponent<>();
+    this.testParams = new LabeledComponent<>();
+    this.dryRunModeCheckBox = new JCheckBox();
+    this.addListenerCheckBox = new JCheckBox();
+    this.dryRunModeCheckBox.addActionListener(e -> logger.log(Level.INFO, String.format("Dry run mode is enabled: %b.", dryRunMode)));
+    this.externalListener = new LabeledComponent<>();
+
+    setUpExternalListener();
+    setUpTestParams();
+    setDryRunBinding();
+    setExternalListenerBinding();
+
+
     FileChooserDescriptor descriptor = new FileChooserDescriptor(
             true,
             false,
@@ -50,6 +107,6 @@ public class RobotFrameworkSettingsEditor extends SettingsEditor<RobotFrameworkR
     });
 
     textFieldWithBrowseButton.addBrowseFolderListener(new TextBrowseFolderListener(descriptor));
-    myScriptName.setComponent(textFieldWithBrowseButton);
+    this.myScriptName.setComponent(textFieldWithBrowseButton);
   }
 }
