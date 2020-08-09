@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 public class NewRobotFrameworkFileAction extends CreateFileFromTemplateAction {
 
   /**
-   *
+   * TODO: Add class description
    */
   public NewRobotFrameworkFileAction() {
     super("New Robot File",

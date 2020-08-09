@@ -1,4 +1,4 @@
-package cz.cuni.mff.kyjovsm.robocop.runConfiguration;
+package cz.cuni.mff.kyjovsm.robocop.run.configuration;
 
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.options.SettingsEditor;
@@ -16,27 +16,66 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
+/**
+ *
+ */
 public class RobotFrameworkSettingsEditor extends SettingsEditor<RobotFrameworkRunConfiguration> {
 
+  /**
+   *
+   */
   private static final Logger logger = Logger.getLogger(RobotFrameworkSettingsEditor.class.getName());
+  /**
+   *
+   */
   private JPanel myPanel;
+  /**
+   *
+   */
   private static final TextFieldWithBrowseButton textFieldWithBrowseButton = new TextFieldWithBrowseButton();
+  /**
+   *
+   */
   private LabeledComponent<TextFieldWithBrowseButton> myScriptName;
+  /**
+   *
+   */
   private LabeledComponent<ExpandableTextField> testParams;
+  /**
+   *
+   */
   private LabeledComponent<ExpandableTextField> externalListener;
+  /**
+   *
+   */
   private JCheckBox dryRunModeCheckBox;
+  /**
+   *
+   */
   private JCheckBox addListenerCheckBox;
+  /**
+   *
+   */
   private static boolean dryRunMode = false;
 
 
+  /**
+   * @return
+   */
   public static boolean isDryRunMode() {
     return dryRunMode;
   }
 
+  /**
+   * @param isEnabled
+   */
   private static void setDryRunMode(boolean isEnabled) {
     dryRunMode = isEnabled;
   }
 
+  /**
+   * @param robotFrameworkRunConfiguration
+   */
   @Override
   protected void resetEditorFrom(RobotFrameworkRunConfiguration robotFrameworkRunConfiguration) {
     myScriptName.getComponent().setText(robotFrameworkRunConfiguration.getScriptName());
@@ -46,6 +85,9 @@ public class RobotFrameworkSettingsEditor extends SettingsEditor<RobotFrameworkR
     addListenerCheckBox.setSelected(robotFrameworkRunConfiguration.getExternalListenersCheckBox());
   }
 
+  /**
+   * @param robotFrameworkRunConfiguration
+   */
   @Override
   protected void applyEditorTo(@NotNull RobotFrameworkRunConfiguration robotFrameworkRunConfiguration) {
     robotFrameworkRunConfiguration.setScriptName(myScriptName.getComponent().getText());
@@ -55,29 +97,47 @@ public class RobotFrameworkSettingsEditor extends SettingsEditor<RobotFrameworkR
     robotFrameworkRunConfiguration.setExternalListenersCheckBox(addListenerCheckBox.isSelected());
   }
 
+  /**
+   * @return
+   */
   @NotNull
   @Override
   protected JComponent createEditor() {
     return this.myPanel;
   }
 
+  /**
+   *
+   */
   private void setDryRunBinding() {
     this.dryRunModeCheckBox.addItemListener(e -> setDryRunMode(e.getStateChange() == ItemEvent.SELECTED));
   }
 
+  /**
+   *
+   */
   private void setExternalListenerBinding() {
     this.addListenerCheckBox.addItemListener(e -> this.externalListener.setEnabled(e.getStateChange() == ItemEvent.SELECTED));
   }
 
+  /**
+   *
+   */
   private void setUpExternalListener() {
     this.externalListener.setComponent(new ExpandableTextField());
     this.externalListener.setEnabled(false);
   }
 
+  /**
+   *
+   */
   private void setUpTestParams() {
     this.testParams.setComponent(new ExpandableTextField());
   }
 
+  /**
+   *
+   */
   private void createUIComponents() {
     this.myScriptName = new LabeledComponent<>();
     this.testParams = new LabeledComponent<>();
@@ -99,6 +159,7 @@ public class RobotFrameworkSettingsEditor extends SettingsEditor<RobotFrameworkR
             false,
             false,
             false).withShowHiddenFiles(false);
+
     descriptor.withFileFilter(virtualFile -> {
       if (virtualFile.getExtension() == null) {
         return false;
