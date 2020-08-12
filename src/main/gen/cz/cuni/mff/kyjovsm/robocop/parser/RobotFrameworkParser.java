@@ -942,6 +942,7 @@ public class RobotFrameworkParser implements PsiParser, LightPsiParser {
       if (!END_OF_LINE(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "robotFrameworkFile_1", c)) break;
     }
+
     return true;
   }
 
