@@ -17,7 +17,7 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version = '2020.2'
+    version = '2020.1'
     downloadSources = false
     type = 'PY'
 }
@@ -34,4 +34,8 @@ patchPluginXml {
     changeNotes """
       Add change notes here.<br>
       <em>most HTML tags may be used</em>"""
+}
+
+sourceSets {
+    sourceSets.main.java.srcDirs 'src/main/gen'
 }
