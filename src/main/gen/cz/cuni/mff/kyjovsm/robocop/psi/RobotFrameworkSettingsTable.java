@@ -12,9 +12,9 @@ public interface RobotFrameworkSettingsTable extends PsiElement {
   List<null> getEmptyLineList();
 
   @NotNull
-  List<RobotFrameworkSettingsParameter> getSettingsParameterList();
+  RobotFrameworkSettingsTableHeader getSettingsTableHeader();
 
   @NotNull
-  RobotFrameworkSettingsTableHeader getSettingsTableHeader();
+  List<RobotFrameworkSettingLine> getSettingLineList();
 
 }

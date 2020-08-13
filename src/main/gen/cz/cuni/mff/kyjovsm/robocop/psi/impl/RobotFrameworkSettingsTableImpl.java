@@ -35,14 +35,14 @@ public class RobotFrameworkSettingsTableImpl extends ASTWrapperPsiElement implem
 
   @Override
   @NotNull
-  public List<RobotFrameworkSettingsParameter> getSettingsParameterList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkSettingsParameter.class);
+  public RobotFrameworkSettingsTableHeader getSettingsTableHeader() {
+    return findNotNullChildByClass(RobotFrameworkSettingsTableHeader.class);
   }
 
   @Override
   @NotNull
-  public RobotFrameworkSettingsTableHeader getSettingsTableHeader() {
-    return findNotNullChildByClass(RobotFrameworkSettingsTableHeader.class);
+  public List<RobotFrameworkSettingLine> getSettingLineList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkSettingLine.class);
   }
 
 }

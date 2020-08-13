@@ -28,8 +28,8 @@ public class RobotFrameworkMetadataSettingImpl extends ASTWrapperPsiElement impl
 
   @Override
   @NotNull
-  public List<RobotFrameworkSettingListOrRecurrence> getSettingListOrRecurrenceList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkSettingListOrRecurrence.class);
+  public List<RobotFrameworkSettingListOrEllipses> getSettingListOrEllipsesList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkSettingListOrEllipses.class);
   }
 
 }

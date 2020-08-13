@@ -28,8 +28,8 @@ public class RobotFrameworkSuiteSetupSettingImpl extends ASTWrapperPsiElement im
 
   @Override
   @NotNull
-  public List<RobotFrameworkRecurrenceForSettingTable> getRecurrenceForSettingTableList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkRecurrenceForSettingTable.class);
+  public List<RobotFrameworkEllipsesForSettingTable> getEllipsesForSettingTableList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkEllipsesForSettingTable.class);
   }
 
 }

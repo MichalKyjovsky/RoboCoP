@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface RobotFrameworkSuiteSetupSetting extends PsiElement {
 
   @NotNull
-  List<RobotFrameworkRecurrenceForSettingTable> getRecurrenceForSettingTableList();
+  List<RobotFrameworkEllipsesForSettingTable> getEllipsesForSettingTableList();
 
 }

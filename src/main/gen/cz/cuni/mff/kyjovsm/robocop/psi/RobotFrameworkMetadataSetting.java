@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface RobotFrameworkMetadataSetting extends PsiElement {
 
   @NotNull
-  List<RobotFrameworkSettingListOrRecurrence> getSettingListOrRecurrenceList();
+  List<RobotFrameworkSettingListOrEllipses> getSettingListOrEllipsesList();
 
 }

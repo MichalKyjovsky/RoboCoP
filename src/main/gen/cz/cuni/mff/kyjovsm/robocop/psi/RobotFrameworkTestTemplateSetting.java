@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface RobotFrameworkTestTemplateSetting extends PsiElement {
 
   @NotNull
-  List<RobotFrameworkRecurrenceForSettingTable> getRecurrenceForSettingTableList();
+  List<RobotFrameworkEllipsesForSettingTable> getEllipsesForSettingTableList();
+
+  @NotNull
+  RobotFrameworkKeyword getKeyword();
 
 }
