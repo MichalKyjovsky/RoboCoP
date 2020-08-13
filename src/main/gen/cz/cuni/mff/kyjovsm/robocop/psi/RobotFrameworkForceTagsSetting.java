@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface RobotFrameworkForceTagsSetting extends PsiElement {
 
   @NotNull
-  List<RobotFrameworkRecurrenceForSettingTable> getRecurrenceForSettingTableList();
+  List<RobotFrameworkEllipsesForSettingTable> getEllipsesForSettingTableList();
 
   @NotNull
   List<RobotFrameworkTag> getTagList();

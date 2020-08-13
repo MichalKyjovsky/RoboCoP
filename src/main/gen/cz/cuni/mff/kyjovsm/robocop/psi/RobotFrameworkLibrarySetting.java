@@ -11,6 +11,6 @@ public interface RobotFrameworkLibrarySetting extends PsiElement {
   RobotFrameworkLibraryReference getLibraryReference();
 
   @NotNull
-  List<RobotFrameworkSettingListOrRecurrence> getSettingListOrRecurrenceList();
+  List<RobotFrameworkSettingListOrEllipses> getSettingListOrEllipsesList();
 
 }

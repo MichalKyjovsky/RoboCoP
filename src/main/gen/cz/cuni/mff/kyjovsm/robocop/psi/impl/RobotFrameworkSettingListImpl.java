@@ -26,4 +26,10 @@ public class RobotFrameworkSettingListImpl extends ASTWrapperPsiElement implemen
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public List<RobotFrameworkKeywordArg> getKeywordArgList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkKeywordArg.class);
+  }
+
 }

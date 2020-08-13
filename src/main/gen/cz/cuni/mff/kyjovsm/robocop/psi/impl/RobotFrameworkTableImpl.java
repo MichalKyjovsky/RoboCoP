@@ -28,8 +28,26 @@ public class RobotFrameworkTableImpl extends ASTWrapperPsiElement implements Rob
 
   @Override
   @Nullable
+  public RobotFrameworkKeywordsTable getKeywordsTable() {
+    return findChildByClass(RobotFrameworkKeywordsTable.class);
+  }
+
+  @Override
+  @Nullable
   public RobotFrameworkSettingsTable getSettingsTable() {
     return findChildByClass(RobotFrameworkSettingsTable.class);
+  }
+
+  @Override
+  @Nullable
+  public RobotFrameworkTestCasesTable getTestCasesTable() {
+    return findChildByClass(RobotFrameworkTestCasesTable.class);
+  }
+
+  @Override
+  @Nullable
+  public RobotFrameworkVariablesTable getVariablesTable() {
+    return findChildByClass(RobotFrameworkVariablesTable.class);
   }
 
 }

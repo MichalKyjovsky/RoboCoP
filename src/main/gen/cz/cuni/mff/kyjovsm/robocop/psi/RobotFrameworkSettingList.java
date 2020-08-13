@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface RobotFrameworkSettingList extends PsiElement {
 
+  @NotNull
+  List<RobotFrameworkKeywordArg> getKeywordArgList();
+
 }

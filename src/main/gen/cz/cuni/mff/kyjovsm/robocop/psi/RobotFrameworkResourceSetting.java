@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 public interface RobotFrameworkResourceSetting extends PsiElement {
 
   @NotNull
-  List<RobotFrameworkRecurrenceForSettingTable> getRecurrenceForSettingTableList();
+  List<RobotFrameworkEllipsesForSettingTable> getEllipsesForSettingTableList();
 
   @Nullable
   RobotFrameworkReferencedFile getReferencedFile();
