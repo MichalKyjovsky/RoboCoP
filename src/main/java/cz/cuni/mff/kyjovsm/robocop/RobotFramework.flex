@@ -25,9 +25,9 @@ EndOfLine = [ \t]* {LineSeparators}
 Space = " "
 ColumnSeparator = {Space} {Space}+ | [ \t]* "\t" [ \t]* | [ \t]+
 
-KeywordArgumentsChar = [^\r\n\#] | \\# //Everything but LineSeparators and Comments
-KeywordsTitleChar = {KeywordArgumentsChar}
-TestCaseTitleChar = {KeywordArgumentsChar}
+KeywordArgumentChar = [^\r\n\#] | \\# //Everything but LineSeparators and Comments
+KeywordsTitleChar = {KeywordArgumentChar}
+TestCaseTitleChar = {KeywordArgumentChar}
 VariableNameChar = [^\#\{\}{WhiteSpace}]
 Comments = "#" {RegularCharacter}*
 
@@ -40,9 +40,37 @@ IntegerLiteral = 0 | "-"? [1-9][0-9]*
 FloatNumberLiteral= [0-9]+ \.? [0-9]* | [0-9]* \.? [0-9]+
 PositiveIntegerLiteral = 0 | [1-9][0-9]*
 
-VariableName = {VariableNameChar}+
+VariableWord = {VariableNameChar}+
+VariableName = {VariableNameChar}+ ({Space} {VariableNameChar})*
+Word = {VariableName}
+SimpleVariable = "${" {Space}? {VariableName} {Space}? "}"
+VariableAssignment = {SimpleVariable} {Space}? "="
 
+ArrayVariable = "@{" {Space}? {VariableName} "}"
+ArrayVariableAccess = {ArrayVariable} \[ {Space}? ({PositiveIntegerLiteral} | {SimpleVariable} | \'{Word}\' ) {Space}?\]
+ArrayAssignment = {ArrayVariable} {Space}? "="
 
+RobotWord = [a-zA-Z0-9\.\*\(\)\[\]\"\'\-_\$\{\}\\#&@%=\|\\]+
+RobotKeyword = {RobotWord} ({Space} {RobotWord})*
+
+TestCaseTitleWord = {TestCaseTitleChar}+
+TestCaseTitle = {TestCaseTitleWord} ({Space}? {TestCaseTitleWord})*
+
+KeywordArgumentWord = {KeywordArgumentChar}+
+KeywordArgument = {KeywordArgumentWord} ({Space} {KeywordArgumentWord})* | {SimpleVariable} | {ArrayVariable} | {EmptyCell}
+
+ForLoopPrefix = ":FOR"
+ForLoopInInfix = "IN"
+ForLoopInRangeInifix = "IN RANGE"
+
+TablesHeadingAsteriskTriplet = "***"
+
+SettingsTableHeader = {Space}? {TablesHeadingAsteriskTriplet} {Space}? (setting | settings) {Space}? {TablesHeadingAsteriskTriplet} {Comments}
+TestCasesTableHeader = {Space}? {TablesHeadingAsteriskTriplet} {Space}? (test case | test cases) {Space}? {TablesHeadingAsteriskTriplet} {Comments}
+KeywordsTableHeader = {Space}? {TablesHeadingAsteriskTriplet} {Space}? (keyword | keywords) {Space}? {TablesHeadingAsteriskTriplet} {Comments}
+VariablesTableHeader = {Space}? {TablesHeadingAsteriskTriplet} {Space}? (variable | variables) {Space}? {TablesHeadingAsteriskTriplet} {Comments}
+
+/*Setting table*/
 
 
 %%
