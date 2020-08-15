@@ -7,18 +7,19 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import static cz.cuni.mff.kyjovsm.robocop.psi.RobotFrameworkTypes.*;
+import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import cz.cuni.mff.kyjovsm.robocop.psi.*;
+import cz.cuni.mff.kyjovsm.robocop.elements.RobotFrameworkImplUtil;
 
-public class RobotFrameworkSettingListOrRecurrenceImpl extends ASTWrapperPsiElement implements RobotFrameworkSettingListOrRecurrence {
+public class RobotFrameworkKeywordArgumentListImpl extends ASTWrapperPsiElement implements RobotFrameworkKeywordArgumentList {
 
-  public RobotFrameworkSettingListOrRecurrenceImpl(@NotNull ASTNode node) {
+  public RobotFrameworkKeywordArgumentListImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull RobotFrameworkVisitor visitor) {
-    visitor.visitSettingListOrRecurrence(this);
+    visitor.visitKeywordArgumentList(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
@@ -27,15 +28,9 @@ public class RobotFrameworkSettingListOrRecurrenceImpl extends ASTWrapperPsiElem
   }
 
   @Override
-  @Nullable
-  public RobotFrameworkRecurrenceForSettingTable getRecurrenceForSettingTable() {
-    return findChildByClass(RobotFrameworkRecurrenceForSettingTable.class);
-  }
-
-  @Override
-  @Nullable
-  public RobotFrameworkSettingList getSettingList() {
-    return findChildByClass(RobotFrameworkSettingList.class);
+  @NotNull
+  public List<RobotFrameworkKeywordArgument> getKeywordArgumentList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkKeywordArgument.class);
   }
 
 }

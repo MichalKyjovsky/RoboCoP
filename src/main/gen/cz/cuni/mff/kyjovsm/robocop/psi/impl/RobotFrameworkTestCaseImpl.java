@@ -7,15 +7,28 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import static cz.cuni.mff.kyjovsm.robocop.psi.RobotFrameworkTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
+import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkTypes.*;
+import com.intellij.extapi.psi.StubBasedPsiElementBase;
+import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkTestCaseStub;
 import cz.cuni.mff.kyjovsm.robocop.psi.*;
-import null.null;
+import cz.cuni.mff.kyjovsm.robocop.elements.RobotFrameworkImplUtil;
+import com.intellij.navigation.ItemPresentation;
+import com.intellij.util.IncorrectOperationException;
+import com.intellij.psi.stubs.IStubElementType;
+import com.intellij.psi.tree.IElementType;
 
-public class RobotFrameworkTestCaseImpl extends ASTWrapperPsiElement implements RobotFrameworkTestCase {
+public class RobotFrameworkTestCaseImpl extends StubBasedPsiElementBase<RobotFrameworkTestCaseStub> implements RobotFrameworkTestCase {
+
+  public RobotFrameworkTestCaseImpl(@NotNull RobotFrameworkTestCaseStub stub, @NotNull IStubElementType type) {
+    super(stub, type);
+  }
 
   public RobotFrameworkTestCaseImpl(@NotNull ASTNode node) {
     super(node);
+  }
+
+  public RobotFrameworkTestCaseImpl(RobotFrameworkTestCaseStub stub, IElementType type, ASTNode node) {
+    super(stub, type, node);
   }
 
   public void accept(@NotNull RobotFrameworkVisitor visitor) {
@@ -29,8 +42,8 @@ public class RobotFrameworkTestCaseImpl extends ASTWrapperPsiElement implements 
 
   @Override
   @NotNull
-  public List<null> getEmptyLineList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, null.class);
+  public List<RobotFrameworkEmptyLine> getEmptyLineList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkEmptyLine.class);
   }
 
   @Override
@@ -43,6 +56,29 @@ public class RobotFrameworkTestCaseImpl extends ASTWrapperPsiElement implements 
   @NotNull
   public RobotFrameworkTestCaseName getTestCaseName() {
     return findNotNullChildByClass(RobotFrameworkTestCaseName.class);
+  }
+
+  @Override
+  @Nullable
+  @NonNls
+  public String getName() {
+    return RobotFrameworkImplUtil.getName(this);
+  }
+
+  @Override
+  public PsiElement setName(@NonNls @NotNull String newName) throws IncorrectOperationException {
+    return RobotFrameworkImplUtil.setName(this, newName);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getNameIdentifier() {
+    return RobotFrameworkImplUtil.getNameIdentifier(this);
+  }
+
+  @Override
+  public ItemPresentation getPresentation() {
+    return RobotFrameworkImplUtil.getPresentation(this);
   }
 
 }

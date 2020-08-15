@@ -4,7 +4,6 @@ package cz.cuni.mff.kyjovsm.robocop.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
-import null.null;
 
 public interface RobotFrameworkForLoopValues extends PsiElement {
 
@@ -12,9 +11,9 @@ public interface RobotFrameworkForLoopValues extends PsiElement {
   List<RobotFrameworkEllipses> getEllipsesList();
 
   @NotNull
-  List<null> getEmptyLineList();
+  List<RobotFrameworkEmptyLine> getEmptyLineList();
 
   @NotNull
-  List<RobotFrameworkKeywordArgList> getKeywordArgListList();
+  List<RobotFrameworkKeywordArgumentList> getKeywordArgumentListList();
 
 }

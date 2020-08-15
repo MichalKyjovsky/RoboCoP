@@ -5,12 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface RobotFrameworkSettingsParameter extends PsiElement {
-
-  @Nullable
-  RobotFrameworkRecurrence getRecurrence();
-
-  @Nullable
-  RobotFrameworkSetting getSetting();
+public interface RobotFrameworkEmptyLine extends PsiElement {
 
 }

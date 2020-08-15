@@ -7,29 +7,24 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import static cz.cuni.mff.kyjovsm.robocop.psi.RobotFrameworkTypes.*;
+import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import cz.cuni.mff.kyjovsm.robocop.psi.*;
+import cz.cuni.mff.kyjovsm.robocop.elements.RobotFrameworkImplUtil;
 
-public class RobotFrameworkKeywordArgImpl extends ASTWrapperPsiElement implements RobotFrameworkKeywordArg {
+public class RobotFrameworkEmptyLineImpl extends ASTWrapperPsiElement implements RobotFrameworkEmptyLine {
 
-  public RobotFrameworkKeywordArgImpl(@NotNull ASTNode node) {
+  public RobotFrameworkEmptyLineImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull RobotFrameworkVisitor visitor) {
-    visitor.visitKeywordArg(this);
+    visitor.visitEmptyLine(this);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof RobotFrameworkVisitor) accept((RobotFrameworkVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public RobotFrameworkVariable getVariable() {
-    return findChildByClass(RobotFrameworkVariable.class);
   }
 
 }

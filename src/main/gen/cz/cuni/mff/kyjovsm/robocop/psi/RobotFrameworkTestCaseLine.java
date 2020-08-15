@@ -17,7 +17,7 @@ public interface RobotFrameworkTestCaseLine extends PsiElement {
   RobotFrameworkForLoops getForLoops();
 
   @Nullable
-  RobotFrameworkKeywordArgList getKeywordArgList();
+  RobotFrameworkKeywordArgumentList getKeywordArgumentList();
 
   @Nullable
   RobotFrameworkTestCaseSettingLine getTestCaseSettingLine();

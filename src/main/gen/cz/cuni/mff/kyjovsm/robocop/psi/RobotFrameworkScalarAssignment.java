@@ -4,35 +4,29 @@ package cz.cuni.mff.kyjovsm.robocop.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement;
+import com.intellij.psi.StubBasedPsiElement;
+import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkScalarAssignmentStub;
+import com.intellij.psi.PsiReference;
+import com.intellij.util.IncorrectOperationException;
 
-public interface RobotFrameworkScalarAssignment extends PsiElement {
+public interface RobotFrameworkScalarAssignment extends RobotFrameworkNamedElement, StubBasedPsiElement<RobotFrameworkScalarAssignmentStub> {
 
-  //WARNING: getReference(...) is skipped
-  //matching getReference(RobotFrameworkScalarAssignment, ...)
-  //methods are not found in RobotFrameworkPsiImplUtil
+  @Nullable
+  PsiReference getReference();
 
-  //WARNING: getReferences(...) is skipped
-  //matching getReferences(RobotFrameworkScalarAssignment, ...)
-  //methods are not found in RobotFrameworkPsiImplUtil
+  @NotNull
+  PsiReference[] getReferences();
 
-  //WARNING: getName(...) is skipped
-  //matching getName(RobotFrameworkScalarAssignment, ...)
-  //methods are not found in RobotFrameworkPsiImplUtil
+  @Nullable
+  @NonNls
+  String getName();
 
-  //WARNING: setName(...) is skipped
-  //matching setName(RobotFrameworkScalarAssignment, ...)
-  //methods are not found in RobotFrameworkPsiImplUtil
+  PsiElement setName(@NonNls @NotNull String newName) throws IncorrectOperationException;
 
-  //WARNING: getNameIdentifier(...) is skipped
-  //matching getNameIdentifier(RobotFrameworkScalarAssignment, ...)
-  //methods are not found in RobotFrameworkPsiImplUtil
+  @Nullable
+  PsiElement getNameIdentifier();
 
-  //WARNING: handleElementRename(...) is skipped
-  //matching handleElementRename(RobotFrameworkScalarAssignment, ...)
-  //methods are not found in RobotFrameworkPsiImplUtil
-
-  //WARNING: toString(...) is skipped
-  //matching toString(RobotFrameworkScalarAssignment, ...)
-  //methods are not found in RobotFrameworkPsiImplUtil
+  PsiElement handleElementRename(String name);
 
 }

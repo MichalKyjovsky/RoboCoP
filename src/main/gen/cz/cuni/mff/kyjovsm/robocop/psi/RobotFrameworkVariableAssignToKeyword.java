@@ -4,7 +4,6 @@ package cz.cuni.mff.kyjovsm.robocop.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
-import null.null;
 
 public interface RobotFrameworkVariableAssignToKeyword extends PsiElement {
 
@@ -12,7 +11,7 @@ public interface RobotFrameworkVariableAssignToKeyword extends PsiElement {
   List<RobotFrameworkEllipses> getEllipsesList();
 
   @NotNull
-  List<null> getEmptyLineList();
+  List<RobotFrameworkEmptyLine> getEmptyLineList();
 
   @NotNull
   RobotFrameworkKeywordCallingTest getKeywordCallingTest();

@@ -4,8 +4,11 @@ package cz.cuni.mff.kyjovsm.robocop.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement;
+import com.intellij.psi.PsiReference;
+import com.intellij.util.IncorrectOperationException;
 
-public interface RobotFrameworkScalarAssignmentLhs extends PsiElement {
+public interface RobotFrameworkScalarAssignmentLhs extends RobotFrameworkNamedElement {
 
   @Nullable
   RobotFrameworkScalarAssignment getScalarAssignment();
@@ -13,32 +16,21 @@ public interface RobotFrameworkScalarAssignmentLhs extends PsiElement {
   @Nullable
   RobotFrameworkScalarVariable getScalarVariable();
 
-  //WARNING: getName(...) is skipped
-  //matching getName(RobotFrameworkScalarAssignmentLhs, ...)
-  //methods are not found in RobotFrameworkPsiImplUtil
+  @Nullable
+  @NonNls
+  String getName();
 
-  //WARNING: setName(...) is skipped
-  //matching setName(RobotFrameworkScalarAssignmentLhs, ...)
-  //methods are not found in RobotFrameworkPsiImplUtil
+  PsiElement setName(@NonNls @NotNull String newName) throws IncorrectOperationException;
 
-  //WARNING: getReference(...) is skipped
-  //matching getReference(RobotFrameworkScalarAssignmentLhs, ...)
-  //methods are not found in RobotFrameworkPsiImplUtil
+  @Nullable
+  PsiReference getReference();
 
-  //WARNING: getReferences(...) is skipped
-  //matching getReferences(RobotFrameworkScalarAssignmentLhs, ...)
-  //methods are not found in RobotFrameworkPsiImplUtil
+  @NotNull
+  PsiReference[] getReferences();
 
-  //WARNING: getNameIdentifier(...) is skipped
-  //matching getNameIdentifier(RobotFrameworkScalarAssignmentLhs, ...)
-  //methods are not found in RobotFrameworkPsiImplUtil
+  @Nullable
+  PsiElement getNameIdentifier();
 
-  //WARNING: handleElementRename(...) is skipped
-  //matching handleElementRename(RobotFrameworkScalarAssignmentLhs, ...)
-  //methods are not found in RobotFrameworkPsiImplUtil
-
-  //WARNING: toString(...) is skipped
-  //matching toString(RobotFrameworkScalarAssignmentLhs, ...)
-  //methods are not found in RobotFrameworkPsiImplUtil
+  PsiElement handleElementRename(String name);
 
 }

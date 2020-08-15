@@ -7,10 +7,10 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import static cz.cuni.mff.kyjovsm.robocop.psi.RobotFrameworkTypes.*;
+import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import cz.cuni.mff.kyjovsm.robocop.psi.*;
-import null.null;
+import cz.cuni.mff.kyjovsm.robocop.elements.RobotFrameworkImplUtil;
 
 public class RobotFrameworkForLoopValuesImpl extends ASTWrapperPsiElement implements RobotFrameworkForLoopValues {
 
@@ -35,14 +35,14 @@ public class RobotFrameworkForLoopValuesImpl extends ASTWrapperPsiElement implem
 
   @Override
   @NotNull
-  public List<null> getEmptyLineList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, null.class);
+  public List<RobotFrameworkEmptyLine> getEmptyLineList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkEmptyLine.class);
   }
 
   @Override
   @NotNull
-  public List<RobotFrameworkKeywordArgList> getKeywordArgListList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkKeywordArgList.class);
+  public List<RobotFrameworkKeywordArgumentList> getKeywordArgumentListList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkKeywordArgumentList.class);
   }
 
 }

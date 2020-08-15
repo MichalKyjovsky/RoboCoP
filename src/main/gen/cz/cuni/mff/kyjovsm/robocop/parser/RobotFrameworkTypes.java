@@ -1,9 +1,11 @@
 // This is a generated file. Not intended for manual editing.
-package cz.cuni.mff.kyjovsm.robocop.psi;
+package cz.cuni.mff.kyjovsm.robocop.parser;
 
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.PsiElement;
 import com.intellij.lang.ASTNode;
+import cz.cuni.mff.kyjovsm.robocop.psi.RobotFrameworkElementType;
+import cz.cuni.mff.kyjovsm.robocop.psi.RobotFrameworkTokenType;
 import cz.cuni.mff.kyjovsm.robocop.psi.impl.*;
 
 public interface RobotFrameworkTypes {
@@ -25,6 +27,7 @@ public interface RobotFrameworkTypes {
   IElementType DOCUMENTATION_SETTING = new RobotFrameworkElementType("DOCUMENTATION_SETTING");
   IElementType ELLIPSES = new RobotFrameworkElementType("ELLIPSES");
   IElementType ELLIPSES_FOR_SETTING_TABLE = new RobotFrameworkElementType("ELLIPSES_FOR_SETTING_TABLE");
+  IElementType EMPTY_LINE = new RobotFrameworkElementType("EMPTY_LINE");
   IElementType ERROR = new RobotFrameworkElementType("ERROR");
   IElementType EXECUTION_LINE = new RobotFrameworkElementType("EXECUTION_LINE");
   IElementType FORCE_TAGS_SETTING = new RobotFrameworkElementType("FORCE_TAGS_SETTING");
@@ -38,18 +41,20 @@ public interface RobotFrameworkTypes {
   IElementType FOR_LOOP_IN_RANGE_PREFIX = new RobotFrameworkElementType("FOR_LOOP_IN_RANGE_PREFIX");
   IElementType FOR_LOOP_PREFIX = new RobotFrameworkElementType("FOR_LOOP_PREFIX");
   IElementType FOR_LOOP_VALUES = new RobotFrameworkElementType("FOR_LOOP_VALUES");
+  IElementType GENERIC_SETTING = new RobotFrameworkElementType("GENERIC_SETTING");
+  IElementType GENERIC_SETTING_NAME = new RobotFrameworkElementType("GENERIC_SETTING_NAME");
   IElementType INDENTED_KEYWORD_INVOCATION_TEST = new RobotFrameworkElementType("INDENTED_KEYWORD_INVOCATION_TEST");
   IElementType INDENTED_VARIABLE_ASSIGNMENT_TO_KEYWORD = new RobotFrameworkElementType("INDENTED_VARIABLE_ASSIGNMENT_TO_KEYWORD");
-  IElementType KEYWORD = new RobotFrameworkElementType("KEYWORD");
+  IElementType KEYWORD = new RobotFrameworkKeywordElementType("KEYWORD");
   IElementType KEYWORDS_TABLE = new RobotFrameworkElementType("KEYWORDS_TABLE");
   IElementType KEYWORDS_TABLE_HEADER = new RobotFrameworkElementType("KEYWORDS_TABLE_HEADER");
-  IElementType KEYWORD_ARG = new RobotFrameworkElementType("KEYWORD_ARG");
-  IElementType KEYWORD_ARG_LIST = new RobotFrameworkElementType("KEYWORD_ARG_LIST");
+  IElementType KEYWORD_ARGUMENT = new RobotFrameworkKeywordArgumentElementType("KEYWORD_ARGUMENT");
+  IElementType KEYWORD_ARGUMENT_LIST = new RobotFrameworkElementType("KEYWORD_ARGUMENT_LIST");
   IElementType KEYWORD_CALLING_SETTINGS = new RobotFrameworkElementType("KEYWORD_CALLING_SETTINGS");
   IElementType KEYWORD_CALLING_TEST = new RobotFrameworkElementType("KEYWORD_CALLING_TEST");
   IElementType KEYWORD_DEFINITION = new RobotFrameworkElementType("KEYWORD_DEFINITION");
   IElementType KEYWORD_LINE = new RobotFrameworkElementType("KEYWORD_LINE");
-  IElementType KEYWORD_NAME = new RobotFrameworkElementType("KEYWORD_NAME");
+  IElementType KEYWORD_NAME = new RobotFrameworkKeywordNameElementType("KEYWORD_NAME");
   IElementType KEYWORD_SETTING = new RobotFrameworkElementType("KEYWORD_SETTING");
   IElementType KEYWORD_SETTING_LINE = new RobotFrameworkElementType("KEYWORD_SETTING_LINE");
   IElementType LIBRARY_REFERENCE = new RobotFrameworkElementType("LIBRARY_REFERENCE");
@@ -59,11 +64,10 @@ public interface RobotFrameworkTypes {
   IElementType REFERENCED_FILE = new RobotFrameworkElementType("REFERENCED_FILE");
   IElementType RESOURCE_SETTING = new RobotFrameworkElementType("RESOURCE_SETTING");
   IElementType RETURN_LINE = new RobotFrameworkElementType("RETURN_LINE");
-  IElementType ROBOT_FRAMEWORK_FILE = new RobotFrameworkElementType("ROBOT_FRAMEWORK_FILE");
-  IElementType SCALAR_ASSIGNMENT = new RobotFrameworkElementType("SCALAR_ASSIGNMENT");
+  IElementType SCALAR_ASSIGNMENT = new RobotFrameworkScalarAssignmentElementType("SCALAR_ASSIGNMENT");
   IElementType SCALAR_ASSIGNMENT_LHS = new RobotFrameworkElementType("SCALAR_ASSIGNMENT_LHS");
   IElementType SCALAR_DEFAULT_ARG_VALUE = new RobotFrameworkElementType("SCALAR_DEFAULT_ARG_VALUE");
-  IElementType SCALAR_VARIABLE = new RobotFrameworkElementType("SCALAR_VARIABLE");
+  IElementType SCALAR_VARIABLE = new RobotFrameworkScalarVariableElementType("SCALAR_VARIABLE");
   IElementType SETTING = new RobotFrameworkElementType("SETTING");
   IElementType SETTINGS_TABLE = new RobotFrameworkElementType("SETTINGS_TABLE");
   IElementType SETTINGS_TABLE_HEADER = new RobotFrameworkElementType("SETTINGS_TABLE_HEADER");
@@ -76,7 +80,7 @@ public interface RobotFrameworkTypes {
   IElementType SUITE_TEARDOWN_SETTING = new RobotFrameworkElementType("SUITE_TEARDOWN_SETTING");
   IElementType TABLE = new RobotFrameworkElementType("TABLE");
   IElementType TAG = new RobotFrameworkElementType("TAG");
-  IElementType TEST_CASE = new RobotFrameworkElementType("TEST_CASE");
+  IElementType TEST_CASE = new RobotFrameworkTestCaseElementType("TEST_CASE");
   IElementType TEST_CASES_TABLE = new RobotFrameworkElementType("TEST_CASES_TABLE");
   IElementType TEST_CASES_TABLE_HEADER = new RobotFrameworkElementType("TEST_CASES_TABLE_HEADER");
   IElementType TEST_CASE_LINE = new RobotFrameworkElementType("TEST_CASE_LINE");
@@ -108,7 +112,7 @@ public interface RobotFrameworkTypes {
   IElementType BRACKET_TEARDOWN_TOKEN = new RobotFrameworkTokenType("BRACKET_TEARDOWN_TOKEN");
   IElementType BRACKET_TEMPLATE_TOKEN = new RobotFrameworkTokenType("BRACKET_TEMPLATE_TOKEN");
   IElementType BRACKET_TIMEOUT_TOKEN = new RobotFrameworkTokenType("BRACKET_TIMEOUT_TOKEN");
-  IElementType COLUMN_SEP_TOKEN = new RobotFrameworkTokenType("COLUMN_SEP_TOKEN");
+  IElementType COLUMN_SEPARATOR_TOKEN = new RobotFrameworkTokenType("COLUMN_SEPARATOR_TOKEN");
   IElementType COMMENT_TOKEN = new RobotFrameworkTokenType("COMMENT_TOKEN");
   IElementType DEFAULT_TAGS_SETTING_TOKEN = new RobotFrameworkTokenType("DEFAULT_TAGS_SETTING_TOKEN");
   IElementType DOCUMENTATION_SETTING_TOKEN = new RobotFrameworkTokenType("DOCUMENTATION_SETTING_TOKEN");
@@ -117,6 +121,7 @@ public interface RobotFrameworkTypes {
   IElementType EMPTY_CELL_TOKEN = new RobotFrameworkTokenType("EMPTY_CELL_TOKEN");
   IElementType FORCE_TAGS_SETTING_TOKEN = new RobotFrameworkTokenType("FORCE_TAGS_SETTING_TOKEN");
   IElementType FOR_KEYWORD_TOKEN = new RobotFrameworkTokenType("FOR_KEYWORD_TOKEN");
+  IElementType GENERIC_SETTING_TOKEN = new RobotFrameworkTokenType("GENERIC_SETTING_TOKEN");
   IElementType INTEGER_TOKEN = new RobotFrameworkTokenType("INTEGER_TOKEN");
   IElementType INVALID_SYNTAX_TOKEN = new RobotFrameworkTokenType("INVALID_SYNTAX_TOKEN");
   IElementType IN_RANGE_TOKEN = new RobotFrameworkTokenType("IN_RANGE_TOKEN");
@@ -129,7 +134,7 @@ public interface RobotFrameworkTypes {
   IElementType NEW_LINE_TOKEN = new RobotFrameworkTokenType("NEW_LINE_TOKEN");
   IElementType RESOURCE_SETTING_TOKEN = new RobotFrameworkTokenType("RESOURCE_SETTING_TOKEN");
   IElementType RF_FILE_TOKEN = new RobotFrameworkTokenType("RF_FILE_TOKEN");
-  IElementType RF_KEYWORD_ARG_TOKEN = new RobotFrameworkTokenType("RF_KEYWORD_ARG_TOKEN");
+  IElementType RF_KEYWORD_ARGUMENT_TOKEN = new RobotFrameworkTokenType("RF_KEYWORD_ARGUMENT_TOKEN");
   IElementType RF_KEYWORD_NAME_TOKEN = new RobotFrameworkTokenType("RF_KEYWORD_NAME_TOKEN");
   IElementType RF_KEYWORD_TOKEN = new RobotFrameworkTokenType("RF_KEYWORD_TOKEN");
   IElementType SCALAR_DEFAULT_ARG_VALUE_TOKEN = new RobotFrameworkTokenType("SCALAR_DEFAULT_ARG_VALUE_TOKEN");
@@ -203,6 +208,9 @@ public interface RobotFrameworkTypes {
       else if (type == ELLIPSES_FOR_SETTING_TABLE) {
         return new RobotFrameworkEllipsesForSettingTableImpl(node);
       }
+      else if (type == EMPTY_LINE) {
+        return new RobotFrameworkEmptyLineImpl(node);
+      }
       else if (type == ERROR) {
         return new RobotFrameworkErrorImpl(node);
       }
@@ -242,6 +250,12 @@ public interface RobotFrameworkTypes {
       else if (type == FOR_LOOP_VALUES) {
         return new RobotFrameworkForLoopValuesImpl(node);
       }
+      else if (type == GENERIC_SETTING) {
+        return new RobotFrameworkGenericSettingImpl(node);
+      }
+      else if (type == GENERIC_SETTING_NAME) {
+        return new RobotFrameworkGenericSettingNameImpl(node);
+      }
       else if (type == INDENTED_KEYWORD_INVOCATION_TEST) {
         return new RobotFrameworkIndentedKeywordInvocationTestImpl(node);
       }
@@ -257,11 +271,11 @@ public interface RobotFrameworkTypes {
       else if (type == KEYWORDS_TABLE_HEADER) {
         return new RobotFrameworkKeywordsTableHeaderImpl(node);
       }
-      else if (type == KEYWORD_ARG) {
-        return new RobotFrameworkKeywordArgImpl(node);
+      else if (type == KEYWORD_ARGUMENT) {
+        return new RobotFrameworkKeywordArgumentImpl(node);
       }
-      else if (type == KEYWORD_ARG_LIST) {
-        return new RobotFrameworkKeywordArgListImpl(node);
+      else if (type == KEYWORD_ARGUMENT_LIST) {
+        return new RobotFrameworkKeywordArgumentListImpl(node);
       }
       else if (type == KEYWORD_CALLING_SETTINGS) {
         return new RobotFrameworkKeywordCallingSettingsImpl(node);
@@ -304,9 +318,6 @@ public interface RobotFrameworkTypes {
       }
       else if (type == RETURN_LINE) {
         return new RobotFrameworkReturnLineImpl(node);
-      }
-      else if (type == ROBOT_FRAMEWORK_FILE) {
-        return new RobotFrameworkRobotFrameworkFileImpl(node);
       }
       else if (type == SCALAR_ASSIGNMENT) {
         return new RobotFrameworkScalarAssignmentImpl(node);
