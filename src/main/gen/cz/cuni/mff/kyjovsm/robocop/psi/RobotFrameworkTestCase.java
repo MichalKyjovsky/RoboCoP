@@ -4,12 +4,16 @@ package cz.cuni.mff.kyjovsm.robocop.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
-import null.null;
+import cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement;
+import com.intellij.psi.StubBasedPsiElement;
+import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkTestCaseStub;
+import com.intellij.navigation.ItemPresentation;
+import com.intellij.util.IncorrectOperationException;
 
-public interface RobotFrameworkTestCase extends PsiElement {
+public interface RobotFrameworkTestCase extends RobotFrameworkNamedElement, StubBasedPsiElement<RobotFrameworkTestCaseStub> {
 
   @NotNull
-  List<null> getEmptyLineList();
+  List<RobotFrameworkEmptyLine> getEmptyLineList();
 
   @NotNull
   List<RobotFrameworkTestCaseLine> getTestCaseLineList();
@@ -17,20 +21,15 @@ public interface RobotFrameworkTestCase extends PsiElement {
   @NotNull
   RobotFrameworkTestCaseName getTestCaseName();
 
-  //WARNING: getName(...) is skipped
-  //matching getName(RobotFrameworkTestCase, ...)
-  //methods are not found in RobotFrameworkPsiImplUtil
+  @Nullable
+  @NonNls
+  String getName();
 
-  //WARNING: setName(...) is skipped
-  //matching setName(RobotFrameworkTestCase, ...)
-  //methods are not found in RobotFrameworkPsiImplUtil
+  PsiElement setName(@NonNls @NotNull String newName) throws IncorrectOperationException;
 
-  //WARNING: getNameIdentifier(...) is skipped
-  //matching getNameIdentifier(RobotFrameworkTestCase, ...)
-  //methods are not found in RobotFrameworkPsiImplUtil
+  @Nullable
+  PsiElement getNameIdentifier();
 
-  //WARNING: getPresentation(...) is skipped
-  //matching getPresentation(RobotFrameworkTestCase, ...)
-  //methods are not found in RobotFrameworkPsiImplUtil
+  ItemPresentation getPresentation();
 
 }

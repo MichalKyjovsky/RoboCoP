@@ -7,9 +7,10 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import static cz.cuni.mff.kyjovsm.robocop.psi.RobotFrameworkTypes.*;
+import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import cz.cuni.mff.kyjovsm.robocop.psi.*;
+import cz.cuni.mff.kyjovsm.robocop.elements.RobotFrameworkImplUtil;
 
 public class RobotFrameworkKeywordCallingSettingsImpl extends ASTWrapperPsiElement implements RobotFrameworkKeywordCallingSettings {
 
@@ -40,8 +41,8 @@ public class RobotFrameworkKeywordCallingSettingsImpl extends ASTWrapperPsiEleme
 
   @Override
   @NotNull
-  public List<RobotFrameworkKeywordArgList> getKeywordArgListList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkKeywordArgList.class);
+  public List<RobotFrameworkKeywordArgumentList> getKeywordArgumentListList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkKeywordArgumentList.class);
   }
 
 }

@@ -4,7 +4,6 @@ package cz.cuni.mff.kyjovsm.robocop.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
-import null.null;
 
 public interface RobotFrameworkEllipsesForSettingTable extends PsiElement {
 
@@ -12,6 +11,6 @@ public interface RobotFrameworkEllipsesForSettingTable extends PsiElement {
   RobotFrameworkEllipses getEllipses();
 
   @NotNull
-  null getEmptyLine();
+  RobotFrameworkEmptyLine getEmptyLine();
 
 }

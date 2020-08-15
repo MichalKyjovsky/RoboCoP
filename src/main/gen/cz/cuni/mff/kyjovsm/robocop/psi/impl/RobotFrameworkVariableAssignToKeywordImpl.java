@@ -7,10 +7,10 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import static cz.cuni.mff.kyjovsm.robocop.psi.RobotFrameworkTypes.*;
+import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import cz.cuni.mff.kyjovsm.robocop.psi.*;
-import null.null;
+import cz.cuni.mff.kyjovsm.robocop.elements.RobotFrameworkImplUtil;
 
 public class RobotFrameworkVariableAssignToKeywordImpl extends ASTWrapperPsiElement implements RobotFrameworkVariableAssignToKeyword {
 
@@ -35,8 +35,8 @@ public class RobotFrameworkVariableAssignToKeywordImpl extends ASTWrapperPsiElem
 
   @Override
   @NotNull
-  public List<null> getEmptyLineList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, null.class);
+  public List<RobotFrameworkEmptyLine> getEmptyLineList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkEmptyLine.class);
   }
 
   @Override

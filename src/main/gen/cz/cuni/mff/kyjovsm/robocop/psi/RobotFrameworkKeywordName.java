@@ -4,31 +4,23 @@ package cz.cuni.mff.kyjovsm.robocop.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement;
+import com.intellij.psi.StubBasedPsiElement;
+import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkKeywordNameStub;
+import com.intellij.navigation.ItemPresentation;
+import com.intellij.util.IncorrectOperationException;
 
-public interface RobotFrameworkKeywordName extends PsiElement {
+public interface RobotFrameworkKeywordName extends RobotFrameworkNamedElement, StubBasedPsiElement<RobotFrameworkKeywordNameStub> {
 
-  //WARNING: getName(...) is skipped
-  //matching getName(RobotFrameworkKeywordName, ...)
-  //methods are not found in RobotFrameworkPsiImplUtil
+  @Nullable
+  @NonNls
+  String getName();
 
-  //WARNING: setName(...) is skipped
-  //matching setName(RobotFrameworkKeywordName, ...)
-  //methods are not found in RobotFrameworkPsiImplUtil
+  PsiElement setName(@NonNls @NotNull String newName) throws IncorrectOperationException;
 
-  //WARNING: getNameIdentifier(...) is skipped
-  //matching getNameIdentifier(RobotFrameworkKeywordName, ...)
-  //methods are not found in RobotFrameworkPsiImplUtil
+  @Nullable
+  PsiElement getNameIdentifier();
 
-  //WARNING: getPresentation(...) is skipped
-  //matching getPresentation(RobotFrameworkKeywordName, ...)
-  //methods are not found in RobotFrameworkPsiImplUtil
-
-  //WARNING: toString(...) is skipped
-  //matching toString(RobotFrameworkKeywordName, ...)
-  //methods are not found in RobotFrameworkPsiImplUtil
-
-  //WARNING: getRegex(...) is skipped
-  //matching getRegex(RobotFrameworkKeywordName, ...)
-  //methods are not found in RobotFrameworkPsiImplUtil
+  ItemPresentation getPresentation();
 
 }

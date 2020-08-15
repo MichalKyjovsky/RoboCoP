@@ -4,11 +4,19 @@ package cz.cuni.mff.kyjovsm.robocop.psi;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiElement;
+import cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement;
+import com.intellij.psi.StubBasedPsiElement;
+import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkKeywordStub;
+import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkKeywordArgumentStub;
+import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkScalarVariableStub;
+import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkTestCaseStub;
+import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkKeywordNameStub;
+import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkScalarAssignmentStub;
 
 public class RobotFrameworkVisitor extends PsiElementVisitor {
 
   public void visitArgumentDefinition(@NotNull RobotFrameworkArgumentDefinition o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitArrayAssignment(@NotNull RobotFrameworkArrayAssignment o) {
@@ -75,6 +83,10 @@ public class RobotFrameworkVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitEmptyLine(@NotNull RobotFrameworkEmptyLine o) {
+    visitPsiElement(o);
+  }
+
   public void visitError(@NotNull RobotFrameworkError o) {
     visitPsiElement(o);
   }
@@ -127,6 +139,14 @@ public class RobotFrameworkVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitGenericSetting(@NotNull RobotFrameworkGenericSetting o) {
+    visitPsiElement(o);
+  }
+
+  public void visitGenericSettingName(@NotNull RobotFrameworkGenericSettingName o) {
+    visitPsiElement(o);
+  }
+
   public void visitIndentedKeywordInvocationTest(@NotNull RobotFrameworkIndentedKeywordInvocationTest o) {
     visitPsiElement(o);
   }
@@ -136,7 +156,8 @@ public class RobotFrameworkVisitor extends PsiElementVisitor {
   }
 
   public void visitKeyword(@NotNull RobotFrameworkKeyword o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
+    // visitStubBasedPsiElement(o);
   }
 
   public void visitKeywordsTable(@NotNull RobotFrameworkKeywordsTable o) {
@@ -147,11 +168,12 @@ public class RobotFrameworkVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitKeywordArg(@NotNull RobotFrameworkKeywordArg o) {
-    visitPsiElement(o);
+  public void visitKeywordArgument(@NotNull RobotFrameworkKeywordArgument o) {
+    visitNamedElement(o);
+    // visitStubBasedPsiElement(o);
   }
 
-  public void visitKeywordArgList(@NotNull RobotFrameworkKeywordArgList o) {
+  public void visitKeywordArgumentList(@NotNull RobotFrameworkKeywordArgumentList o) {
     visitPsiElement(o);
   }
 
@@ -172,7 +194,8 @@ public class RobotFrameworkVisitor extends PsiElementVisitor {
   }
 
   public void visitKeywordName(@NotNull RobotFrameworkKeywordName o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
+    // visitStubBasedPsiElement(o);
   }
 
   public void visitKeywordSetting(@NotNull RobotFrameworkKeywordSetting o) {
@@ -200,7 +223,7 @@ public class RobotFrameworkVisitor extends PsiElementVisitor {
   }
 
   public void visitReferencedFile(@NotNull RobotFrameworkReferencedFile o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitResourceSetting(@NotNull RobotFrameworkResourceSetting o) {
@@ -212,19 +235,21 @@ public class RobotFrameworkVisitor extends PsiElementVisitor {
   }
 
   public void visitScalarAssignment(@NotNull RobotFrameworkScalarAssignment o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
+    // visitStubBasedPsiElement(o);
   }
 
   public void visitScalarAssignmentLhs(@NotNull RobotFrameworkScalarAssignmentLhs o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitScalarDefaultArgValue(@NotNull RobotFrameworkScalarDefaultArgValue o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitScalarVariable(@NotNull RobotFrameworkScalarVariable o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
+    // visitStubBasedPsiElement(o);
   }
 
   public void visitSetting(@NotNull RobotFrameworkSetting o) {
@@ -276,7 +301,8 @@ public class RobotFrameworkVisitor extends PsiElementVisitor {
   }
 
   public void visitTestCase(@NotNull RobotFrameworkTestCase o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
+    // visitStubBasedPsiElement(o);
   }
 
   public void visitTestCasesTable(@NotNull RobotFrameworkTestCasesTable o) {
@@ -343,7 +369,7 @@ public class RobotFrameworkVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitRobotFrameworkFile(@NotNull RobotFrameworkRobotFrameworkFile o) {
+  public void visitNamedElement(@NotNull RobotFrameworkNamedElement o) {
     visitPsiElement(o);
   }
 

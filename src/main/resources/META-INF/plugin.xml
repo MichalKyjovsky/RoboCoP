@@ -13,10 +13,13 @@
     <depends>com.intellij.modules.lang</depends>
     <depends>com.intellij.modules.python</depends>
 
+
     <extensions defaultExtensionNs="com.intellij">
         <fileType name="Robot Framework File" implementationClass="cz.cuni.mff.kyjovsm.robocop.RobotFrameworkFileType" fieldName="INSTANCE"
                   language="RobotFramework" extensions="robot"/>
         <configurationType implementation="cz.cuni.mff.kyjovsm.robocop.run.configuration.RobotFrameworkConfigurationType"/>
+        <lang.parserDefinition language="RobotFramework"
+                               implementationClass="cz.cuni.mff.kyjovsm.robocop.RobotFrameworkParserDefinition"/>
     </extensions>
 
     <actions>

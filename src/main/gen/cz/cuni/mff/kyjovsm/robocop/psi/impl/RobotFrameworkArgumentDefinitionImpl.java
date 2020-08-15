@@ -7,9 +7,12 @@ import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import static cz.cuni.mff.kyjovsm.robocop.psi.RobotFrameworkTypes.*;
+import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import cz.cuni.mff.kyjovsm.robocop.psi.*;
+import cz.cuni.mff.kyjovsm.robocop.elements.RobotFrameworkImplUtil;
+import com.intellij.psi.PsiReference;
+import com.intellij.util.IncorrectOperationException;
 
 public class RobotFrameworkArgumentDefinitionImpl extends ASTWrapperPsiElement implements RobotFrameworkArgumentDefinition {
 
@@ -36,6 +39,46 @@ public class RobotFrameworkArgumentDefinitionImpl extends ASTWrapperPsiElement i
   @Nullable
   public RobotFrameworkVariable getVariable() {
     return findChildByClass(RobotFrameworkVariable.class);
+  }
+
+  @Override
+  @Nullable
+  @NonNls
+  public String getName() {
+    return RobotFrameworkImplUtil.getName(this);
+  }
+
+  @Override
+  public PsiElement setName(@NonNls @NotNull String newName) throws IncorrectOperationException {
+    return RobotFrameworkImplUtil.setName(this, newName);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getNameIdentifier() {
+    return RobotFrameworkImplUtil.getNameIdentifier(this);
+  }
+
+  @Override
+  @Nullable
+  public PsiReference getReference() {
+    return RobotFrameworkImplUtil.getReference(this);
+  }
+
+  @Override
+  @NotNull
+  public PsiReference[] getReferences() {
+    return RobotFrameworkImplUtil.getReferences(this);
+  }
+
+  @Override
+  public PsiElement handleElementRename(String name) {
+    return RobotFrameworkImplUtil.handleElementRename(this, name);
+  }
+
+  @Override
+  public String toString() {
+    return RobotFrameworkImplUtil.toString(this);
   }
 
 }

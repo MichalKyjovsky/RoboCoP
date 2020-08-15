@@ -4,14 +4,13 @@ package cz.cuni.mff.kyjovsm.robocop.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
-import null.null;
 
-public interface RobotFrameworkRecurrenceForSettingTable extends PsiElement {
-
-  @NotNull
-  null getEmptyLine();
+public interface RobotFrameworkGenericSetting extends PsiElement {
 
   @NotNull
-  RobotFrameworkRecurrence getRecurrence();
+  RobotFrameworkGenericSettingName getGenericSettingName();
+
+  @NotNull
+  List<RobotFrameworkSettingListOrEllipses> getSettingListOrEllipsesList();
 
 }

@@ -14,6 +14,6 @@ public interface RobotFrameworkForInRangeDoubleArgument extends PsiElement {
   RobotFrameworkForLoopInRangePrefix getForLoopInRangePrefix();
 
   @NotNull
-  List<RobotFrameworkKeywordArg> getKeywordArgList();
+  List<RobotFrameworkKeywordArgument> getKeywordArgumentList();
 
 }

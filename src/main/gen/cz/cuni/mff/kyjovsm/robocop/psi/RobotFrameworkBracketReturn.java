@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface RobotFrameworkBracketReturn extends PsiElement {
 
   @NotNull
-  List<RobotFrameworkKeywordArg> getKeywordArgList();
+  List<RobotFrameworkKeywordArgument> getKeywordArgumentList();
 
 }

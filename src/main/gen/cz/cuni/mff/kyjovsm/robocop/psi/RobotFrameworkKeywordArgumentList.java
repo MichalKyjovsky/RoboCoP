@@ -5,9 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface RobotFrameworkKeywordArgList extends PsiElement {
+public interface RobotFrameworkKeywordArgumentList extends PsiElement {
 
   @NotNull
-  List<RobotFrameworkKeywordArg> getKeywordArgList();
+  List<RobotFrameworkKeywordArgument> getKeywordArgumentList();
 
 }
