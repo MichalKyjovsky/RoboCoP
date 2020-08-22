@@ -3,16 +3,17 @@ package cz.cuni.mff.kyjovsm.robocop.actions;
 import com.intellij.ide.actions.CreateFileFromTemplateAction;
 import com.intellij.ide.actions.CreateFileFromTemplateDialog;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.NlsContexts;
 import com.intellij.psi.PsiDirectory;
 import cz.cuni.mff.kyjovsm.robocop.icons.RobotFrameworkIcons;
+
 import javax.swing.Icon;
+
 import org.jetbrains.annotations.NotNull;
 
 public class NewRobotFrameworkFileAction extends CreateFileFromTemplateAction {
 
   /**
-   *
+   * TODO: Add class description
    */
   public NewRobotFrameworkFileAction() {
     super("New Robot File",
@@ -56,9 +57,9 @@ public class NewRobotFrameworkFileAction extends CreateFileFromTemplateAction {
    * @return
    */
   @Override
-  protected @NlsContexts.Command String getActionName(PsiDirectory directory,
-                                                      @NotNull String newName,
-                                                      String templateName) {
+  protected String getActionName(PsiDirectory directory,
+                                 @NotNull String newName,
+                                 String templateName) {
     return String.format("Create Robot file %s", newName);
   }
 }
