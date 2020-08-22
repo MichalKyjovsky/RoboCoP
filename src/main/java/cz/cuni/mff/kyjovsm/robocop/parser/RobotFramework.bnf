@@ -114,7 +114,7 @@ VARIABLES_LINE ::= SCALAR_ASSIGNMENT_LHS (ASSIGNABLE_IN_VARIABLES_TBL)? END_OF_L
                    ELLIPSES_LINE_SETTINGS END_OF_LINE* { recoverWhile="not_a_newline_token" }
 
 /* Test cases table */
-TEST_CASES_TABLE ::= TEST_CASES_TABLE_HEADER EMPTY_LINE* TEST_CASE* { pin = 3 methods=[getNameIdentifier getPresentation]}
+TEST_CASES_TABLE ::= TEST_CASES_TABLE_HEADER EMPTY_LINE* TEST_CASE* { pin = 3 methods=[getNameIdentifier getPresentation] }
 
 TEST_CASES_TABLE_HEADER ::= TEST_CASES_TABLE_HEADER_TOKEN END_OF_LINE* (NEWLINE_TOKEN | <<eof>>)
 

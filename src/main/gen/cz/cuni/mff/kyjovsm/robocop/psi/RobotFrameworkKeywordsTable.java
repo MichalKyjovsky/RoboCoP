@@ -4,6 +4,7 @@ package cz.cuni.mff.kyjovsm.robocop.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import com.intellij.navigation.ItemPresentation;
 
 public interface RobotFrameworkKeywordsTable extends PsiElement {
 
@@ -16,12 +17,9 @@ public interface RobotFrameworkKeywordsTable extends PsiElement {
   @NotNull
   List<RobotFrameworkKeywordDefinition> getKeywordDefinitionList();
 
-  //WARNING: getNameIdentifier(...) is skipped
-  //matching getNameIdentifier(RobotFrameworkKeywordsTable, ...)
-  //methods are not found in RobotFrameworkImplUtil
+  @Nullable
+  PsiElement getNameIdentifier();
 
-  //WARNING: getPresentation(...) is skipped
-  //matching getPresentation(RobotFrameworkKeywordsTable, ...)
-  //methods are not found in RobotFrameworkImplUtil
+  ItemPresentation getPresentation();
 
 }
