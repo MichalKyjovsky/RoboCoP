@@ -29,14 +29,26 @@ public class RobotFrameworkKeywordLineImpl extends ASTWrapperPsiElement implemen
 
   @Override
   @Nullable
+  public RobotFrameworkEllipsesLineTest getEllipsesLineTest() {
+    return findChildByClass(RobotFrameworkEllipsesLineTest.class);
+  }
+
+  @Override
+  @Nullable
   public RobotFrameworkExecutionLine getExecutionLine() {
     return findChildByClass(RobotFrameworkExecutionLine.class);
   }
 
   @Override
   @Nullable
-  public RobotFrameworkForLoops getForLoops() {
-    return findChildByClass(RobotFrameworkForLoops.class);
+  public RobotFrameworkForLoopIn getForLoopIn() {
+    return findChildByClass(RobotFrameworkForLoopIn.class);
+  }
+
+  @Override
+  @Nullable
+  public RobotFrameworkForLoopInRange getForLoopInRange() {
+    return findChildByClass(RobotFrameworkForLoopInRange.class);
   }
 
   @Override

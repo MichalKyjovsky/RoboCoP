@@ -29,12 +29,6 @@ public class RobotFrameworkSettingImpl extends ASTWrapperPsiElement implements R
 
   @Override
   @Nullable
-  public RobotFrameworkDefaultTagsSetting getDefaultTagsSetting() {
-    return findChildByClass(RobotFrameworkDefaultTagsSetting.class);
-  }
-
-  @Override
-  @Nullable
   public RobotFrameworkDocumentationSetting getDocumentationSetting() {
     return findChildByClass(RobotFrameworkDocumentationSetting.class);
   }
@@ -43,6 +37,12 @@ public class RobotFrameworkSettingImpl extends ASTWrapperPsiElement implements R
   @Nullable
   public RobotFrameworkForceTagsSetting getForceTagsSetting() {
     return findChildByClass(RobotFrameworkForceTagsSetting.class);
+  }
+
+  @Override
+  @Nullable
+  public RobotFrameworkGenericSetting getGenericSetting() {
+    return findChildByClass(RobotFrameworkGenericSetting.class);
   }
 
   @Override
@@ -65,26 +65,8 @@ public class RobotFrameworkSettingImpl extends ASTWrapperPsiElement implements R
 
   @Override
   @Nullable
-  public RobotFrameworkSuiteSetupSetting getSuiteSetupSetting() {
-    return findChildByClass(RobotFrameworkSuiteSetupSetting.class);
-  }
-
-  @Override
-  @Nullable
-  public RobotFrameworkSuiteTeardownSetting getSuiteTeardownSetting() {
-    return findChildByClass(RobotFrameworkSuiteTeardownSetting.class);
-  }
-
-  @Override
-  @Nullable
   public RobotFrameworkTestSetupSetting getTestSetupSetting() {
     return findChildByClass(RobotFrameworkTestSetupSetting.class);
-  }
-
-  @Override
-  @Nullable
-  public RobotFrameworkTestTeardownSetting getTestTeardownSetting() {
-    return findChildByClass(RobotFrameworkTestTeardownSetting.class);
   }
 
   @Override
@@ -101,8 +83,8 @@ public class RobotFrameworkSettingImpl extends ASTWrapperPsiElement implements R
 
   @Override
   @Nullable
-  public RobotFrameworkVariablesSetting getVariablesSetting() {
-    return findChildByClass(RobotFrameworkVariablesSetting.class);
+  public RobotFrameworkVariableSetting getVariableSetting() {
+    return findChildByClass(RobotFrameworkVariableSetting.class);
   }
 
 }

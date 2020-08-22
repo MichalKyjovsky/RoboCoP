@@ -29,8 +29,8 @@ public class RobotFrameworkTestCaseLineImpl extends ASTWrapperPsiElement impleme
 
   @Override
   @Nullable
-  public RobotFrameworkEllipses getEllipses() {
-    return findChildByClass(RobotFrameworkEllipses.class);
+  public RobotFrameworkEllipsesLineTest getEllipsesLineTest() {
+    return findChildByClass(RobotFrameworkEllipsesLineTest.class);
   }
 
   @Override
@@ -41,20 +41,26 @@ public class RobotFrameworkTestCaseLineImpl extends ASTWrapperPsiElement impleme
 
   @Override
   @Nullable
-  public RobotFrameworkForLoops getForLoops() {
-    return findChildByClass(RobotFrameworkForLoops.class);
+  public RobotFrameworkForLoopIn getForLoopIn() {
+    return findChildByClass(RobotFrameworkForLoopIn.class);
   }
 
   @Override
   @Nullable
-  public RobotFrameworkKeywordArgumentList getKeywordArgumentList() {
-    return findChildByClass(RobotFrameworkKeywordArgumentList.class);
+  public RobotFrameworkForLoopInRange getForLoopInRange() {
+    return findChildByClass(RobotFrameworkForLoopInRange.class);
   }
 
   @Override
   @Nullable
-  public RobotFrameworkTestCaseSettingLine getTestCaseSettingLine() {
-    return findChildByClass(RobotFrameworkTestCaseSettingLine.class);
+  public RobotFrameworkKeywordArgList getKeywordArgList() {
+    return findChildByClass(RobotFrameworkKeywordArgList.class);
+  }
+
+  @Override
+  @Nullable
+  public RobotFrameworkTestSettingLine getTestSettingLine() {
+    return findChildByClass(RobotFrameworkTestSettingLine.class);
   }
 
 }

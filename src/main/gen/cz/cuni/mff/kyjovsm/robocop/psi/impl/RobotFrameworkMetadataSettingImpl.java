@@ -29,8 +29,20 @@ public class RobotFrameworkMetadataSettingImpl extends ASTWrapperPsiElement impl
 
   @Override
   @NotNull
-  public List<RobotFrameworkSettingListOrEllipses> getSettingListOrEllipsesList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkSettingListOrEllipses.class);
+  public List<RobotFrameworkEllipses> getEllipsesList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkEllipses.class);
+  }
+
+  @Override
+  @NotNull
+  public List<RobotFrameworkEmptyLine> getEmptyLineList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkEmptyLine.class);
+  }
+
+  @Override
+  @NotNull
+  public List<RobotFrameworkSettingList> getSettingListList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkSettingList.class);
   }
 
 }

@@ -8,13 +8,13 @@ import com.intellij.psi.PsiElement;
 public interface RobotFrameworkSetting extends PsiElement {
 
   @Nullable
-  RobotFrameworkDefaultTagsSetting getDefaultTagsSetting();
-
-  @Nullable
   RobotFrameworkDocumentationSetting getDocumentationSetting();
 
   @Nullable
   RobotFrameworkForceTagsSetting getForceTagsSetting();
+
+  @Nullable
+  RobotFrameworkGenericSetting getGenericSetting();
 
   @Nullable
   RobotFrameworkLibrarySetting getLibrarySetting();
@@ -26,16 +26,7 @@ public interface RobotFrameworkSetting extends PsiElement {
   RobotFrameworkResourceSetting getResourceSetting();
 
   @Nullable
-  RobotFrameworkSuiteSetupSetting getSuiteSetupSetting();
-
-  @Nullable
-  RobotFrameworkSuiteTeardownSetting getSuiteTeardownSetting();
-
-  @Nullable
   RobotFrameworkTestSetupSetting getTestSetupSetting();
-
-  @Nullable
-  RobotFrameworkTestTeardownSetting getTestTeardownSetting();
 
   @Nullable
   RobotFrameworkTestTemplateSetting getTestTemplateSetting();
@@ -44,6 +35,6 @@ public interface RobotFrameworkSetting extends PsiElement {
   RobotFrameworkTestTimeoutSetting getTestTimeoutSetting();
 
   @Nullable
-  RobotFrameworkVariablesSetting getVariablesSetting();
+  RobotFrameworkVariableSetting getVariableSetting();
 
 }

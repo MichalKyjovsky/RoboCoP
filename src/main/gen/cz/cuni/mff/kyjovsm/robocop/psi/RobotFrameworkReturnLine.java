@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface RobotFrameworkReturnLine extends PsiElement {
 
   @NotNull
-  RobotFrameworkBracketReturn getBracketReturn();
+  RobotFrameworkReturnSetting getReturnSetting();
 
 }

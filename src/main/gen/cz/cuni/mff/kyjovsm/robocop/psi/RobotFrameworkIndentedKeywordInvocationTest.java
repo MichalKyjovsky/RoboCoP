@@ -14,6 +14,6 @@ public interface RobotFrameworkIndentedKeywordInvocationTest extends PsiElement 
   RobotFrameworkKeyword getKeyword();
 
   @NotNull
-  List<RobotFrameworkKeywordArgumentList> getKeywordArgumentListList();
+  List<RobotFrameworkKeywordArgList> getKeywordArgListList();
 
 }

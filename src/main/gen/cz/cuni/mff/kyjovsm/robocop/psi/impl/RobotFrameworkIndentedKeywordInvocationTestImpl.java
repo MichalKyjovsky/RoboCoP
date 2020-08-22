@@ -41,8 +41,8 @@ public class RobotFrameworkIndentedKeywordInvocationTestImpl extends ASTWrapperP
 
   @Override
   @NotNull
-  public List<RobotFrameworkKeywordArgumentList> getKeywordArgumentListList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkKeywordArgumentList.class);
+  public List<RobotFrameworkKeywordArgList> getKeywordArgListList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkKeywordArgList.class);
   }
 
 }

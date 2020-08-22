@@ -8,10 +8,16 @@ import com.intellij.psi.PsiElement;
 public interface RobotFrameworkKeywordLine extends PsiElement {
 
   @Nullable
+  RobotFrameworkEllipsesLineTest getEllipsesLineTest();
+
+  @Nullable
   RobotFrameworkExecutionLine getExecutionLine();
 
   @Nullable
-  RobotFrameworkForLoops getForLoops();
+  RobotFrameworkForLoopIn getForLoopIn();
+
+  @Nullable
+  RobotFrameworkForLoopInRange getForLoopInRange();
 
   @Nullable
   RobotFrameworkKeywordSettingLine getKeywordSettingLine();

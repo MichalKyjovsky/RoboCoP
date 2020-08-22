@@ -29,14 +29,26 @@ public class RobotFrameworkLibrarySettingImpl extends ASTWrapperPsiElement imple
 
   @Override
   @NotNull
+  public List<RobotFrameworkEllipses> getEllipsesList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkEllipses.class);
+  }
+
+  @Override
+  @NotNull
+  public List<RobotFrameworkEmptyLine> getEmptyLineList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkEmptyLine.class);
+  }
+
+  @Override
+  @NotNull
   public RobotFrameworkLibraryReference getLibraryReference() {
     return findNotNullChildByClass(RobotFrameworkLibraryReference.class);
   }
 
   @Override
   @NotNull
-  public List<RobotFrameworkSettingListOrEllipses> getSettingListOrEllipsesList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkSettingListOrEllipses.class);
+  public List<RobotFrameworkSettingList> getSettingListList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkSettingList.class);
   }
 
 }

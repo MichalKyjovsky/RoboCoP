@@ -8,9 +8,15 @@ import com.intellij.psi.PsiElement;
 public interface RobotFrameworkGenericSetting extends PsiElement {
 
   @NotNull
+  List<RobotFrameworkEllipses> getEllipsesList();
+
+  @NotNull
+  List<RobotFrameworkEmptyLine> getEmptyLineList();
+
+  @NotNull
   RobotFrameworkGenericSettingName getGenericSettingName();
 
   @NotNull
-  List<RobotFrameworkSettingListOrEllipses> getSettingListOrEllipsesList();
+  List<RobotFrameworkSettingList> getSettingListList();
 
 }

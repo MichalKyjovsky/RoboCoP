@@ -29,8 +29,8 @@ public class RobotFrameworkKeywordSettingImpl extends ASTWrapperPsiElement imple
 
   @Override
   @Nullable
-  public RobotFrameworkBracketArguments getBracketArguments() {
-    return findChildByClass(RobotFrameworkBracketArguments.class);
+  public RobotFrameworkArgumentsSetting getArgumentsSetting() {
+    return findChildByClass(RobotFrameworkArgumentsSetting.class);
   }
 
   @Override
@@ -41,14 +41,14 @@ public class RobotFrameworkKeywordSettingImpl extends ASTWrapperPsiElement imple
 
   @Override
   @Nullable
-  public RobotFrameworkBracketTeardown getBracketTeardown() {
-    return findChildByClass(RobotFrameworkBracketTeardown.class);
+  public RobotFrameworkTestCaseBracketTeardown getTestCaseBracketTeardown() {
+    return findChildByClass(RobotFrameworkTestCaseBracketTeardown.class);
   }
 
   @Override
   @Nullable
-  public RobotFrameworkBracketTimeout getBracketTimeout() {
-    return findChildByClass(RobotFrameworkBracketTimeout.class);
+  public RobotFrameworkTestCaseBracketTimeout getTestCaseBracketTimeout() {
+    return findChildByClass(RobotFrameworkTestCaseBracketTimeout.class);
   }
 
 }

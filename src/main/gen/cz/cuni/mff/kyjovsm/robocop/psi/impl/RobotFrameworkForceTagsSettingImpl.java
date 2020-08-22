@@ -29,8 +29,14 @@ public class RobotFrameworkForceTagsSettingImpl extends ASTWrapperPsiElement imp
 
   @Override
   @NotNull
-  public List<RobotFrameworkEllipsesForSettingTable> getEllipsesForSettingTableList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkEllipsesForSettingTable.class);
+  public List<RobotFrameworkEllipses> getEllipsesList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkEllipses.class);
+  }
+
+  @Override
+  @NotNull
+  public List<RobotFrameworkEmptyLine> getEmptyLineList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkEmptyLine.class);
   }
 
   @Override
