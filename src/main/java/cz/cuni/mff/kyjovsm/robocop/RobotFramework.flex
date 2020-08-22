@@ -26,375 +26,372 @@ return;
 %caseless
 
 %{
-    private int initial_state = YYINITIAL;
-    int yyline;
-    int yycolumn;
-    int yychar;
-    private boolean firstCell = false;
-    private boolean lineBeginning = false;
-    private boolean documentationSettingLine = false;
-    private boolean tagsSettingLine = false;
-    private boolean librarySettingLine = false;
-    private boolean resourceSettingLine = false;
-    private boolean timeoutSettingLine = false;
-    private boolean returnBracketLine = false;
-    private boolean argumentsBracketLine = false;
-    private boolean forLoopLine = false;
-    private boolean keywordLine = false;
+  int yyline, yycolumn, yychar;
+  private boolean documentationLine = false;
+  private boolean tagsLine = false;
+  private boolean timeoutLine = false;
+  private boolean returnLine = false;
+  private boolean keywordToLeft = false;
+  private boolean lineBeginning = true;
+  private boolean firstCell = true;
+  private boolean argumentsLine = false;
+  private boolean forLoopLine = false;
+  private boolean resourceSettingLine = false;
+  private boolean librarySettingLine = false;
+  private int previous_state = YYINITIAL;
 
-
-    private IElementType newLine() {
-      lineBeginning = true;
-      firstCell = true;
-      return NEW_LINE_TOKEN;
+  private IElementType next(IElementType toReturn) {
+    if (toReturn != WHITESPACE_TOKEN) {
+        lineBeginning = false;
     }
 
-    private IElementType next(IElementType tokenToReturn) {
-      if (tokenToReturn != WHITESPACE_TOKEN) {
-          lineBeginning = false;
-      }
-
-      if (firstCell && tokenToReturn != WHITESPACE_TOKEN && tokenToReturn != COLUMN_SEPARATOR_TOKEN && tokenToReturn != EMPTY_CELL_TOKEN) {
-        if (tokenToReturn == ELLIPSES_TOKEN && documentationSettingLine) {
-          yybegin(DOCUMENTAION_SETTING_TABLE);
-        } else if (tokenToReturn != ELLIPSES_TOKEN) {
-            keywordLine = false;
-            tagsSettingLine = false;
-            timeoutSettingLine = false;
-            documentationSettingLine = false;
-            returnBracketLine = false;
-            argumentsBracketLine = false;
-            forLoopLine = false;
-            resourceSettingLine = false;
-            librarySettingLine = false;
+    if (firstCell && toReturn != WHITESPACE_TOKEN && toReturn != COLUMN_SEPARATOR_TOKEN && toReturn != EMPTY_CELL_TOKEN) {
+        // If we see an ellipses, then retain the state from the previous line so everything is tokenized properly
+        if (toReturn == ELLIPSES_TOKEN && documentationLine) {
+            yybegin(DOCUMENTATION_SETTING);
+        } else if (toReturn != ELLIPSES_TOKEN) {
+           keywordToLeft = false;
+           tagsLine = false;
+           timeoutLine = false;
+           documentationLine = false;
+           returnLine = false;
+           argumentsLine =  false;
+           forLoopLine = false;
+           resourceSettingLine =  false;
+           librarySettingLine = false;
         }
         firstCell = false;
-      }
+    }
 
-      if (tokenToReturn == INVALID_SYNTAX_TOKEN) {
-        System.out.println(String.format("Invalid syntax \"$s\" at line: $d, column: $d", yytext(), yyline, yycolumn));
-      } else if (tokenToReturn == RF_KEYWORD_TOKEN) {
-        if (keywordLine || returnBracketLine || forLoopLine) {
-             return RF_KEYWORD_ARGUMENT_TOKEN;
-        } else if (tagsSettingLine) {
-             return TAG_TOKEN;
-        } else if (documentationSettingLine) {
-             return DOCUMENTATION_TOKEN;
+    if (toReturn == INVALID_SYNTAX_TOKEN) {
+        System.out.println(String.format("Bad syntax \"%s\" at line %d col %d", yytext(), yyline, yycolumn));
+    }
+    else if (toReturn == ROBOT_KEYWORD_TOKEN) {
+        if (keywordToLeft || returnLine || forLoopLine) {
+            return ROBOT_KEYWORD_ARGUMENT_TOKEN;
+        } else if (tagsLine) {
+            return TAG_TOKEN;
+        } else if (documentationLine) {
+            return DOCUMENTATION_TOKEN;
         } else if (resourceSettingLine) {
-             return RF_FILE_TOKEN;
+            return ROBOT_FILE_TOKEN;
         } else if (librarySettingLine) {
-             librarySettingLine = false;
-             return LIBRARY_TOKEN;
+            librarySettingLine = false;
+            return LIBRARY_REFERENCE_TOKEN;
         } else {
-             keywordLine = true;
-             return RF_KEYWORD_TOKEN;
+        keywordToLeft = true;
+        return ROBOT_KEYWORD_TOKEN;
         }
-    } else if (tokenToReturn == RF_KEYWORD_ARGUMENT_TOKEN) {
-        if (keywordLine) {
-             return RF_KEYWORD_ARGUMENT_TOKEN;
-        } else if (tagsSettingLine) {
-             return TAG_TOKEN;
-        } else if (documentationSettingLine) {
-             return DOCUMENTATION_TOKEN;
-        } else if (resourceSettingLine) {
-             return RF_FILE_TOKEN;
-        } else if (librarySettingLine) {
+    }
+    else if (toReturn == ROBOT_KEYWORD_ARGUMENT_TOKEN) {
+         if (keywordToLeft) {
+            return ROBOT_KEYWORD_ARGUMENT_TOKEN;
+         } else if (tagsLine) {
+            return TAG_TOKEN;
+         } else if (documentationLine) {
+            return DOCUMENTATION_TOKEN;
+         } else if (resourceSettingLine) {
+             return ROBOT_FILE_TOKEN;
+         } else if (librarySettingLine) {
              librarySettingLine = false;
-             return LIBRARY_TOKEN;
-        } else {
-             return RF_KEYWORD_ARGUMENT_TOKEN;
-        }
-    } else if (tokenToReturn == BRACKET_TAGS_TOKEN || tokenToReturn == FORCE_TAGS_SETTING_TOKEN) {
-        tagsSettingLine = true;
-    } else if (tokenToReturn == FOR_KEYWORD_TOKEN) {
+             return LIBRARY_REFERENCE_TOKEN;
+         } else {
+             return ROBOT_KEYWORD_ARGUMENT_TOKEN;
+         }
+    }
+    else if (toReturn == FOR_LOOP_START_TOKEN) {
         forLoopLine = true;
-        return FOR_KEYWORD_TOKEN;
-    } else if (tokenToReturn == TEST_TIMEOUT_SETTING_TOKEN || tokenToReturn == BRACKET_TIMEOUT_TOKEN) {
-        timeoutSettingLine = true;
-    } else if (tokenToReturn == BRACKET_RETURN_TOKEN) {
-        returnBracketLine = true;
-    } else if (tokenToReturn == DOCUMENTATION_SETTING_TOKEN || tokenToReturn == BRACKET_DOCUMENTATION_TOKEN) {
-        documentationSettingLine = true;
-    } else if (tokenToReturn == BRACKET_ARGUMENTS_TOKEN) {
-        argumentsBracketLine = true;
-    } else if (tokenToReturn == RESOURCE_SETTING_TOKEN || tokenToReturn == VARIABLES_SETTING_TOKEN) {
-        /*Resource and Variables act same, both reference the .robot file*/
+        return FOR_LOOP_START_TOKEN;
+    }
+    else if (toReturn == BRACKET_TAGS_TOKEN || toReturn == FORCE_TAGS_SETTING_KEYWORD_TOKEN) {
+        tagsLine = true;
+    }
+    else if (toReturn == BRACKET_TIMEOUT_TOKEN || toReturn == TEST_TIMEOUT_SETTING_TOKEN) {
+        timeoutLine = true;
+    }
+    else if (toReturn == BRACKET_DOCUMENTATION_TOKEN || toReturn == DOCUMENTATION_SETTING_TOKEN) {
+        documentationLine = true;
+    }
+    else if (toReturn == RETURN_SETTING_TOKEN) {
+        returnLine = true;
+    }
+    else if (toReturn == ARGUMENTS_SETTING_TOKEN) {
+        argumentsLine = true;
+    }
+    else if (toReturn == RESOURCE_SETTING_TOKEN || toReturn == VARIABLE_SETTING_TOKEN) {
         resourceSettingLine = true;
-    } else if (tokenToReturn == LIBRARY_SETTING_TOKEN) {
-        librarySettingLine = true;
     }
+    else if (toReturn == LIBRARY_SETTING_TOKEN) {
+            librarySettingLine = true;
+        }
+    return toReturn;
+  }
 
-    return tokenToReturn;
-    }
+  private IElementType newLine() {
+    lineBeginning = firstCell = true;
+    return NEWLINE_TOKEN;
+  }
+
+
 %}
 
-/* General tokens coverage*/
-LineSeparators= \r|\n|\r\n
-RegularCharacter = [^\r\n] //Everything but LineSeparators
-WhiteSpace=[\ \n\r\t]
-WhiteSpaceSupplement = [^ \n\r\t]
-EndOfLine = {WhiteSpace}* {LineSeparators}
-Space = " "
-ColumnSeparator = {Space} {Space}+ | [ \t]* "\t" [ \t]* | [ \t]+
 
-KeywordArgumentChar = [^\r\n\#] | \\# //Everything but LineSeparators and Comments
-TestCaseTitleChar = {KeywordArgumentChar}
-VariableNameChar = [^\#\{\}\ \n\r\t]
-Comments = "#" {RegularCharacter}*
+LineSeparator = \r|\n|\r\n
+InputCharacter = [^\r\n]
 
+KeywordArgumentChar = [^\r\n\t\# ] | \\#
+TestCaseHeaderChar =  {KeywordArgumentChar}
+VariableChar = [^\r\n\t\#\{\} ]
+
+ColumnSep = {SingleSpace} {SingleSpace}+ | [ \t]* "\t" [ \t]* | [ \t]+ \| [ \t]+
+SingleSpace = " "
+WhiteSpace = [ \t]
+NonWhiteSpace = [^ \t\r\n]
+
+EndOfLine = {WhiteSpace}* {LineSeparator}
 Ellipses = \.\.\.
 EmptyCell = "\\"
 
-/*Numeric values */
-IntegerLiteral = 0 | "-"? [1-9][0-9]*
+/* integer literals */
+DecIntegerLiteral = 0 | "-"? [1-9][0-9]*
 FloatNumberLiteral= [0-9]+ \.? [0-9]* | [0-9]* \.? [0-9]+
-PositiveIntegerLiteral = 0 | [1-9][0-9]*
+NonNegativeIntegerLiteral = 0 | [1-9][0-9]*
 
-/*Robot time units*/
-TimeUnitsDay = {FloatNumberLiteral} {Space}? ("days"|"day"|"d")
-TimeUnitsHour = {FloatNumberLiteral} {Space}? ("hours"|"hour"|"h")
-TimeUnitsMinutes = {FloatNumberLiteral} {Space}? ("minutes"|"minute"|"m")
-TimeUnitsSecond = {FloatNumberLiteral} {Space}? ("seconds"|"second"|"s")
-TimeUnitsMillisecond = {FloatNumberLiteral} {Space}? ("milliseconds"|"millisecond"|"millis"|"ms")
+Comment = "#" {InputCharacter}*
 
 
-TimeoutValue = "none" | ("-" {Space}?)? {FloatNumberLiteral} |
-               ("-")? {Space}? {TimeUnitsMillisecond} |
-               ("-")? {Space}? {TimeUnitsSecond} ({Space}? {TimeUnitsMillisecond})? |
-               ("-")? {Space}? {TimeUnitsMinutes} ({Space}? {TimeUnitsSecond})? ({Space}? {TimeUnitsMillisecond})? |
-               ("-")? {Space}? {TimeUnitsHour} ({Space}? {TimeUnitsMinutes})? ({Space}? {TimeUnitsSecond})? ({Space}? {TimeUnitsMillisecond})? |
-               ("-")? {Space}? {TimeUnitsDay} ({Space}? {TimeUnitsHour})? ({Space}? {TimeUnitsMinutes})? ({Space}? {TimeUnitsSecond})? ({Space}? {TimeUnitsMillisecond})?
+VariableWord = {VariableChar}+
+VariableName = {VariableWord} ({SingleSpace} {VariableWord})*
+Variable = "${" {SingleSpace}? {VariableName} {SingleSpace}? "}"
+Assignment = {Variable} {SingleSpace}? "="
+AssignmentNoSpace = {Variable} "="
 
+ArrayVariable = "@{" {SingleSpace}? {VariableName} {SingleSpace}? "}"
+ArrayVariableAccess = {ArrayVariable} \[ {SingleSpace}? ({NonNegativeIntegerLiteral} | {Variable}) {SingleSpace}? \]
+ArrayAssignment = {ArrayVariable} {SingleSpace}? "="
 
-
-VariableName = {VariableNameChar}+ ({Space} {VariableNameChar})*
-RegularWord = {RegularCharacter}*
-SimpleVariable = "${" {Space}? {VariableName} {Space}? "}"
-VariableAssignment = {SimpleVariable} {Space}? "="
-
-ArrayVariable = "@{" {Space}? {VariableName} "}"
-ArrayVariableAccess = {ArrayVariable} "[" {Space}? ({PositiveIntegerLiteral} | {SimpleVariable} ) {Space}? "]"
-ArrayAssignment = {ArrayVariable} {Space}? "="
-
+RobotKeyword = {RobotWord} ({SingleSpace} {RobotWord})*
 RobotWord = [a-zA-Z0-9\.\*\(\)\[\]\"\'\-_\$\{\}\\#&@%=\|\\]+
-RobotKeyword = {RobotWord} ({Space} {RobotWord})*
 
-TestCaseTitleWord = {TestCaseTitleChar}+
-TestCaseTitle = {TestCaseTitleWord} ({Space} {TestCaseTitleWord})*
+TestCaseHeaderWord = {TestCaseHeaderChar}+
+TestCaseHeader = {TestCaseHeaderWord} ({SingleSpace} {TestCaseHeaderWord})*
 
 KeywordArgumentWord = {KeywordArgumentChar}+
-KeywordArgument = {KeywordArgumentWord} ({Space} {KeywordArgumentWord})* | {SimpleVariable} | {ArrayVariable} | {EmptyCell}
+KeywordArgument = ({KeywordArgumentWord} ({SingleSpace} {KeywordArgumentWord})*) | {Variable} | {EmptyCell}
 
-ScalarDefaultArgumentValue = {VariableAssignment} {KeywordArgument}
+ScalarDefaultArgumentValue = {AssignmentNoSpace} {SingleSpace}? {KeywordArgument}
 
+/* Common words */
+Setup = setup
+Teardown = teardown
+Test = test
+Suite = suite
+Documentation = documentation
+OptColon = ({SingleSpace}? ":")?
 
-ForLoopInInfix = "IN"
-ForLoopPrefix = ":FOR"
-ForLoopInRangeInifix = "IN RANGE"
+/* *** Settings *** */
+TestSetupSetting = {Test} {SingleSpace}? {Setup} {OptColon}
+TestTeardownSetting = {Test} {SingleSpace}? {Teardown}  {OptColon}
+SuiteSetupSetting = {Suite} {SingleSpace}? {Setup} {OptColon}
+SuiteTeardownSetting = {Suite} {SingleSpace}? {Teardown} {OptColon}
+ForceTags = (force | default) tags {OptColon}
+ResourceSetting = resource {OptColon}
+VariableSetting = variables {OptColon}
+LibrarySetting = library {OptColon}
+TestTimeoutSetting = {Test} timeout {OptColon}
+DocumentationSetting = {Documentation} {OptColon}
+MetadataSetting = metadata {OptColon}
+TestTemplateSetting = {Test} template {OptColon}
 
-TablesHeadingAsteriskTriplet = "***"
+/* *** Test Cases *** */
+BracketTags = "[" {WhiteSpace}* tags {WhiteSpace}* "]"
+BracketDocumentation = "[" {WhiteSpace}* {Documentation} {WhiteSpace}* "]"
+DocumentationArgument = {NonWhiteSpace} {InputCharacter}*
 
-SettingsTableHeader = {Space}? {TablesHeadingAsteriskTriplet} {Space}? (setting | settings) {Space}? {TablesHeadingAsteriskTriplet} {Comments}
-TestCasesTableHeader = {Space}? {TablesHeadingAsteriskTriplet} {Space}? (test case | test cases) {Space}? {TablesHeadingAsteriskTriplet} {Comments}
-KeywordsTableHeader = {Space}? {TablesHeadingAsteriskTriplet} {Space}? (keyword | keywords) {Space}? {TablesHeadingAsteriskTriplet} {Comments}
-VariablesTableHeader = {Space}? {TablesHeadingAsteriskTriplet} {Space}? (variable | variables) {Space}? {TablesHeadingAsteriskTriplet} {Comments}
+BracketSetup = ("[" {SingleSpace}? {Setup} {SingleSpace}? "]")
+BracketTeardown = ("[" {SingleSpace}? {Teardown} {SingleSpace}? "]")
+BracketTimeout = "[" {SingleSpace}? timeout {SingleSpace}? "]"
+BracketTemplate = "[" {SingleSpace}? template {SingleSpace}? "]"
 
-/*Common words*/
-TagsWord = tags
-TestWord = test
-TearDown = word
-SuiteWord = suite
-SetupWord = setup
-ForceWord = force
-ReturnWord = return
-TimeoutWord = timeout
-LibraryWord = l {Space}? i {Space}? b {Space}? r {Space}? a {Space}? r {Space}? y
-DefaultWord = default
-MetadataWord = metadata
-ResourceWord = resource
-TemplateWord = template
-VariablesWord = variables
-ArgumentsWord = arguments
-DocumentationWord = documentation
+RobotDays = {FloatNumberLiteral} {SingleSpace}? ("days" | "day" | "d")
+RobotHours =  {FloatNumberLiteral} {SingleSpace}? ("hours" | "hour" | "h")
+RobotMinutes =  {FloatNumberLiteral} {SingleSpace}? ("minutes" | "minute" | "mins" | "min" | "m")
+RobotSeconds =  {FloatNumberLiteral} {SingleSpace}? ("seconds" | "second" | "secs" | "sec" | "s")
+RobotMillis = {FloatNumberLiteral} {SingleSpace}? ("milliseconds" | "millisecond" | "millis" | "ms")
+RobotSecondsNumber = ("-" {SingleSpace}?)? {FloatNumberLiteral}
 
+TimeoutValue = "none" |
+               {RobotSecondsNumber} |
+               ("-")? {SingleSpace}? {RobotDays} ({SingleSpace}? {RobotHours})? ({SingleSpace}? {RobotMinutes})? ({SingleSpace}? {RobotSeconds})? ({SingleSpace}? {RobotMillis})? |
+               ("-")? {SingleSpace}? {RobotHours} ({SingleSpace}? {RobotMinutes})? ({SingleSpace}? {RobotSeconds})? ({SingleSpace}? {RobotMillis})? |
+               ("-")? {SingleSpace}? {RobotMinutes} ({SingleSpace}? {RobotSeconds})? ({SingleSpace}? {RobotMillis})? |
+               ("-")? {SingleSpace}? {RobotSeconds} ({SingleSpace}? {RobotMillis})? |
+               ("-")? {SingleSpace}? {RobotMillis}
 
-/*Settings table*/
-TestSetupSetting = {TestWord} {Space} {SetupWord}
-TestTearDownSetting = {TestWord} {Space} {TearDown}
-SuiteSetupSetting = {SuiteWord} {Space} {SetupWord}
-SuiteTeardownSetting = {SuiteWord} {Space} {TearDown}
-ForceTags = ({ForceWord} | {DefaultWord}) {Space} {TagsWord}
-ResourceSetting = {ResourceWord}
-VariableSetting = {VariablesWord}
-LibrarySetting = {LibraryWord}
-TestTimeoutSetting = {TestWord} {Space} {TimeoutWord}
-MetadataSetting = {MetadataWord}
-DocumentationSetting = {DocumentationWord}
-DocumentationArguments = {WhiteSpaceSupplement} {RegularWord}
-TestTemplateSetting = {TestWord} {Space} {TemplateWord}
+/* *** Keywords *** */
+BracketArguments = "[" {SingleSpace}? arguments {SingleSpace}? "]"
+BracketReturn = "[" {SingleSpace}? return {SingleSpace}? "]"
 
-/*Test Cases table*/
-SetupSettingBracket = "[" {Space}? {SetupWord} {Space}? "]"
-TearDownSettingBracket = "[" {Space}? {TearDown} {Space}? "]"
-TagsBracket = "[" {Space}? {TagsWord} {Space}? "]"
-TimeoutBracket = "[" {Space}? {TimeoutWord} {Space}? "]"
-TemplateBracket = "[" {Space}? {TemplateWord} {Space}? "]"
-DocumentationBracket = "[" {Space}? {DocumentationWord} {Space}? "]"
-ArgumentsBracket = "[" {Space}? {ArgumentsWord} {Space}? "]"
-ReturnBracket = "[" {Space}? {ReturnWord} {Space}? "]"
+/* Tables headers */
+AdditionalCharacters = {InputCharacter}*
+SettingsTableHeader  = {SingleSpace}? "***" {SingleSpace}? ((setting s?)
+                                 | (metadata)) {SingleSpace}? ("***") {AdditionalCharacters}
+VariablesTableHeader = {SingleSpace}? "***" {SingleSpace}? (variable s?) {SingleSpace}? "***" {AdditionalCharacters}
+TestCasesTableHeader = {SingleSpace}? "***" {SingleSpace}? test {SingleSpace}? case s? {SingleSpace}? "***" {AdditionalCharacters}
+KeywordsTableHeader =  {SingleSpace}? "***" {SingleSpace}?  keyword s? {WhiteSpace}? "***" {AdditionalCharacters}
+
+ForLoopStart = ":FOR"
+InRange = "IN RANGE"
+In = "IN"
+
 
 %state SETTINGS
-%state DOCUMENTAION_SETTING_TABLE
 %state VARIABLES
 %state TEST_CASES
 %state KEYWORDS
+%state DOCUMENTATION_SETTING
 %state INVALID_SYNTAX
-
 %%
 
 <YYINITIAL> {
     {EndOfLine}                      { return newLine(); }
-    {RegularWord}                    { return next(COMMENT_TOKEN); }
     {SettingsTableHeader}            { yybegin(SETTINGS); return next(SETTINGS_TABLE_HEADER_TOKEN); }
     {VariablesTableHeader}           { yybegin(VARIABLES); return next(VARIABLES_TABLE_HEADER_TOKEN); }
     {TestCasesTableHeader}           { yybegin(TEST_CASES); return next(TEST_CASES_TABLE_HEADER_TOKEN); }
     {KeywordsTableHeader}            { yybegin(KEYWORDS); return next(KEYWORDS_TABLE_HEADER_TOKEN); }
+    {AdditionalCharacters}                           { return next(COMMENT_TOKEN); }
 }
 
 <SETTINGS> {
-    {EndOfLine}                      { return newLine(); }
-    {Comments}                       { return next(COMMENT_TOKEN); }
-    {SimpleVariable}                 { return next(VARIABLE_TOKEN);}
-    {Ellipses}                       { return next(ELLIPSES_TOKEN); }
-    {WhiteSpace}                     { return next(WHITESPACE_TOKEN); }
-    {ArrayVariable}                  { return next(ARRAY_VARIABLE_TOKEN); }
-    {ColumnSeparator}                { return next(COLUMN_SEPARATOR_TOKEN); }
-    {KeywordArgument}                { return next(RF_KEYWORD_ARGUMENT_TOKEN); }
-    {ArrayVariableAccess}            { return next(ARRAY_VARIABLE_ACCESS_TOKEN); }
-    {SettingsTableHeader}            { yybegin(SETTINGS); return next(INVALID_SYNTAX_TOKEN); }
-    {KeywordsTableHeader}            { yybegin(KEYWORDS); return next(KEYWORDS_TABLE_HEADER_TOKEN); }
-    {VariablesTableHeader}           { yybegin(VARIABLES); return next(VARIABLES_TABLE_HEADER_TOKEN); }
-    {TestCasesTableHeader}           { yybegin(TEST_CASES); return next(TEST_CASES_TABLE_HEADER_TOKEN); }
-    {TimeoutValue}                   { if (onTimeOutLine ) { return next(TIMEOUT_UNITS_TOKEN); } return next(RF_KEYWORD_TOKEN); }
-    {LibrarySetting}                 { if (lineBeginning) { return next(LIBRARY_SETTING_TOKEN); } return next(RF_KEYWORD_TOKEN); }
-    {RobotKeyword}                   { if (lineBeginning) { return next(GENERIC_SETTING_TOKEN); } return next(RF_KEYWORD_TOKEN); }
-    {MetadataSetting}                { if (lineBeginning) { return next(METADATA_SETTING_TOKEN); } return next(RF_KEYWORD_TOKEN); }
-    {ResourceSetting}                { if (lineBeginning) { return next(RESOURCE_SETTING_TOKEN); } return next(RF_KEYWORD_TOKEN); }
-    {VariableSetting}                { if (lineBeginning) { return next(VARIABLES_SETTING_TOKEN); } return next(RF_KEYWORD_TOKEN); }
-    {TestSetupSetting}               { if (lineBeginning) { return next(TEST_SETUP_SETTING_TOKEN); } return next(RF_KEYWORD_TOKEN); }
-    {ForceTags}                      { if (lineBeginning) { return next(FORCE_TAGS_SETTING_TOKEN); } return next(RF_KEYWORD_TOKEN); }
-    {SuiteSetupSetting}              { if (lineBeginning) { return next(SUITE_SETUP_SETTING_TOKEN); } return next(RF_KEYWORD_TOKEN); }
-    {TestTimeoutSetting}             { if (lineBeginning) { return next(TEST_TIMEOUT_SETTING_TOKEN); } return next(RF_KEYWORD_TOKEN); }
-    {DocumentationSetting}           { if (lineBeginning) { return next(DOCUMENTATION_SETTING_TOKEN); } return next(RF_KEYWORD_TOKEN); }
-    {TestTearDownSetting}            { if (lineBeginning) { return next(TEST_TEARDOWN_SETTING_TOKEN); } return next(RF_KEYWORD_TOKEN); }
-    {TestTemplateSetting}            { if (lineBeginning) { return next(TEST_TEMPLATE_SETTING_TOKEN); } return next(RF_KEYWORD_TOKEN); }
-    {SuiteTeardownSetting}           { if (lineBeginning) { return next(SUITE_TEARDOWN_SETTING_TOKEN); } return next(RF_KEYWORD_TOKEN); }
-}
-
-
-<DOCUMENTAION_SETTING_TABLE> {
-    {DocumentationArguments}         { return next(DOCUMENTATION_TOKEN);}
-    {ColumnSeparator}                { return next(COLUMN_SEPARATOR_TOKEN); }
-    {LineSeparators}                 { yybegin(initial_state); return newLine(); }
+     {EndOfLine}                     { return newLine(); }
+     {Comment}                       { return next(COMMENT_TOKEN); }
+     {VariablesTableHeader}          { yybegin(VARIABLES); return next(VARIABLES_TABLE_HEADER_TOKEN); }
+     {KeywordsTableHeader}           {  yybegin(KEYWORDS); return next(KEYWORDS_TABLE_HEADER_TOKEN); }
+     {TestCasesTableHeader}          { yybegin(TEST_CASES); return next(TEST_CASES_TABLE_HEADER_TOKEN); }
+     {SettingsTableHeader}           { yybegin(INVALID_SYNTAX); return next(INVALID_SYNTAX_TOKEN); }
+     {Ellipses}                      { return next(ELLIPSES_TOKEN); }
+     {Variable}                      { return next(VARIABLE_TOKEN); }
+     {ArrayVariable}                 { return next(ARRAY_VARIABLE_TOKEN); }
+     {ArrayVariableAccess}           { return next(ARRAY_VARIABLE_ACCESS_TOKEN); }
+     {TimeoutValue}                  { if (timeoutLine) { return next(TIMEOUT_VALUE_TOKEN); } return next(ROBOT_KEYWORD_TOKEN); }
+     {ForceTags}                     { if (lineBeginning) {return next(FORCE_TAGS_SETTING_KEYWORD_TOKEN); } return next(ROBOT_KEYWORD_TOKEN); }
+     {ResourceSetting}               { if (lineBeginning) {return next(RESOURCE_SETTING_TOKEN); } return next(ROBOT_KEYWORD_TOKEN); }
+     {TestSetupSetting}              { if (lineBeginning) {return next(TEST_SETUP_SETTING_TOKEN); } return next(ROBOT_KEYWORD_TOKEN); }
+     {TestTeardownSetting}           { if (lineBeginning) {return next(TEST_TEARDOWN_SETTING_TOKEN); } return next(ROBOT_KEYWORD_TOKEN); }
+     {SuiteSetupSetting}             { if (lineBeginning) {return next(SUITE_SETUP_SETTING_TOKEN); } return next(ROBOT_KEYWORD_TOKEN); }
+     {SuiteTeardownSetting}          { if (lineBeginning) {return next(SUITE_TEARDOWN_SETTING_TOKEN); } return next(ROBOT_KEYWORD_TOKEN); }
+     {LibrarySetting}                { if (lineBeginning) {return next(LIBRARY_SETTING_TOKEN); } return next(ROBOT_KEYWORD_TOKEN); }
+     {TestTimeoutSetting}            { if (lineBeginning) {return next(TEST_TIMEOUT_SETTING_TOKEN); } return next(ROBOT_KEYWORD_TOKEN); }
+     {DocumentationSetting}          { if (lineBeginning) {previous_state = yystate(); yybegin(DOCUMENTATION_SETTING); return next(DOCUMENTATION_SETTING_TOKEN); } return next(ROBOT_KEYWORD_TOKEN); }
+     {MetadataSetting}               { if (lineBeginning) {return next(METADATA_SETTING_TOKEN); } return next(ROBOT_KEYWORD_TOKEN); }
+     {VariableSetting}               { if (lineBeginning) {return next(VARIABLE_SETTING_TOKEN); } return next(ROBOT_KEYWORD_TOKEN); }
+     {TestTemplateSetting}           { if (lineBeginning) {return next(TEST_TEMPLATE_SETTING_TOKEN); } return next(ROBOT_KEYWORD_TOKEN); }
+     {RobotKeyword}                  { if (lineBeginning) {return next(GENERIC_SETTING_TOKEN); } return next(ROBOT_KEYWORD_TOKEN); }
+     {KeywordArgument}               { return next(ROBOT_KEYWORD_ARGUMENT_TOKEN); }
+     {ColumnSep}                     { return next(COLUMN_SEPARATOR_TOKEN); }
+     {WhiteSpace}                    { return next(WHITESPACE_TOKEN); }
 }
 
 <VARIABLES> {
      {EndOfLine}                     { return newLine(); }
-     {Comments}                      { return next(COMMENT_TOKEN); }
-     {SimpleVariable}                { return next(VARIABLE_TOKEN);}
-     {Ellipses}                      { return next(ELLIPSES_TOKEN); }
-     {VariableAssignment}            { return next(ASSIGNMENT_TOKEN);}
-     {WhiteSpace}                    { return next(WHITESPACE_TOKEN); }
-     {ArrayVariable}                 { return next(ARRAY_VARIABLE_TOKEN); }
-     {ArrayAssignment}               { return next(ARRAY_ASSIGNMENT_TOKEN); }
-     {ColumnSeparator}               { return next(COLUMN_SEPARATOR_TOKEN); }
-     {KeywordArgument}               { return next(RF_KEYWORD_ARGUMENT_TOKEN); }
+     {Comment}                       { return next(COMMENT_TOKEN); }
      {VariablesTableHeader}          { return next(VARIABLES_TABLE_HEADER_TOKEN); }
-     {SettingsTableHeader}           { yybegin(SETTINGS); return next(SETTINGS_TABLE_HEADER_TOKEN); }
      {KeywordsTableHeader}           { yybegin(KEYWORDS); return next(KEYWORDS_TABLE_HEADER_TOKEN); }
      {TestCasesTableHeader}          { yybegin(TEST_CASES); return next(TEST_CASES_TABLE_HEADER_TOKEN); }
+     {SettingsTableHeader}           { yybegin(SETTINGS); return next(SETTINGS_TABLE_HEADER_TOKEN); }
+     {Ellipses}                      { return next(ELLIPSES_TOKEN); }
+     {Assignment}                    { return next(ASSIGNMENT_TOKEN); }
+     {ArrayAssignment}               { return next(ARRAY_ASSIGNMENT_TOKEN); }
+     {Variable}                      { return next(VARIABLE_TOKEN); }
+     {ArrayVariable}                 { return next(ARRAY_VARIABLE_TOKEN); }
+     {KeywordArgument}               { return next(ROBOT_KEYWORD_ARGUMENT_TOKEN); }
+     {ColumnSep}                     { return next(COLUMN_SEPARATOR_TOKEN); }
+     {WhiteSpace}                    { return next(WHITESPACE_TOKEN); }
 }
 
+
 <TEST_CASES> {
-     {TestCaseTitle}                 { if (lineBeginning) { return next(TEST_CASE_NAME_TOKEN); } return next(RF_KEYWORD_ARGUMENT_TOKEN); }
-     {EndOfLine}                     { return newLine(); }
-     {Comments}                      { return next(COMMENT_TOKEN); }
+     {EndOfLine}                     {  return newLine(); }
+     {Comment}                       { return next(COMMENT_TOKEN); }
      {SettingsTableHeader}           { yybegin(SETTINGS); return next(SETTINGS_TABLE_HEADER_TOKEN); }
      {VariablesTableHeader}          { yybegin(VARIABLES); return next(VARIABLES_TABLE_HEADER_TOKEN); }
-     {TestCasesTableHeader}          { return next(TEST_CASES_TABLE_HEADER_TOKEN); }
      {KeywordsTableHeader}           { yybegin(KEYWORDS); return next(KEYWORDS_TABLE_HEADER_TOKEN); }
+     {TestCasesTableHeader}          { return next(TEST_CASES_TABLE_HEADER_TOKEN); }
      {Ellipses}                      { return next(ELLIPSES_TOKEN); }
-     {SetupSettingBracket}           { return next(BRACKET_SETUP_TOKEN); }
-     {TagsBracket}                   { return next(BRACKET_TAGS_TOKEN); }
-     {TearDownSettingBracket}        { return next(BRACKET_TEARDOWN_TOKEN); }
-     {TemplateBracket}               { return next(BRACKET_TEMPLATE_TOKEN); }
-     {TimeoutBracket}                { return next(BRACKET_TIMEOUT_TOKEN); }
-     {DocumentationBracket}          { initial_state = yystate(); yybegin(DOCUMENTATION_SETTING); return next(BRACKET_DOCUMENTATION_TOKEN); }
+     {BracketTags}                   { if (lineBeginning) { return next(TEST_CASE_NAME_TOKEN); } return next(BRACKET_TAGS_TOKEN); }
+     {BracketDocumentation}          { if (lineBeginning) { return next(TEST_CASE_NAME_TOKEN); } previous_state = yystate(); yybegin(DOCUMENTATION_SETTING); return next(BRACKET_DOCUMENTATION_TOKEN); }
+     {BracketSetup}                  { if (lineBeginning) { return next(TEST_CASE_NAME_TOKEN); } return next(BRACKET_SETUP_TOKEN); }
+     {BracketTeardown}                  { if (lineBeginning) { return next(TEST_CASE_NAME_TOKEN); } return next(BRACKET_TEARDOWN_TOKEN); }
+     {BracketTimeout}                   { if (lineBeginning) { return next(TEST_CASE_NAME_TOKEN); } return next(BRACKET_TIMEOUT_TOKEN); }
+     {BracketTemplate}                  { if (lineBeginning) { return next(TEST_CASE_NAME_TOKEN); } return next(TEMPLATE_SETTING_TOKEN); }
      {EmptyCell}                     { return next(EMPTY_CELL_TOKEN); }
-     {ForLoopPrefix}                 { return next(FOR_KEYWORD_TOKEN); }
-     {ForLoopInRangeInifix}          { return next(IN_RANGE_TOKEN); }
-     {ForLoopInInfix}                { return next(IN_TOKEN); }
-     {SimpleVariable}                { return next(VARIABLE_TOKEN);}
+     {ForLoopStart}                  { return next(FOR_LOOP_START_TOKEN); }
+     {InRange}                       { return next(IN_RANGE_TOKEN); }
+     {In}                            { return next(IN_TOKEN); }
+     {Assignment}                    { return next(ASSIGNMENT_TOKEN); }
+     {ArrayAssignment}               { return next(ARRAY_ASSIGNMENT_TOKEN); }
+     {Variable}                      { return next(VARIABLE_TOKEN); }
      {ArrayVariable}                 { return next(ARRAY_VARIABLE_TOKEN); }
-     {TimeoutValue}                  { if (lineBeginning) { return next(RF_KEYWORD_NAME_TOKEN); } }
-     {IntegerLiteral}                { if (lineBeginning) { return next(RF_KEYWORD_NAME_TOKEN); }
-                                      else if (firstCell) { return next(RF_KEYWORD_TOKEN); }
-                                      else if (forLoopLine) { return next(INTEGER_TOKEN); }
-                                      else if (keywordLine) { return next(INTEGER_TOKEN); }
-                                      else { return next(RF_KEYWORD_TOKEN); }}
-     {ColumnSeparator}               { return next(COLUMN_SEPARATOR_TOKEN); }
-     {WhiteSpace}                    { return next(WHITESPACE_TOKEN); }
-     {KeywordArgument}               { if (lineBeginning) { return next(INVALID_SYNTAX_TOKEN); } return next(RF_KEYWORD_ARGUMENT_TOKEN); }
-     {RobotKeyword}                  { if (lineBeginning) { return next(RF_KEYWORD_NAME_TOKEN); } return next(RF_KEYWORD_TOKEN); }
      {ArrayVariableAccess}           { return next(ARRAY_VARIABLE_ACCESS_TOKEN); }
+     {TimeoutValue}                  { if (timeoutLine) { return next(TIMEOUT_VALUE_TOKEN);} return next(ROBOT_KEYWORD_TOKEN); }
+     {DecIntegerLiteral}             { if (lineBeginning) { return next(TEST_CASE_NAME_TOKEN); }
+                                       else if (firstCell) { return next(ROBOT_KEYWORD_TOKEN); }
+                                       else if (forLoopLine) { return next(INTEGER_TOKEN); }
+                                       else if (keywordToLeft) { return next(INTEGER_TOKEN); }
+                                       return next(ROBOT_KEYWORD_TOKEN); }
+     {RobotKeyword}                  { if (lineBeginning) { return next(TEST_CASE_NAME_TOKEN); } return next(ROBOT_KEYWORD_TOKEN); }
+     {TestCaseHeader}                { if (lineBeginning) { return next(TEST_CASE_NAME_TOKEN); } return next(ROBOT_KEYWORD_ARGUMENT_TOKEN); }
+     {KeywordArgument}               { if (lineBeginning) { return next(TEST_CASE_NAME_TOKEN); } return next(ROBOT_KEYWORD_ARGUMENT_TOKEN); }
+     {ColumnSep}                     { return next(COLUMN_SEPARATOR_TOKEN); }
+     {WhiteSpace}                    { return next(WHITESPACE_TOKEN); }
+}
+
+<DOCUMENTATION_SETTING> {
+    {ColumnSep}                      { return next(COLUMN_SEPARATOR_TOKEN); }
+    {DocumentationArgument}                   { return next(DOCUMENTATION_TOKEN); }
+    {LineSeparator}                  { yybegin(previous_state); return newLine();}
 }
 
 <KEYWORDS> {
-       {EndOfLine}                   { return newLine(); }
-       {Comments}                    { return next(COMMENT_TOKEN); }
-       {SettingsTableHeader}         { yybegin(SETTINGS); return next(SETTINGS_TABLE_HEADER_TOKEN); }
-       {VariablesTableHeader}        { yybegin(VARIABLES); return next(VARIABLES_TABLE_HEADER_TOKEN); }
-       {TestCasesTableHeader}        { yybegin(TEST_CASES); return next(TEST_CASES_TABLE_HEADER_TOKEN); }
-       {KeywordsTableHeader}         { yybegin(KEYWORDS); return next(INVALID_SYNTAX_TOKEN); }
-       {Ellipses}                    { return next(ELLIPSES_TOKEN); }
-       {ArgumentsBracket}            { return next(BRACKET_ARGUMENTS_TOKEN); }
-       {ReturnBracket}               { return next(BRACKET_RETURN_TOKEN); }
-       {SetupSettingBracket}         { return next(BRACKET_SETUP_TOKEN); }
-       {TagsBracket}                 { return next(BRACKET_TAGS_TOKEN); }
-       {TearDownSettingBracket}      { return next(BRACKET_TEARDOWN_TOKEN); }
-       {TemplateBracket}             { return next(BRACKET_TEMPLATE_TOKEN); }
-       {TimeoutBracket}              { return next(BRACKET_TIMEOUT_TOKEN); }
-       {DocumentationBracket}        { initial_state = yystate(); yybegin(DOCUMENTAION_SETTING_TABLE); return next(BRACKET_DOCUMENTATION_TOKEN); }
-       {EmptyCell}                   { return next(EMPTY_CELL_TOKEN); }
-       {ForLoopPrefix}               { return next(FOR_KEYWORD_TOKEN); }
-       {ForLoopInRangeInifix}        { return next(IN_RANGE_TOKEN); }
-       {ForLoopInInfix}              { return next(IN_TOKEN); }
-       {SimpleVariable}              { return next(VARIABLE_TOKEN);}
-       {ArrayVariable}               { return next(ARRAY_VARIABLE_TOKEN); }
-       {TimeoutValue}                {if (lineBeginning) { return next(RF_KEYWORD_NAME_TOKEN); }
-                                      if (timeoutSettingLine) { return next(TIMEOUT_UNITS_TOKEN); }
-                                      return next(RF_KEYWORD_TOKEN);}
-       {ScalarDefaultArgumentValue}  { if (argumentsBracketLine) { return next(SCALAR_DEFAULT_ARG_VALUE_TOKEN); } return next(RF_KEYWORD_ARGUMENT_TOKEN); }
-       {VariableAssignment}          { return next(ASSIGNMENT_TOKEN);}
-       {ArrayAssignment}             { return next(ARRAY_ASSIGNMENT_TOKEN); }
-       {ColumnSeparator}             { return next(COLUMN_SEPARATOR_TOKEN); }
-       {WhiteSpace}                  { return next(WHITESPACE_TOKEN); }
-       {KeywordArgument}             { if (lineBeginning) { return next(INVALID_SYNTAX_TOKEN); } return next(RF_KEYWORD_ARGUMENT_TOKEN); }
-       {RobotKeyword}                { if (lineBeginning) { return next(RF_KEYWORD_NAME_TOKEN); } return next(RF_KEYWORD_TOKEN); }
-       {ArrayVariableAccess}         { return next(ARRAY_VARIABLE_ACCESS_TOKEN); }
-       {IntegerLiteral}              { if (lineBeginning) { return next(RF_KEYWORD_NAME_TOKEN); }
-                                       else if (firstCell) { return next(RF_KEYWORD_TOKEN); }
+     {EndOfLine}                     { return newLine(); }
+     {Comment}                       { return next(COMMENT_TOKEN); }
+     {SettingsTableHeader}           { yybegin(SETTINGS); return next(SETTINGS_TABLE_HEADER_TOKEN); }
+     {VariablesTableHeader}          { yybegin(VARIABLES); return next(VARIABLES_TABLE_HEADER_TOKEN); }
+     {TestCasesTableHeader}          { yybegin(TEST_CASES); return next(TEST_CASES_TABLE_HEADER_TOKEN); }
+     {KeywordsTableHeader}           { yybegin(INVALID_SYNTAX); return next(INVALID_SYNTAX_TOKEN); }
+     {Ellipses}                      { return next(ELLIPSES_TOKEN); }
+     {BracketDocumentation}          { previous_state = yystate(); yybegin(DOCUMENTATION_SETTING); return next(BRACKET_DOCUMENTATION_TOKEN); }
+     {BracketArguments}              { return next(ARGUMENTS_SETTING_TOKEN); }
+     {BracketSetup}                  { return next(BRACKET_SETUP_TOKEN); }
+     {BracketTeardown}               { return next(BRACKET_TEARDOWN_TOKEN); }
+     {BracketTimeout}                { return next(BRACKET_TIMEOUT_TOKEN); }
+     {BracketReturn}                 { return next(RETURN_SETTING_TOKEN); }
+     {TimeoutValue}                  { if (lineBeginning) { return next(ROBOT_KEYWORD_NAME_TOKEN); }
+                                       if (timeoutLine) { return next(TIMEOUT_VALUE_TOKEN); }
+                                       return next(ROBOT_KEYWORD_TOKEN); }
+     {EmptyCell}                     { return next(EMPTY_CELL_TOKEN); }
+     {ForLoopStart}                  { return next(FOR_LOOP_START_TOKEN); }
+     {InRange}                       { return next(IN_RANGE_TOKEN); }
+     {In}                            { return next(IN_TOKEN); }
+     {ScalarDefaultArgumentValue}    { if (argumentsLine) { return next(SCALAR_DEFAULT_ARG_VALUE_TOKEN); } return next(ROBOT_KEYWORD_ARGUMENT_TOKEN); }
+     {Assignment}                    { return next(ASSIGNMENT_TOKEN); }
+     {ArrayAssignment}               { return next(ARRAY_ASSIGNMENT_TOKEN); }
+     {Variable}                      { return next(VARIABLE_TOKEN); }
+     {ArrayVariable}                 { return next(ARRAY_VARIABLE_TOKEN); }
+     {ArrayVariableAccess}           { return next(ARRAY_VARIABLE_ACCESS_TOKEN); }
+     {DecIntegerLiteral}             { if (lineBeginning) { return next(ROBOT_KEYWORD_NAME_TOKEN); }
+                                       else if (firstCell) { return next(ROBOT_KEYWORD_TOKEN); }
                                        else if (forLoopLine) { return next(INTEGER_TOKEN); }
-                                       else if (keywordLine) { return next(INTEGER_TOKEN); }
-                                       else { return next(RF_KEYWORD_TOKEN); }}
+                                       else if (keywordToLeft) { return next(INTEGER_TOKEN); }
+                                       else { return next(ROBOT_KEYWORD_TOKEN); }}
+     {RobotKeyword}                  { if (lineBeginning) { return next(ROBOT_KEYWORD_NAME_TOKEN); } return next(ROBOT_KEYWORD_TOKEN); }
+     {KeywordArgument}               { if (lineBeginning) { return next(INVALID_SYNTAX_TOKEN); } return next(ROBOT_KEYWORD_ARGUMENT_TOKEN); }
+     {ColumnSep}                     { return next(COLUMN_SEPARATOR_TOKEN); }
+     {WhiteSpace}                    { return next(WHITESPACE_TOKEN); }
 }
-
 
 <INVALID_SYNTAX> {
-     .+                              { return next(INVALID_SYNTAX_TOKEN); }
+    .+                               { return next(INVALID_SYNTAX_TOKEN);}
 }
 
-/* error fallback */
-
-[^]                                  { return next(INVALID_SYNTAX_TOKEN); }
-
+[^]                                  { return next(INVALID_SYNTAX_TOKEN);}

@@ -8,15 +8,15 @@ import com.intellij.psi.PsiElement;
 public interface RobotFrameworkKeywordSetting extends PsiElement {
 
   @Nullable
-  RobotFrameworkBracketArguments getBracketArguments();
+  RobotFrameworkArgumentsSetting getArgumentsSetting();
 
   @Nullable
   RobotFrameworkBracketDocumentation getBracketDocumentation();
 
   @Nullable
-  RobotFrameworkBracketTeardown getBracketTeardown();
+  RobotFrameworkTestCaseBracketTeardown getTestCaseBracketTeardown();
 
   @Nullable
-  RobotFrameworkBracketTimeout getBracketTimeout();
+  RobotFrameworkTestCaseBracketTimeout getTestCaseBracketTimeout();
 
 }

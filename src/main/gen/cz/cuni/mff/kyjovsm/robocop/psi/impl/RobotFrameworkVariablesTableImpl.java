@@ -35,14 +35,14 @@ public class RobotFrameworkVariablesTableImpl extends ASTWrapperPsiElement imple
 
   @Override
   @NotNull
-  public RobotFrameworkVariablesTableHeader getVariablesTableHeader() {
-    return findNotNullChildByClass(RobotFrameworkVariablesTableHeader.class);
+  public List<RobotFrameworkVariablesLine> getVariablesLineList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkVariablesLine.class);
   }
 
   @Override
   @NotNull
-  public List<RobotFrameworkVariableLine> getVariableLineList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkVariableLine.class);
+  public RobotFrameworkVariablesTableHeader getVariablesTableHeader() {
+    return findNotNullChildByClass(RobotFrameworkVariablesTableHeader.class);
   }
 
 }

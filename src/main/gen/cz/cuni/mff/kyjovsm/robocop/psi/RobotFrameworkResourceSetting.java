@@ -8,7 +8,10 @@ import com.intellij.psi.PsiElement;
 public interface RobotFrameworkResourceSetting extends PsiElement {
 
   @NotNull
-  List<RobotFrameworkEllipsesForSettingTable> getEllipsesForSettingTableList();
+  List<RobotFrameworkEllipses> getEllipsesList();
+
+  @NotNull
+  List<RobotFrameworkEmptyLine> getEmptyLineList();
 
   @Nullable
   RobotFrameworkReferencedFile getReferencedFile();

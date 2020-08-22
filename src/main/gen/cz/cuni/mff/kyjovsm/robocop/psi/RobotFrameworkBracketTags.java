@@ -7,11 +7,11 @@ import com.intellij.psi.PsiElement;
 
 public interface RobotFrameworkBracketTags extends PsiElement {
 
-  @Nullable
-  RobotFrameworkEllipses getEllipses();
+  @NotNull
+  List<RobotFrameworkEllipses> getEllipsesList();
 
-  @Nullable
-  RobotFrameworkEmptyLine getEmptyLine();
+  @NotNull
+  List<RobotFrameworkEmptyLine> getEmptyLineList();
 
   @NotNull
   List<RobotFrameworkTag> getTagList();

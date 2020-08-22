@@ -11,9 +11,9 @@ public interface RobotFrameworkVariablesTable extends PsiElement {
   List<RobotFrameworkEmptyLine> getEmptyLineList();
 
   @NotNull
-  RobotFrameworkVariablesTableHeader getVariablesTableHeader();
+  List<RobotFrameworkVariablesLine> getVariablesLineList();
 
   @NotNull
-  List<RobotFrameworkVariableLine> getVariableLineList();
+  RobotFrameworkVariablesTableHeader getVariablesTableHeader();
 
 }

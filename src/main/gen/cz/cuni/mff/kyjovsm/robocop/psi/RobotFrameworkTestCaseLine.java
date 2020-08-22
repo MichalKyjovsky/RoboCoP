@@ -8,18 +8,21 @@ import com.intellij.psi.PsiElement;
 public interface RobotFrameworkTestCaseLine extends PsiElement {
 
   @Nullable
-  RobotFrameworkEllipses getEllipses();
+  RobotFrameworkEllipsesLineTest getEllipsesLineTest();
 
   @Nullable
   RobotFrameworkExecutionLine getExecutionLine();
 
   @Nullable
-  RobotFrameworkForLoops getForLoops();
+  RobotFrameworkForLoopIn getForLoopIn();
 
   @Nullable
-  RobotFrameworkKeywordArgumentList getKeywordArgumentList();
+  RobotFrameworkForLoopInRange getForLoopInRange();
 
   @Nullable
-  RobotFrameworkTestCaseSettingLine getTestCaseSettingLine();
+  RobotFrameworkKeywordArgList getKeywordArgList();
+
+  @Nullable
+  RobotFrameworkTestSettingLine getTestSettingLine();
 
 }

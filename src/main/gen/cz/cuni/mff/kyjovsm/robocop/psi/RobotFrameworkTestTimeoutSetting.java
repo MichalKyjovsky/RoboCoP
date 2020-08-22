@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface RobotFrameworkTestTimeoutSetting extends PsiElement {
 
   @NotNull
-  List<RobotFrameworkEllipsesForSettingTable> getEllipsesForSettingTableList();
+  List<RobotFrameworkEllipses> getEllipsesList();
+
+  @NotNull
+  List<RobotFrameworkEmptyLine> getEmptyLineList();
 
 }

@@ -29,8 +29,8 @@ public class RobotFrameworkReturnLineImpl extends ASTWrapperPsiElement implement
 
   @Override
   @NotNull
-  public RobotFrameworkBracketReturn getBracketReturn() {
-    return findNotNullChildByClass(RobotFrameworkBracketReturn.class);
+  public RobotFrameworkReturnSetting getReturnSetting() {
+    return findNotNullChildByClass(RobotFrameworkReturnSetting.class);
   }
 
 }

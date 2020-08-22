@@ -8,15 +8,18 @@ import com.intellij.psi.PsiElement;
 public interface RobotFrameworkForLoopInRange extends PsiElement {
 
   @Nullable
-  RobotFrameworkForInRangeDoubleArgument getForInRangeDoubleArgument();
+  RobotFrameworkDoubleBoundForLoop getDoubleBoundForLoop();
 
   @Nullable
-  RobotFrameworkForInRangeSingleArgument getForInRangeSingleArgument();
-
-  @Nullable
-  RobotFrameworkForInRangeTripleArgument getForInRangeTripleArgument();
+  RobotFrameworkDoubleBoundForLoopWithStep getDoubleBoundForLoopWithStep();
 
   @NotNull
-  List<RobotFrameworkForLoopExecutionLine> getForLoopExecutionLineList();
+  List<RobotFrameworkIndentedKeywordInvocationTest> getIndentedKeywordInvocationTestList();
+
+  @NotNull
+  List<RobotFrameworkIndentedVariableAssignToKeyword> getIndentedVariableAssignToKeywordList();
+
+  @Nullable
+  RobotFrameworkSingleBoundForLoop getSingleBoundForLoop();
 
 }

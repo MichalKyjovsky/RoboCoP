@@ -29,26 +29,32 @@ public class RobotFrameworkForLoopInRangeImpl extends ASTWrapperPsiElement imple
 
   @Override
   @Nullable
-  public RobotFrameworkForInRangeDoubleArgument getForInRangeDoubleArgument() {
-    return findChildByClass(RobotFrameworkForInRangeDoubleArgument.class);
+  public RobotFrameworkDoubleBoundForLoop getDoubleBoundForLoop() {
+    return findChildByClass(RobotFrameworkDoubleBoundForLoop.class);
   }
 
   @Override
   @Nullable
-  public RobotFrameworkForInRangeSingleArgument getForInRangeSingleArgument() {
-    return findChildByClass(RobotFrameworkForInRangeSingleArgument.class);
-  }
-
-  @Override
-  @Nullable
-  public RobotFrameworkForInRangeTripleArgument getForInRangeTripleArgument() {
-    return findChildByClass(RobotFrameworkForInRangeTripleArgument.class);
+  public RobotFrameworkDoubleBoundForLoopWithStep getDoubleBoundForLoopWithStep() {
+    return findChildByClass(RobotFrameworkDoubleBoundForLoopWithStep.class);
   }
 
   @Override
   @NotNull
-  public List<RobotFrameworkForLoopExecutionLine> getForLoopExecutionLineList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkForLoopExecutionLine.class);
+  public List<RobotFrameworkIndentedKeywordInvocationTest> getIndentedKeywordInvocationTestList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkIndentedKeywordInvocationTest.class);
+  }
+
+  @Override
+  @NotNull
+  public List<RobotFrameworkIndentedVariableAssignToKeyword> getIndentedVariableAssignToKeywordList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkIndentedVariableAssignToKeyword.class);
+  }
+
+  @Override
+  @Nullable
+  public RobotFrameworkSingleBoundForLoop getSingleBoundForLoop() {
+    return findChildByClass(RobotFrameworkSingleBoundForLoop.class);
   }
 
 }

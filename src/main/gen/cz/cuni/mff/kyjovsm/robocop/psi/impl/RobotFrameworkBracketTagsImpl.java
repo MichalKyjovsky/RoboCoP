@@ -28,15 +28,15 @@ public class RobotFrameworkBracketTagsImpl extends ASTWrapperPsiElement implemen
   }
 
   @Override
-  @Nullable
-  public RobotFrameworkEllipses getEllipses() {
-    return findChildByClass(RobotFrameworkEllipses.class);
+  @NotNull
+  public List<RobotFrameworkEllipses> getEllipsesList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkEllipses.class);
   }
 
   @Override
-  @Nullable
-  public RobotFrameworkEmptyLine getEmptyLine() {
-    return findChildByClass(RobotFrameworkEmptyLine.class);
+  @NotNull
+  public List<RobotFrameworkEmptyLine> getEmptyLineList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, RobotFrameworkEmptyLine.class);
   }
 
   @Override

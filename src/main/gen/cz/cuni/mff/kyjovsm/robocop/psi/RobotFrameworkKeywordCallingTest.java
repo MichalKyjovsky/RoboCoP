@@ -17,6 +17,6 @@ public interface RobotFrameworkKeywordCallingTest extends PsiElement {
   RobotFrameworkKeyword getKeyword();
 
   @NotNull
-  List<RobotFrameworkKeywordArgumentList> getKeywordArgumentListList();
+  List<RobotFrameworkKeywordArgList> getKeywordArgListList();
 
 }
