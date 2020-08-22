@@ -11,6 +11,7 @@ import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import cz.cuni.mff.kyjovsm.robocop.psi.*;
 import cz.cuni.mff.kyjovsm.robocop.elements.RobotFrameworkImplUtil;
+import com.intellij.psi.PsiReference;
 
 public class RobotFrameworkLibraryReferenceImpl extends ASTWrapperPsiElement implements RobotFrameworkLibraryReference {
 
@@ -25,6 +26,18 @@ public class RobotFrameworkLibraryReferenceImpl extends ASTWrapperPsiElement imp
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof RobotFrameworkVisitor) accept((RobotFrameworkVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @Nullable
+  public PsiReference getReference() {
+    return RobotFrameworkImplUtil.getReference(this);
+  }
+
+  @Override
+  @NotNull
+  public PsiReference[] getReferences() {
+    return RobotFrameworkImplUtil.getReferences(this);
   }
 
 }

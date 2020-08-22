@@ -4,6 +4,7 @@ package cz.cuni.mff.kyjovsm.robocop.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import com.intellij.navigation.ItemPresentation;
 
 public interface RobotFrameworkTestCasesTable extends PsiElement {
 
@@ -16,12 +17,9 @@ public interface RobotFrameworkTestCasesTable extends PsiElement {
   @NotNull
   RobotFrameworkTestCasesTableHeader getTestCasesTableHeader();
 
-  //WARNING: getNameIdentifier(...) is skipped
-  //matching getNameIdentifier(RobotFrameworkTestCasesTable, ...)
-  //methods are not found in RobotFrameworkImplUtil
+  @Nullable
+  PsiElement getNameIdentifier();
 
-  //WARNING: getPresentation(...) is skipped
-  //matching getPresentation(RobotFrameworkTestCasesTable, ...)
-  //methods are not found in RobotFrameworkImplUtil
+  ItemPresentation getPresentation();
 
 }

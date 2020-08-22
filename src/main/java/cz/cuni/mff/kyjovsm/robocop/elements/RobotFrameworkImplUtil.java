@@ -14,11 +14,13 @@ import cz.cuni.mff.kyjovsm.robocop.elements.presentations.RobotFrameworkTestCase
 import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkKeywordNameStub;
 import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkScalarAssignmentStub;
 import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkScalarVariableStub;
+import cz.cuni.mff.kyjovsm.robocop.icons.RobotFrameworkIcons;
 import cz.cuni.mff.kyjovsm.robocop.psi.*;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.swing.*;
 import java.io.File;
 
 public class RobotFrameworkImplUtil {
@@ -473,4 +475,80 @@ public class RobotFrameworkImplUtil {
     return "Robot Framework Scalar Assignment Left hand side: " + element.getText();
   }
   /* RobotFrameworkScalarAssignmentLhs - Implementation of defined methods - END */
+  /* RobotFrameworkLibraryReference - Implementation of defined methods - BEGIN */
+
+  @NotNull
+  public static PsiReference[] getReferences(RobotFrameworkLibraryReference element) {
+    return ReferenceProvidersRegistry.getReferencesFromProviders(element);
+  }
+
+  @Nullable
+  public static PsiReference getReference(RobotFrameworkLibraryReference element) {
+    PsiReference[] refs = ReferenceProvidersRegistry.getReferencesFromProviders(element);
+    if (refs.length <= 0) {
+      return null;
+    }
+    return refs[0];
+  }
+  /* RobotFrameworkLibraryReference - Implementation of defined methods - END */
+  /* RobotFrameworkTestCasesTable - Implementation of defined methods - BEGIN */
+
+  public static ItemPresentation getPresentation(final RobotFrameworkTestCasesTable element) {
+    return new ItemPresentation() {
+      @Nullable
+      @Override
+      public String getPresentableText() {
+        return "Test Case Table";
+      }
+
+      @Nullable
+      @Override
+      public String getLocationString() {
+        return element.getContainingFile().getName();
+      }
+
+      @Nullable
+      @Override
+      public Icon getIcon(boolean unused) {
+        return RobotFrameworkIcons.ICON_MAIN;
+      }
+    };
+  }
+
+  @Nullable
+  public static PsiElement getNameIdentifier(RobotFrameworkTestCasesTable element) {
+    return element.getTestCasesTableHeader();
+  }
+  /* RobotFrameworkTestCasesTable - Implementation of defined methods - END */
+  /* RobotFrameworkKeywordsTable - Implementation of defined methods - BEGIN */
+
+  public static ItemPresentation getPresentation(final RobotFrameworkKeywordsTable element) {
+    return new ItemPresentation() {
+      @Nullable
+      @Override
+      public String getPresentableText() {
+        return "Keywords Table";
+      }
+
+      @Nullable
+      @Override
+      public String getLocationString() {
+        return element.getContainingFile().getName();
+      }
+
+      @Nullable
+      @Override
+      public Icon getIcon(boolean unused) {
+        return RobotFrameworkIcons.ICON_MAIN;
+      }
+    };
+  }
+
+  @Nullable
+  public static PsiElement getNameIdentifier(RobotFrameworkKeywordsTable element) {
+    return element.getKeywordsTableHeader();
+  }
+  /* RobotFrameworkKeywordsTable - Implementation of defined methods - END */
+
+
 }
