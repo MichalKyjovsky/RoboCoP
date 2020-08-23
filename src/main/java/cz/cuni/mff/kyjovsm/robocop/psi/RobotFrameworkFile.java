@@ -21,6 +21,6 @@ public class RobotFrameworkFile extends PsiFileBase {
 
   @Override
   public String toString() {
-    return "Robot Framework File";
+    return getName();
   }
 }
