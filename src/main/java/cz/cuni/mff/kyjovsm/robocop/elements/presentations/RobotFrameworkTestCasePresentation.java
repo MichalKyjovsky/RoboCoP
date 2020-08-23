@@ -18,7 +18,7 @@ public class RobotFrameworkTestCasePresentation implements ItemPresentation {
   @Nullable
   @Override
   public String getPresentableText() {
-    return String.format("Robot Test: %s", rfTestCase.getName());
+    return String.format("Robot Test Case: %s", rfTestCase.getName());
   }
 
   @Nullable

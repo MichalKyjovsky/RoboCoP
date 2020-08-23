@@ -81,7 +81,9 @@ SETTING_LIST ::= (COLUMN_SEPARATOR_TOKEN  KEYWORD_ARGUMENT)+
 private SETTING_LIST_OR_ELLIPSES ::= SETTING_LIST | ELLIPSES_FOR_SETTINGS_TABLE
 private DOCUMENTATION_OR_ELLIPSES ::= (COLUMN_SEPARATOR_TOKEN DOCUMENTATION_TOKEN) | ELLIPSES_FOR_SETTINGS_TABLE { pin=1}
 
-LIBRARY_REFERENCE ::= LIBRARY_REFERENCE_TOKEN {methods=[getReference getReferences]}
+LIBRARY_REFERENCE ::= LIBRARY_REFERENCE_TOKEN { mixin="cz.cuni.mff.kyjovsm.robocop.psi.impl.RobotFrameworkNamedElementImpl"
+                                                implements="cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement"
+                                                methods=[getReference getReferences getName setName getNameIdentifier handleElementRename getPresentation toString]}
 LIBRARY_SETTING ::= LIBRARY_SETTING_TOKEN  COLUMN_SEPARATOR_TOKEN  LIBRARY_REFERENCE   SETTING_LIST_OR_ELLIPSES* { pin=3}
 GENERIC_SETTING_NAME ::= GENERIC_SETTING_TOKEN
 GENERIC_SETTING ::= GENERIC_SETTING_NAME SETTING_LIST_OR_ELLIPSES* { pin=1 }

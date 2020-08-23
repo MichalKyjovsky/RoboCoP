@@ -35,7 +35,7 @@ public class RobotFrameworkScalarAssignmentElementType extends IStubElementType<
 
   @Override
   public @NotNull String getExternalId() {
-    return String.format("Robot Framework Keyword: ", super.toString());
+    return String.format("Robot Framework Keyword Assignment: ", super.toString());
   }
 
   @Override

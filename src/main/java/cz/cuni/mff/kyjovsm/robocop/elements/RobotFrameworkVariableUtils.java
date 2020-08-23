@@ -2,20 +2,14 @@ package cz.cuni.mff.kyjovsm.robocop.elements;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.util.PsiTreeUtil;
 import cz.cuni.mff.kyjovsm.robocop.RobotFrameworkPsiFile;
-import cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkReference;
 import cz.cuni.mff.kyjovsm.robocop.psi.*;
 import org.jetbrains.annotations.NotNull;
 import cz.cuni.mff.kyjovsm.robocop.elements.search.VariableInfo;
 
-import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

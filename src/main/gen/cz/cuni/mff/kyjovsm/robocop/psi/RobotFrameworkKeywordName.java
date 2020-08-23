@@ -23,8 +23,4 @@ public interface RobotFrameworkKeywordName extends RobotFrameworkNamedElement, S
 
   ItemPresentation getPresentation();
 
-  //WARNING: getRegex(...) is skipped
-  //matching getRegex(RobotFrameworkKeywordName, ...)
-  //methods are not found in RobotFrameworkImplUtil
-
 }
