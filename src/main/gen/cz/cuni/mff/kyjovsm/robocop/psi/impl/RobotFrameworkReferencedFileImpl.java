@@ -2,8 +2,6 @@
 package cz.cuni.mff.kyjovsm.robocop.psi.impl;
 
 import java.util.List;
-
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
@@ -16,7 +14,7 @@ import com.intellij.navigation.ItemPresentation;
 import com.intellij.psi.PsiReference;
 import com.intellij.util.IncorrectOperationException;
 
-public class RobotFrameworkReferencedFileImpl extends ASTWrapperPsiElement implements RobotFrameworkReferencedFile {
+public class RobotFrameworkReferencedFileImpl extends RobotFrameworkNamedElementImpl implements RobotFrameworkReferencedFile {
 
   public RobotFrameworkReferencedFileImpl(@NotNull ASTNode node) {
     super(node);
