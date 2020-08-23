@@ -7,47 +7,20 @@ import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
 import cz.cuni.mff.kyjovsm.robocop.psi.RobotFrameworkFile;
-import cz.cuni.mff.kyjovsm.robocop.psi.RobotFrameworkLibraryReference;
-import cz.cuni.mff.kyjovsm.robocop.psi.RobotFrameworkVariable;
+import cz.cuni.mff.kyjovsm.robocop.psi.RobotFrameworkReferencedFile;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class RobotFrameworkUtil {
-  public static List<RobotFrameworkLibraryReference> findVariables(Project project, String key) {
-    List<RobotFrameworkLibraryReference> result = new ArrayList<>();
-    Collection<VirtualFile> virtualFiles =
-            FileTypeIndex.getFiles(RobotFrameworkFileType.INSTANCE, GlobalSearchScope.allScope(project));
+  public static RobotFrameworkFile findResourceFiles(Project project, String fileName) {
+    Collection<VirtualFile> virtualFiles = FileTypeIndex.getFiles(RobotFrameworkFileType.INSTANCE, GlobalSearchScope.allScope(project));
     for (VirtualFile virtualFile : virtualFiles) {
-      RobotFrameworkFile robotFrameworkFile = (RobotFrameworkFile) PsiManager.getInstance(project).findFile(virtualFile);
-      if (robotFrameworkFile != null) {
-        RobotFrameworkLibraryReference[] references = PsiTreeUtil.getChildrenOfType(robotFrameworkFile, RobotFrameworkLibraryReference.class);
-        if (references != null) {
-          for (RobotFrameworkLibraryReference reference : references) {
-            if (key.equals(reference.getReference())) {
-              result.add(reference);
-            }
-          }
-        }
+      RobotFrameworkFile rfFile = (RobotFrameworkFile) PsiManager.getInstance(project).findFile(virtualFile);
+      if (rfFile != null && rfFile.getName().equals(fileName)) {
+        return rfFile;
       }
     }
-    return result;
+    return null;
   }
-
-//  public static List<SimpleProperty> findProperties(Project project) {
-//    List<SimpleProperty> result = new ArrayList<>();
-//    Collection<VirtualFile> virtualFiles =
-//            FileTypeIndex.getFiles(SimpleFileType.INSTANCE, GlobalSearchScope.allScope(project));
-//    for (VirtualFile virtualFile : virtualFiles) {
-//      SimpleFile simpleFile = (SimpleFile) PsiManager.getInstance(project).findFile(virtualFile);
-//      if (simpleFile != null) {
-//        SimpleProperty[] properties = PsiTreeUtil.getChildrenOfType(simpleFile, SimpleProperty.class);
-//        if (properties != null) {
-//          Collections.addAll(result, properties);
-//        }
-//      }
-//    }
-//    return result;
-//  }
 }
+

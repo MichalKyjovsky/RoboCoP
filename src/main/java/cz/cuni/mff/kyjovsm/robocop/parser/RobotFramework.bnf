@@ -48,7 +48,6 @@
     implements("SCALAR_ASSIGNMENT_LHS")="cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement"
     implements("SCALAR_DEFAULT_ARG_VALUE")="cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement"
     implements("ARGUMENT_DEFINITION")="cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement"
-    implements("REFERENCED_FILE")="cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement"
 
 }
 
@@ -94,7 +93,9 @@ TEST_SETUP_SETTING ::= TEST_SETUP_TOKEN ELLIPSES_FOR_SETTINGS_TABLE+ COLUMN_SEPA
 TEST_TIMEOUT_SETTING ::= TEST_TIMEOUT_SETTING_TOKEN  ELLIPSES_FOR_SETTINGS_TABLE+ COLUMN_SEPARATOR_TOKEN TIMEOUT_VALUE_TOKEN |
                          TEST_TIMEOUT_SETTING_TOKEN  COLUMN_SEPARATOR_TOKEN  TIMEOUT_VALUE_TOKEN { pin=1 }
 
-REFERENCED_FILE ::= ROBOT_FILE_TOKEN { methods=[getReference getReferences getName setName getNameIdentifier handleElementRename getPresentation toString]}
+REFERENCED_FILE ::= ROBOT_FILE_TOKEN { mixin="cz.cuni.mff.kyjovsm.robocop.psi.impl.RobotFrameworkNamedElementImpl"
+                                       implements="cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement"
+                                       methods=[getReference getReferences getName setName getNameIdentifier handleElementRename getPresentation toString]}
 RESOURCE_SETTING ::= RESOURCE_SETTING_TOKEN  ELLIPSES_FOR_SETTINGS_TABLE* COLUMN_SEPARATOR_TOKEN  REFERENCED_FILE { pin = 1 }
 VARIABLE_SETTING ::= VARIABLE_SETTING_TOKEN  ELLIPSES_FOR_SETTINGS_TABLE* COLUMN_SEPARATOR_TOKEN  REFERENCED_FILE { pin = 1 }
 
@@ -241,6 +242,6 @@ private EMPTY_FOR_LOOP_LINE ::=     NEWLINE_TOKEN END_OF_LINE* & NEWLINE_TOKEN
 
 KEYWORD ::= ROBOT_KEYWORD_TOKEN { methods=[getName setName getNameIdentifier getReference getReferences handleElementRename toString]}
 
-KEYWORD_NAME ::= ROBOT_KEYWORD_NAME_TOKEN { methods=[getName setName getNameIdentifier getPresentation toString getRegex] }
+KEYWORD_NAME ::= ROBOT_KEYWORD_NAME_TOKEN { methods=[getName setName getNameIdentifier getPresentation toString] }
 
 ERROR ::= INVALID_SYNTAX_TOKEN

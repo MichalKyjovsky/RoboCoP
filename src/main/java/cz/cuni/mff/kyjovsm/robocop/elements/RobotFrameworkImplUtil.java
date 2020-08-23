@@ -1,6 +1,7 @@
 package cz.cuni.mff.kyjovsm.robocop.elements;
 
 import com.google.common.base.Optional;
+import com.intellij.lang.ASTNode;
 import com.intellij.navigation.ItemPresentation;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
@@ -15,6 +16,7 @@ import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkKeywordNameStub;
 import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkScalarAssignmentStub;
 import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkScalarVariableStub;
 import cz.cuni.mff.kyjovsm.robocop.icons.RobotFrameworkIcons;
+import cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkTypes;
 import cz.cuni.mff.kyjovsm.robocop.psi.*;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
@@ -28,10 +30,7 @@ public class RobotFrameworkImplUtil {
   /* RobotFrameworkKeywordName - Implementation of defined method - BEGIN*/
   @Nullable
   public static PsiElement getNameIdentifier(RobotFrameworkKeywordName element) {
-    if (element == null) {
-      return null;
-    }
-    return element.getNameIdentifier();
+    return element;
   }
 
   public static ItemPresentation getPresentation(final RobotFrameworkKeywordName element) {
@@ -373,6 +372,7 @@ public class RobotFrameworkImplUtil {
   /* RobotFrameworkArgumentDefinition - Implementation of defined methods - END */
 
   /* RobotFrameworkReferencedFile - Implementation of defined methods - BEGIN */
+
   @NotNull
   public static PsiReference[] getReferences(RobotFrameworkReferencedFile element) {
     return ReferenceProvidersRegistry.getReferencesFromProviders(element);
@@ -399,14 +399,20 @@ public class RobotFrameworkImplUtil {
     final String oldText = element.getText();
     final int indexOfLastSlash = oldText.lastIndexOf(File.separatorChar);
     final String fullPathOfNewResourceName = oldText.substring(0, indexOfLastSlash + 1) + newName;
-    RobotFrameworkReferencedFile replacement = ElementFactory.createRobotFrameworkReferencedFile(element.getProject(), fullPathOfNewResourceName);
+    RobotFrameworkReferencedFile replacement = ElementFactory.createReferencedFile(element.getProject(), fullPathOfNewResourceName);
     element.getParent().getNode().replaceChild(element.getNode(), replacement.getNode());
     return replacement;
   }
 
   @Nullable
   public static PsiElement getNameIdentifier(RobotFrameworkReferencedFile element) {
-    return element;
+    ASTNode keyNode = element.getNode().findChildByType(RobotFrameworkTypes.ROBOT_FILE_TOKEN);
+    if (keyNode != null) {
+      System.out.println("REACHED");
+      return keyNode.getPsi();
+    } else {
+      return null;
+    }
   }
 
   public static PsiElement handleElementRename(RobotFrameworkReferencedFile element, String name) {
