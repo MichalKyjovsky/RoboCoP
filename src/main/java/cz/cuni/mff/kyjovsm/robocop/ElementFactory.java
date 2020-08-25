@@ -27,7 +27,6 @@ public class ElementFactory {
   }
 
   public static RobotFrameworkPsiFile createFile(Project project, String text) {
-
     String name = "TestCase_N.robot";
     return (RobotFrameworkPsiFile) PsiFileFactory.getInstance(project)
             .createFileFromText(name, RobotFrameworkFileType.INSTANCE, text);
@@ -99,6 +98,16 @@ public class ElementFactory {
             "Resource  %s\n";
     RobotFrameworkPsiFile file = createFile(project, format(template, fullPathOfNewResourceName));
     return PsiTreeUtil.findChildOfType(file, RobotFrameworkReferencedFile.class);
+  }
+
+  public static RobotFrameworkReferencedFile createReferencedFile(Project project, String name) {
+    final RobotFrameworkFile rfFile = createFileR(project, name);
+    return (RobotFrameworkReferencedFile) rfFile.getFirstChild();
+  }
+
+  public static RobotFrameworkFile createFileR(Project project, String text) {
+    String name = "dummy.robot";
+    return (RobotFrameworkFile) PsiFileFactory.getInstance(project).createFileFromText(name, RobotFrameworkFileType.INSTANCE, text);
   }
 
   public static RobotFrameworkScalarAssignmentLhs createScalarAssignmentLhs(Project project, String newName) {

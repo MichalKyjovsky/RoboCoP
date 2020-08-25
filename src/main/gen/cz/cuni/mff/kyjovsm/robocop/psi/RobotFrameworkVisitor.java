@@ -179,7 +179,7 @@ public class RobotFrameworkVisitor extends PsiElementVisitor {
   }
 
   public void visitLibraryReference(@NotNull RobotFrameworkLibraryReference o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitLibrarySetting(@NotNull RobotFrameworkLibrarySetting o) {

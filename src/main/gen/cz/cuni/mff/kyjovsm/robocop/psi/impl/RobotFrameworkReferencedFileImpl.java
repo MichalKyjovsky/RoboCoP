@@ -8,14 +8,13 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import cz.cuni.mff.kyjovsm.robocop.psi.*;
 import cz.cuni.mff.kyjovsm.robocop.elements.RobotFrameworkImplUtil;
 import com.intellij.navigation.ItemPresentation;
 import com.intellij.psi.PsiReference;
 import com.intellij.util.IncorrectOperationException;
 
-public class RobotFrameworkReferencedFileImpl extends ASTWrapperPsiElement implements RobotFrameworkReferencedFile {
+public class RobotFrameworkReferencedFileImpl extends RobotFrameworkNamedElementImpl implements RobotFrameworkReferencedFile {
 
   public RobotFrameworkReferencedFileImpl(@NotNull ASTNode node) {
     super(node);

@@ -17,6 +17,7 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
+    plugins 'python'
     version = '2020.2'
     downloadSources = false
     type = 'PY'
@@ -31,6 +32,7 @@ runIde {
 }
 
 patchPluginXml {
+
     changeNotes """
       Add change notes here.<br>
       <em>most HTML tags may be used</em>"""

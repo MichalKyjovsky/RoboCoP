@@ -48,7 +48,6 @@
     implements("SCALAR_ASSIGNMENT_LHS")="cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement"
     implements("SCALAR_DEFAULT_ARG_VALUE")="cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement"
     implements("ARGUMENT_DEFINITION")="cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement"
-    implements("REFERENCED_FILE")="cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement"
 
 }
 
@@ -82,7 +81,9 @@ SETTING_LIST ::= (COLUMN_SEPARATOR_TOKEN  KEYWORD_ARGUMENT)+
 private SETTING_LIST_OR_ELLIPSES ::= SETTING_LIST | ELLIPSES_FOR_SETTINGS_TABLE
 private DOCUMENTATION_OR_ELLIPSES ::= (COLUMN_SEPARATOR_TOKEN DOCUMENTATION_TOKEN) | ELLIPSES_FOR_SETTINGS_TABLE { pin=1}
 
-LIBRARY_REFERENCE ::= LIBRARY_REFERENCE_TOKEN {methods=[getReference getReferences]}
+LIBRARY_REFERENCE ::= LIBRARY_REFERENCE_TOKEN { mixin="cz.cuni.mff.kyjovsm.robocop.psi.impl.RobotFrameworkNamedElementImpl"
+                                                implements="cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement"
+                                                methods=[getReference getReferences getName setName getNameIdentifier handleElementRename getPresentation toString]}
 LIBRARY_SETTING ::= LIBRARY_SETTING_TOKEN  COLUMN_SEPARATOR_TOKEN  LIBRARY_REFERENCE   SETTING_LIST_OR_ELLIPSES* { pin=3}
 GENERIC_SETTING_NAME ::= GENERIC_SETTING_TOKEN
 GENERIC_SETTING ::= GENERIC_SETTING_NAME SETTING_LIST_OR_ELLIPSES* { pin=1 }
@@ -94,7 +95,9 @@ TEST_SETUP_SETTING ::= TEST_SETUP_TOKEN ELLIPSES_FOR_SETTINGS_TABLE+ COLUMN_SEPA
 TEST_TIMEOUT_SETTING ::= TEST_TIMEOUT_SETTING_TOKEN  ELLIPSES_FOR_SETTINGS_TABLE+ COLUMN_SEPARATOR_TOKEN TIMEOUT_VALUE_TOKEN |
                          TEST_TIMEOUT_SETTING_TOKEN  COLUMN_SEPARATOR_TOKEN  TIMEOUT_VALUE_TOKEN { pin=1 }
 
-REFERENCED_FILE ::= ROBOT_FILE_TOKEN { methods=[getReference getReferences getName setName getNameIdentifier handleElementRename getPresentation toString]}
+REFERENCED_FILE ::= ROBOT_FILE_TOKEN { mixin="cz.cuni.mff.kyjovsm.robocop.psi.impl.RobotFrameworkNamedElementImpl"
+                                       implements="cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement"
+                                       methods=[getReference getReferences getName setName getNameIdentifier handleElementRename getPresentation toString]}
 RESOURCE_SETTING ::= RESOURCE_SETTING_TOKEN  ELLIPSES_FOR_SETTINGS_TABLE* COLUMN_SEPARATOR_TOKEN  REFERENCED_FILE { pin = 1 }
 VARIABLE_SETTING ::= VARIABLE_SETTING_TOKEN  ELLIPSES_FOR_SETTINGS_TABLE* COLUMN_SEPARATOR_TOKEN  REFERENCED_FILE { pin = 1 }
 
@@ -114,7 +117,7 @@ VARIABLES_LINE ::= SCALAR_ASSIGNMENT_LHS (ASSIGNABLE_IN_VARIABLES_TBL)? END_OF_L
                    ELLIPSES_LINE_SETTINGS END_OF_LINE* { recoverWhile="not_a_newline_token" }
 
 /* Test cases table */
-TEST_CASES_TABLE ::= TEST_CASES_TABLE_HEADER EMPTY_LINE* TEST_CASE* { pin = 3 methods=[getNameIdentifier getPresentation]}
+TEST_CASES_TABLE ::= TEST_CASES_TABLE_HEADER EMPTY_LINE* TEST_CASE* { pin = 3 methods=[getNameIdentifier getPresentation] }
 
 TEST_CASES_TABLE_HEADER ::= TEST_CASES_TABLE_HEADER_TOKEN END_OF_LINE* (NEWLINE_TOKEN | <<eof>>)
 
@@ -241,6 +244,6 @@ private EMPTY_FOR_LOOP_LINE ::=     NEWLINE_TOKEN END_OF_LINE* & NEWLINE_TOKEN
 
 KEYWORD ::= ROBOT_KEYWORD_TOKEN { methods=[getName setName getNameIdentifier getReference getReferences handleElementRename toString]}
 
-KEYWORD_NAME ::= ROBOT_KEYWORD_NAME_TOKEN { methods=[getName setName getNameIdentifier getPresentation toString getRegex] }
+KEYWORD_NAME ::= ROBOT_KEYWORD_NAME_TOKEN { methods=[getName setName getNameIdentifier getPresentation toString] }
 
 ERROR ::= INVALID_SYNTAX_TOKEN

@@ -1,6 +1,7 @@
 package cz.cuni.mff.kyjovsm.robocop.elements;
 
 import com.google.common.base.Optional;
+import com.intellij.lang.ASTNode;
 import com.intellij.navigation.ItemPresentation;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
@@ -9,16 +10,20 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
 import cz.cuni.mff.kyjovsm.robocop.ElementFactory;
 import cz.cuni.mff.kyjovsm.robocop.elements.presentations.RobotFrameworkKeywordNamePresentation;
+import cz.cuni.mff.kyjovsm.robocop.elements.presentations.RobotFrameworkLibraryPresentation;
 import cz.cuni.mff.kyjovsm.robocop.elements.presentations.RobotFrameworkReferencedFilePresentation;
 import cz.cuni.mff.kyjovsm.robocop.elements.presentations.RobotFrameworkTestCasePresentation;
 import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkKeywordNameStub;
 import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkScalarAssignmentStub;
 import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkScalarVariableStub;
+import cz.cuni.mff.kyjovsm.robocop.icons.RobotFrameworkIcons;
+import cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkTypes;
 import cz.cuni.mff.kyjovsm.robocop.psi.*;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.swing.*;
 import java.io.File;
 
 public class RobotFrameworkImplUtil {
@@ -26,10 +31,7 @@ public class RobotFrameworkImplUtil {
   /* RobotFrameworkKeywordName - Implementation of defined method - BEGIN*/
   @Nullable
   public static PsiElement getNameIdentifier(RobotFrameworkKeywordName element) {
-    if (element == null) {
-      return null;
-    }
-    return element.getNameIdentifier();
+    return element;
   }
 
   public static ItemPresentation getPresentation(final RobotFrameworkKeywordName element) {
@@ -371,6 +373,7 @@ public class RobotFrameworkImplUtil {
   /* RobotFrameworkArgumentDefinition - Implementation of defined methods - END */
 
   /* RobotFrameworkReferencedFile - Implementation of defined methods - BEGIN */
+
   @NotNull
   public static PsiReference[] getReferences(RobotFrameworkReferencedFile element) {
     return ReferenceProvidersRegistry.getReferencesFromProviders(element);
@@ -397,14 +400,19 @@ public class RobotFrameworkImplUtil {
     final String oldText = element.getText();
     final int indexOfLastSlash = oldText.lastIndexOf(File.separatorChar);
     final String fullPathOfNewResourceName = oldText.substring(0, indexOfLastSlash + 1) + newName;
-    RobotFrameworkReferencedFile replacement = ElementFactory.createRobotFrameworkReferencedFile(element.getProject(), fullPathOfNewResourceName);
+    RobotFrameworkReferencedFile replacement = ElementFactory.createReferencedFile(element.getProject(), fullPathOfNewResourceName);
     element.getParent().getNode().replaceChild(element.getNode(), replacement.getNode());
     return replacement;
   }
 
   @Nullable
   public static PsiElement getNameIdentifier(RobotFrameworkReferencedFile element) {
-    return element;
+    ASTNode keyNode = element.getNode().findChildByType(RobotFrameworkTypes.ROBOT_FILE_TOKEN);
+    if (keyNode != null) {
+      return keyNode.getPsi();
+    } else {
+      return null;
+    }
   }
 
   public static PsiElement handleElementRename(RobotFrameworkReferencedFile element, String name) {
@@ -418,7 +426,6 @@ public class RobotFrameworkImplUtil {
   public static String toString(RobotFrameworkReferencedFile element) {
     return "Resource Setting: " + element.getText();
   }
-
   /* RobotFrameworkReferencedFile - Implementation of defined methods - END */
 
   /* RobotFrameworkScalarAssignmentLhs - Implementation of defined methods - BEGIN */
@@ -473,4 +480,120 @@ public class RobotFrameworkImplUtil {
     return "Robot Framework Scalar Assignment Left hand side: " + element.getText();
   }
   /* RobotFrameworkScalarAssignmentLhs - Implementation of defined methods - END */
+  /* RobotFrameworkLibraryReference - Implementation of defined methods - BEGIN */
+
+  @NotNull
+  public static PsiReference[] getReferences(RobotFrameworkLibraryReference element) {
+    return ReferenceProvidersRegistry.getReferencesFromProviders(element);
+  }
+
+  @Nullable
+  public static PsiReference getReference(RobotFrameworkLibraryReference element) {
+    PsiReference[] refs = ReferenceProvidersRegistry.getReferencesFromProviders(element);
+    System.out.println(refs.length);
+    if (refs.length <= 0) {
+      return null;
+    }
+    return refs[0];
+  }
+
+  @Nullable
+  @NonNls
+  public static String getName(RobotFrameworkLibraryReference element) {
+    final String text = element.getText();
+    final int indexOfLastSlash = text.lastIndexOf(File.separatorChar);
+    return text.substring(indexOfLastSlash + 1);
+  }
+
+  public static PsiElement setName(RobotFrameworkLibraryReference element, @NonNls @NotNull String newName) throws com.intellij.util.IncorrectOperationException {
+    final String oldText = element.getText();
+    final int indexOfLastSlash = oldText.lastIndexOf(File.separatorChar);
+    final String fullPathOfNewResourceName = oldText.substring(0, indexOfLastSlash + 1) + newName;
+    RobotFrameworkReferencedFile replacement = ElementFactory.createReferencedFile(element.getProject(), fullPathOfNewResourceName);
+    element.getParent().getNode().replaceChild(element.getNode(), replacement.getNode());
+    return replacement;
+  }
+
+  @Nullable
+  public static PsiElement getNameIdentifier(RobotFrameworkLibraryReference element) {
+    ASTNode keyNode = element.getNode().findChildByType(RobotFrameworkTypes.ROBOT_FILE_TOKEN);
+    if (keyNode != null) {
+      return keyNode.getPsi();
+    } else {
+      return null;
+    }
+  }
+
+  public static PsiElement handleElementRename(RobotFrameworkLibraryReference element, String name) {
+    return element.setName(name);
+  }
+
+  public static ItemPresentation getPresentation(final RobotFrameworkLibraryReference element) {
+    return new RobotFrameworkLibraryPresentation(element);
+  }
+
+  public static String toString(RobotFrameworkLibraryReference element) {
+    return "Library Setting: " + element.getText();
+  }
+  /* RobotFrameworkLibraryReference - Implementation of defined methods - END */
+  /* RobotFrameworkTestCasesTable - Implementation of defined methods - BEGIN */
+
+  public static ItemPresentation getPresentation(final RobotFrameworkTestCasesTable element) {
+    return new ItemPresentation() {
+      @Nullable
+      @Override
+      public String getPresentableText() {
+        return "Test Case Table";
+      }
+
+      @Nullable
+      @Override
+      public String getLocationString() {
+        return element.getContainingFile().getName();
+      }
+
+      @Nullable
+      @Override
+      public Icon getIcon(boolean unused) {
+        return RobotFrameworkIcons.ICON_MAIN;
+      }
+    };
+  }
+
+  @Nullable
+  public static PsiElement getNameIdentifier(RobotFrameworkTestCasesTable element) {
+    return element.getTestCasesTableHeader();
+  }
+  /* RobotFrameworkTestCasesTable - Implementation of defined methods - END */
+  /* RobotFrameworkKeywordsTable - Implementation of defined methods - BEGIN */
+
+  public static ItemPresentation getPresentation(final RobotFrameworkKeywordsTable element) {
+    return new ItemPresentation() {
+      @Nullable
+      @Override
+      public String getPresentableText() {
+        return "Keywords Table";
+      }
+
+      @Nullable
+      @Override
+      public String getLocationString() {
+        return element.getContainingFile().getName();
+      }
+
+      @Nullable
+      @Override
+      public Icon getIcon(boolean unused) {
+        return RobotFrameworkIcons.ICON_MAIN;
+      }
+    };
+  }
+
+  @Nullable
+  public static PsiElement getNameIdentifier(RobotFrameworkKeywordsTable element) {
+    return element.getKeywordsTableHeader();
+  }
+  /* RobotFrameworkKeywordsTable - Implementation of defined methods - END */
+
+
 }
