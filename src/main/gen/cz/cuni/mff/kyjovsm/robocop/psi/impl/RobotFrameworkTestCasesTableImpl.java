@@ -11,6 +11,7 @@ import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import cz.cuni.mff.kyjovsm.robocop.psi.*;
 import cz.cuni.mff.kyjovsm.robocop.elements.RobotFrameworkImplUtil;
+import com.intellij.navigation.ItemPresentation;
 
 public class RobotFrameworkTestCasesTableImpl extends ASTWrapperPsiElement implements RobotFrameworkTestCasesTable {
 
@@ -43,6 +44,17 @@ public class RobotFrameworkTestCasesTableImpl extends ASTWrapperPsiElement imple
   @NotNull
   public RobotFrameworkTestCasesTableHeader getTestCasesTableHeader() {
     return findNotNullChildByClass(RobotFrameworkTestCasesTableHeader.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getNameIdentifier() {
+    return RobotFrameworkImplUtil.getNameIdentifier(this);
+  }
+
+  @Override
+  public ItemPresentation getPresentation() {
+    return RobotFrameworkImplUtil.getPresentation(this);
   }
 
 }

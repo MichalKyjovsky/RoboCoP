@@ -4,15 +4,30 @@ package cz.cuni.mff.kyjovsm.robocop.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement;
+import com.intellij.navigation.ItemPresentation;
+import com.intellij.psi.PsiReference;
+import com.intellij.util.IncorrectOperationException;
 
-public interface RobotFrameworkLibraryReference extends PsiElement {
+public interface RobotFrameworkLibraryReference extends RobotFrameworkNamedElement {
 
-  //WARNING: getReference(...) is skipped
-  //matching getReference(RobotFrameworkLibraryReference, ...)
-  //methods are not found in RobotFrameworkImplUtil
+  @Nullable
+  PsiReference getReference();
 
-  //WARNING: getReferences(...) is skipped
-  //matching getReferences(RobotFrameworkLibraryReference, ...)
-  //methods are not found in RobotFrameworkImplUtil
+  @NotNull
+  PsiReference[] getReferences();
+
+  @Nullable
+  @NonNls
+  String getName();
+
+  PsiElement setName(@NonNls @NotNull String newName) throws IncorrectOperationException;
+
+  @Nullable
+  PsiElement getNameIdentifier();
+
+  PsiElement handleElementRename(String name);
+
+  ItemPresentation getPresentation();
 
 }

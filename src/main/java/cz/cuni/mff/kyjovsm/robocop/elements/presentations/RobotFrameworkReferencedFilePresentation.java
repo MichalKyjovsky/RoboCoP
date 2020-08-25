@@ -1,6 +1,7 @@
 package cz.cuni.mff.kyjovsm.robocop.elements.presentations;
 
 import com.intellij.navigation.ItemPresentation;
+import com.intellij.psi.PsiFile;
 import cz.cuni.mff.kyjovsm.robocop.icons.RobotFrameworkIcons;
 import cz.cuni.mff.kyjovsm.robocop.psi.RobotFrameworkReferencedFile;
 import org.jetbrains.annotations.Nullable;
@@ -22,10 +23,8 @@ public class RobotFrameworkReferencedFilePresentation implements ItemPresentatio
 
   @Override
   public @Nullable String getLocationString() {
-    if (robotFrameworkReferencedFile.getContainingFile() == null) {
-      return null;
-    }
-    return robotFrameworkReferencedFile.getContainingFile().getName();
+    PsiFile containingFile = robotFrameworkReferencedFile.getContainingFile();
+    return containingFile == null ? null : containingFile.getName();
   }
 
   @Override
