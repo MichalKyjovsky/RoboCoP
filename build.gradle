@@ -5,7 +5,7 @@ plugins {
 
 group 'cz.cuni.mff.kyjovsm.robocop'
 version '1.0-SNAPSHOT'
-sourceCompatibility = 14
+sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
@@ -32,9 +32,7 @@ runIde {
 }
 
 patchPluginXml {
-    version = project.version
-    sinceBuild = '202'
-    untilBuild = '202.*'
+
     changeNotes """
       Add change notes here.<br>
       <em>most HTML tags may be used</em>"""
