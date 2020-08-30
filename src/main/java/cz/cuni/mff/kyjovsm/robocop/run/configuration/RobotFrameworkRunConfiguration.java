@@ -14,16 +14,15 @@ import com.intellij.openapi.roots.ProjectRootManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 
 /**
- *
+ * A class providing methods which are invoked once the
+ * configuration is in the Run state, i.e. when the user
+ * runs the configuration and changes are visible in the
+ * IDE.
  */
 public class RobotFrameworkRunConfiguration extends RunConfigurationBase {
 
-  private static final Logger logger = Logger.getLogger(RobotFrameworkRunConfiguration.class.getName());
   private static String PROJECT_SDK = "";
 
   /**
