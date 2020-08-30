@@ -13,10 +13,21 @@
     <depends>com.intellij.modules.lang</depends>
     <depends>com.intellij.modules.python</depends>
 
+
     <extensions defaultExtensionNs="com.intellij">
+        <psi.referenceContributor implementation="cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkReferenceContributor"/>
+        <colorSettingsPage implementation="cz.cuni.mff.kyjovsm.robocop.RobotFrameworkColorSettingPage"/>
+        <lang.syntaxHighlighterFactory language="RobotFramework"
+                                       implementationClass="cz.cuni.mff.kyjovsm.robocop.RobotFrameworkSyntaxHighlighterFactory"/>
         <fileType name="Robot Framework File" implementationClass="cz.cuni.mff.kyjovsm.robocop.RobotFrameworkFileType" fieldName="INSTANCE"
                   language="RobotFramework" extensions="robot"/>
         <configurationType implementation="cz.cuni.mff.kyjovsm.robocop.run.configuration.RobotFrameworkConfigurationType"/>
+        <lang.parserDefinition language="RobotFramework"
+                               implementationClass="cz.cuni.mff.kyjovsm.robocop.RobotFrameworkParserDefinition"/>
+        <stubElementTypeHolder class="cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkTypes"/>
+        <internalFileTemplate name="fileTemplates.internal.RobotFrameworkTestCasesFile"/>
+        <internalFileTemplate name="fileTemplates.internal.RobotFrameworkKeywordsDefinitionFile"/>
+
     </extensions>
 
     <actions>
@@ -25,7 +36,7 @@
 
         <action id="cz.cuni.mff.kyjovsm.robocop.actions.NewRobotFrameworkFileAction"
                 class="cz.cuni.mff.kyjovsm.robocop.actions.NewRobotFrameworkFileAction" text="New Robot File"
-                description="Creates either a new Robot Framework Test Suite or Keywords definition file">
+                description="Creates either a new robot framework test suite or keywords definition file">
             <add-to-group group-id="NewXml" anchor="last"/>
         </action>
     </actions>
