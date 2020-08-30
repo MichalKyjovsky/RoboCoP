@@ -18,7 +18,7 @@ public class RobotFrameworkTokenType extends IElementType {
    *
    * @param debugName the name of the element type, used for debugging purposes.
    */
-  protected RobotFrameworkTokenType(@NotNull @NonNls String debugName) {
+  public RobotFrameworkTokenType(@NotNull @NonNls String debugName) {
     super(debugName, RobotFrameworkLanguage.INSTANCE);
   }
 

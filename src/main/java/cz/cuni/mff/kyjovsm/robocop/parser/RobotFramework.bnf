@@ -1,0 +1,249 @@
+{
+    parserClass="cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkParser"
+    parserUtilClass="cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkParserUtil"
+
+    extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+    psiClassPrefix="RobotFramework"
+    psiImplClassSuffix="Impl"
+    psiPackage="cz.cuni.mff.kyjovsm.robocop.psi"
+    psiImplPackage="cz.cuni.mff.kyjovsm.robocop.psi.impl"
+
+    elementTypeHolderClass="cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkTypes"
+    elementTypeClass="cz.cuni.mff.kyjovsm.robocop.psi.RobotFrameworkElementType"
+    tokenTypeClass="cz.cuni.mff.kyjovsm.robocop.psi.RobotFrameworkTokenType"
+
+    psiImplUtilClass="cz.cuni.mff.kyjovsm.robocop.elements.RobotFrameworkImplUtil"
+
+    implements("KEYWORD")=["cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement"
+                     "com.intellij.psi.StubBasedPsiElement<cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkKeywordStub>"]
+    extends("KEYWORD")="com.intellij.extapi.psi.StubBasedPsiElementBase<cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkKeywordStub>"
+    elementTypeClass("KEYWORD")="cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkKeywordElementType"
+
+    implements("KEYWORD_ARGUMENT")=["cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement"
+                         "com.intellij.psi.StubBasedPsiElement<cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkKeywordArgumentStub>"]
+    extends("KEYWORD_ARGUMENT")="com.intellij.extapi.psi.StubBasedPsiElementBase<cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkKeywordArgumentStub>"
+    elementTypeClass("KEYWORD_ARGUMENT")="cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkKeywordArgumentElementType"
+
+    implements("KEYWORD_NAME")=["cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement"
+                         "com.intellij.psi.StubBasedPsiElement<cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkKeywordNameStub>"]
+    extends("KEYWORD_NAME")="com.intellij.extapi.psi.StubBasedPsiElementBase<cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkKeywordNameStub>"
+    elementTypeClass("KEYWORD_NAME")="cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkKeywordNameElementType"
+
+    implements("TEST_CASE")=["cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement"
+                       "com.intellij.psi.StubBasedPsiElement<cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkTestCaseStub>"]
+    extends("TEST_CASE")="com.intellij.extapi.psi.StubBasedPsiElementBase<cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkTestCaseStub>"
+    elementTypeClass("TEST_CASE")="cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkTestCaseElementType"
+
+    implements("SCALAR_VARIABLE")=["cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement"
+                              "com.intellij.psi.StubBasedPsiElement<cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkScalarVariableStub>"]
+    extends("SCALAR_VARIABLE")="com.intellij.extapi.psi.StubBasedPsiElementBase<cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkScalarVariableStub>"
+    elementTypeClass("SCALAR_VARIABLE")="cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkScalarVariableElementType"
+
+    implements("SCALAR_ASSIGNMENT")=["cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement"
+                                "com.intellij.psi.StubBasedPsiElement<cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkScalarAssignmentStub>"]
+    extends("SCALAR_ASSIGNMENT")="com.intellij.extapi.psi.StubBasedPsiElementBase<cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkScalarAssignmentStub>"
+    elementTypeClass("SCALAR_ASSIGNMENT")="cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkScalarAssignmentElementType"
+
+    implements("SCALAR_ASSIGNMENT_LHS")="cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement"
+    implements("SCALAR_DEFAULT_ARG_VALUE")="cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement"
+    implements("ARGUMENT_DEFINITION")="cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement"
+
+}
+
+
+robotFile ::= (TABLE | EMPTY_LINE )* END_OF_LINE*
+
+TABLE ::= (SETTINGS_TABLE|VARIABLES_TABLE|TEST_CASES_TABLE|KEYWORDS_TABLE)
+
+/* Settings Table */
+SETTINGS_TABLE ::= SETTINGS_TABLE_HEADER (SETTINGS_LINE EMPTY_LINE | EMPTY_LINE)* (SETTINGS_LINE END_OF_LINE* <<eof>>)? { pin=2 }
+
+SETTINGS_TABLE_HEADER ::= SETTINGS_TABLE_HEADER_TOKEN EMPTY_LINE
+
+SETTINGS_LINE ::= WHITESPACE_TOKEN? SETTING END_OF_LINE* |
+                  ELLIPSES_LINE_SETTINGS    END_OF_LINE* {recoverWhile="not_a_newline_token"}
+
+SETTING ::= FORCE_TAGS_SETTING |
+            RESOURCE_SETTING |
+            VARIABLE_SETTING |
+            TEST_SETUP_SETTING |
+            LIBRARY_SETTING |
+            TEST_TIMEOUT_SETTING |
+            DOCUMENTATION_SETTING |
+            METADATA_SETTING |
+            TEST_TEMPLATE_SETTING |
+            GENERIC_SETTING
+
+private TAG_LIST_OR_ELLIPSES_NO_COL ::= TAG_LIST | ELLIPSES_FOR_SETTINGS_TABLE
+FORCE_TAGS_SETTING ::= FORCE_TAGS_SETTING_KEYWORD_TOKEN TAG_LIST_OR_ELLIPSES_NO_COL* { pin = 1 }
+SETTING_LIST ::= (COLUMN_SEPARATOR_TOKEN  KEYWORD_ARGUMENT)+
+private SETTING_LIST_OR_ELLIPSES ::= SETTING_LIST | ELLIPSES_FOR_SETTINGS_TABLE
+private DOCUMENTATION_OR_ELLIPSES ::= (COLUMN_SEPARATOR_TOKEN DOCUMENTATION_TOKEN) | ELLIPSES_FOR_SETTINGS_TABLE { pin=1}
+
+LIBRARY_REFERENCE ::= LIBRARY_REFERENCE_TOKEN { mixin="cz.cuni.mff.kyjovsm.robocop.psi.impl.RobotFrameworkNamedElementImpl"
+                                                implements="cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement"
+                                                methods=[getReference getReferences getName setName getNameIdentifier handleElementRename getPresentation toString]}
+LIBRARY_SETTING ::= LIBRARY_SETTING_TOKEN  COLUMN_SEPARATOR_TOKEN  LIBRARY_REFERENCE   SETTING_LIST_OR_ELLIPSES* { pin=3}
+GENERIC_SETTING_NAME ::= GENERIC_SETTING_TOKEN
+GENERIC_SETTING ::= GENERIC_SETTING_NAME SETTING_LIST_OR_ELLIPSES* { pin=1 }
+
+TEST_SETUP_TOKEN ::=  (TEST_SETUP_SETTING_TOKEN | TEST_TEARDOWN_SETTING_TOKEN | SUITE_SETUP_SETTING_TOKEN | SUITE_TEARDOWN_SETTING_TOKEN)
+TEST_SETUP_SETTING ::= TEST_SETUP_TOKEN ELLIPSES_FOR_SETTINGS_TABLE+ COLUMN_SEPARATOR_TOKEN KEYWORD_INVOCATION_SETTINGS |
+                       TEST_SETUP_TOKEN COLUMN_SEPARATOR_TOKEN KEYWORD_INVOCATION_SETTINGS { pin = 1 }
+
+TEST_TIMEOUT_SETTING ::= TEST_TIMEOUT_SETTING_TOKEN  ELLIPSES_FOR_SETTINGS_TABLE+ COLUMN_SEPARATOR_TOKEN TIMEOUT_VALUE_TOKEN |
+                         TEST_TIMEOUT_SETTING_TOKEN  COLUMN_SEPARATOR_TOKEN  TIMEOUT_VALUE_TOKEN { pin=1 }
+
+REFERENCED_FILE ::= ROBOT_FILE_TOKEN { mixin="cz.cuni.mff.kyjovsm.robocop.psi.impl.RobotFrameworkNamedElementImpl"
+                                       implements="cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement"
+                                       methods=[getReference getReferences getName setName getNameIdentifier handleElementRename getPresentation toString]}
+RESOURCE_SETTING ::= RESOURCE_SETTING_TOKEN  ELLIPSES_FOR_SETTINGS_TABLE* COLUMN_SEPARATOR_TOKEN  REFERENCED_FILE { pin = 1 }
+VARIABLE_SETTING ::= VARIABLE_SETTING_TOKEN  ELLIPSES_FOR_SETTINGS_TABLE* COLUMN_SEPARATOR_TOKEN  REFERENCED_FILE { pin = 1 }
+
+DOCUMENTATION_SETTING ::= DOCUMENTATION_SETTING_TOKEN  DOCUMENTATION_OR_ELLIPSES* { pin=1 }
+
+METADATA_SETTING ::= METADATA_SETTING_TOKEN  SETTING_LIST_OR_ELLIPSES* { pin=1 }
+
+TEST_TEMPLATE_SETTING ::= TEST_TEMPLATE_SETTING_TOKEN ELLIPSES_FOR_SETTINGS_TABLE* COLUMN_SEPARATOR_TOKEN KEYWORD
+
+/* Variables table */
+VARIABLES_TABLE ::= VARIABLES_TABLE_HEADER (VARIABLES_LINE EMPTY_LINE | EMPTY_LINE)* (VARIABLES_LINE END_OF_LINE* <<eof>>)? { pin = 2 }
+
+VARIABLES_TABLE_HEADER ::= VARIABLES_TABLE_HEADER_TOKEN EMPTY_LINE
+
+VARIABLES_LINE ::= SCALAR_ASSIGNMENT_LHS (ASSIGNABLE_IN_VARIABLES_TBL)? END_OF_LINE*  |
+                   ARRAY_ASSIGNMENT_LHS  (ARRAY_ASSIGNABLE_IN_VARIABLES_TBL)? END_OF_LINE*  |
+                   ELLIPSES_LINE_SETTINGS END_OF_LINE* { recoverWhile="not_a_newline_token" }
+
+/* Test cases table */
+TEST_CASES_TABLE ::= TEST_CASES_TABLE_HEADER EMPTY_LINE* TEST_CASE* { pin = 3 methods=[getNameIdentifier getPresentation] }
+
+TEST_CASES_TABLE_HEADER ::= TEST_CASES_TABLE_HEADER_TOKEN END_OF_LINE* (NEWLINE_TOKEN | <<eof>>)
+
+TEST_CASE ::= TEST_CASE_NAME ( TEST_CASE_LINE EMPTY_LINE | EMPTY_LINE )* (TEST_CASE_LINE END_OF_LINE* <<eof>>)?   { pin = 3 methods=[getName setName getNameIdentifier getPresentation]}
+
+TEST_CASE_NAME ::= TEST_CASE_NAME_TOKEN
+
+TEST_SETTING_LINE ::= COLUMN_SEPARATOR_TOKEN  TEST_SETTING { pin=2 }
+
+TEST_SETTING ::= (BRACKET_DOCUMENTATION|BRACKET_TAGS|TEST_CASE_BRACKET_SETUP|TEST_CASE_BRACKET_TEARDOWN|TEST_CASE_BRACKET_TEMPLATE|TEST_CASE_BRACKET_TIMEOUT)
+
+BRACKET_DOCUMENTATION ::= BRACKET_DOCUMENTATION_TOKEN  (ELLIPSES_FOR_TEST_TABLE? COLUMN_SEPARATOR_TOKEN  DOCUMENTATION_TOKEN)* { pin=1 }
+private TAG_LIST ::= (COLUMN_SEPARATOR_TOKEN TAG)+
+private TAG_LIST_OR_ELLIPSES ::= TAG_LIST | ELLIPSES_FOR_TEST_TABLE
+BRACKET_TAGS ::= BRACKET_TAGS_TOKEN TAG_LIST_OR_ELLIPSES* { pin=1 }
+
+TEST_CASE_BRACKET_SETUP ::= BRACKET_SETUP_TOKEN  COLUMN_SEPARATOR_TOKEN KEYWORD_INVOCATION_SETTINGS { pin=1 }
+TEST_CASE_BRACKET_TEARDOWN ::= BRACKET_TEARDOWN_TOKEN COLUMN_SEPARATOR_TOKEN KEYWORD_INVOCATION_SETTINGS { pin=1 }
+TEST_CASE_BRACKET_TEMPLATE ::= TEMPLATE_SETTING_TOKEN COLUMN_SEPARATOR_TOKEN KEYWORD { pin=1 }
+TEST_CASE_BRACKET_TIMEOUT ::= BRACKET_TIMEOUT_TOKEN COLUMN_SEPARATOR_TOKEN TIMEOUT_VALUE_TOKEN { pin=1 }
+
+TEST_CASE_LINE ::= TEST_SETTING_LINE  END_OF_LINE* |
+                  EXECUTION_LINE     END_OF_LINE* |
+                  ELLIPSES_LINE_TEST END_OF_LINE* |
+                  FOR_LOOP_IN_RANGE  END_OF_LINE* |
+                  FOR_LOOP_IN        END_OF_LINE* |
+                  KEYWORD_ARG_LIST   END_OF_LINE* |
+                  COLUMN_SEPARATOR_TOKEN {recoverWhile="not_a_newline_token"}
+
+/* Keywords table */
+KEYWORDS_TABLE ::= KEYWORDS_TABLE_HEADER (EMPTY_LINE | KEYWORD_DEFINITION)* { pin=1 methods=[getNameIdentifier getPresentation] }
+
+KEYWORDS_TABLE_HEADER ::= KEYWORDS_TABLE_HEADER_TOKEN END_OF_LINE* NEWLINE_TOKEN
+
+KEYWORD_DEFINITION ::= KEYWORD_NAME  (KEYWORD_LINE EMPTY_LINE | EMPTY_LINE )* (KEYWORD_LINE END_OF_LINE* <<eof>>)?  { pin = 1 }
+
+KEYWORD_SETTING_LINE ::= COLUMN_SEPARATOR_TOKEN KEYWORD_SETTING
+KEYWORD_SETTING ::= ARGUMENTS_SETTING | BRACKET_DOCUMENTATION | TEST_CASE_BRACKET_TEARDOWN | TEST_CASE_BRACKET_TIMEOUT
+
+ARGUMENTS_SETTING ::= ARGUMENTS_SETTING_TOKEN (COLUMN_SEPARATOR_TOKEN ARGUMENT_DEFINITION)*
+SCALAR_DEFAULT_ARG_VALUE ::= SCALAR_DEFAULT_ARG_VALUE_TOKEN { methods = [getName setName getNameIdentifier getReference getReferences handleElementRename toString] }
+ARGUMENT_DEFINITION ::= VARIABLE | SCALAR_DEFAULT_ARG_VALUE { methods = [getName setName getNameIdentifier getReference getReferences handleElementRename toString] }
+
+KEYWORD_LINE ::= EXECUTION_LINE        END_OF_LINE* |
+                 KEYWORD_SETTING_LINE  END_OF_LINE* |
+                 RETURN_LINE           END_OF_LINE* |
+                 ELLIPSES_LINE_TEST    END_OF_LINE* |
+                 FOR_LOOP_IN_RANGE     END_OF_LINE* |
+                 FOR_LOOP_IN           END_OF_LINE* |
+                 COLUMN_SEPARATOR_TOKEN { recoverWhile="not_a_newline_token" }
+
+
+RETURN_LINE ::= COLUMN_SEPARATOR_TOKEN RETURN_SETTING { pin = 2 }
+RETURN_SETTING ::= RETURN_SETTING_TOKEN (COLUMN_SEPARATOR_TOKEN KEYWORD_ARGUMENT)+ { pin = 1 }
+
+
+private not_a_newline_token ::= ! NEWLINE_TOKEN
+
+SCALAR_VARIABLE ::= VARIABLE_TOKEN { methods=[getReference getReferences getName setName getNameIdentifier handleElementRename toString] }
+ARRAY_VARIABLE  ::= ARRAY_VARIABLE_TOKEN
+SCALAR_ASSIGNMENT ::= ASSIGNMENT_TOKEN { methods=[getReference getReferences getName setName getNameIdentifier handleElementRename toString] }
+ARRAY_ASSIGNMENT ::= ARRAY_ASSIGNMENT_TOKEN
+SINGLE_VARIABLE_LIST ::= SCALAR_VARIABLE ((COLUMN_SEPARATOR_TOKEN SCALAR_VARIABLE) | INDENTED_ELLIPSES_FOR_TEST_TABLE)+ | SCALAR_VARIABLE //Used for variable list in :FOR loops
+VARIABLE ::= SCALAR_VARIABLE | ARRAY_VARIABLE
+ASSIGNMENT ::= SCALAR_ASSIGNMENT | ARRAY_ASSIGNMENT
+
+SCALAR_ASSIGNMENT_LHS ::= SCALAR_VARIABLE | SCALAR_ASSIGNMENT { methods=[getName setName getReference getReferences getNameIdentifier handleElementRename toString]}
+ARRAY_ASSIGNMENT_LHS  ::= ARRAY_VARIABLE | ARRAY_ASSIGNMENT
+SINGLE_ASSIGNMENT_LHS ::= SCALAR_ASSIGNMENT_LHS | ARRAY_ASSIGNMENT_LHS
+MULTI_ASSIGNMENT_LHS  ::= VARIABLE (COLUMN_SEPARATOR_TOKEN VARIABLE)*  COLUMN_SEPARATOR_TOKEN ASSIGNMENT
+                       |  VARIABLE (COLUMN_SEPARATOR_TOKEN  VARIABLE)+
+
+
+KEYWORD_ARG_LIST ::= (COLUMN_SEPARATOR_TOKEN KEYWORD_ARGUMENT)+
+KEYWORD_CALLING_TEST ::= KEYWORD (KEYWORD_ARG_LIST | ELLIPSES_FOR_TEST_TABLE)* { pin=2 }
+INDENTED_KEYWORD_INVOCATION_TEST ::= KEYWORD (KEYWORD_ARG_LIST | INDENTED_ELLIPSES_FOR_TEST_TABLE)+ | KEYWORD
+KEYWORD_INVOCATION_SETTINGS ::= KEYWORD (KEYWORD_ARG_LIST | ELLIPSES_FOR_SETTINGS_TABLE)+ | KEYWORD
+ASSIGNABLE_IN_VARIABLES_TBL ::= COLUMN_SEPARATOR_TOKEN KEYWORD_ARGUMENT
+ARRAY_ASSIGNABLE_IN_VARIABLES_TBL ::= ( KEYWORD_ARG_LIST | ELLIPSES_FOR_SETTINGS_TABLE )*
+
+//Rule for assigning a variable to a keyword invocation.
+VARIABLE_ASSIGN_TO_KEYWORD ::= ( MULTI_ASSIGNMENT_LHS | SINGLE_ASSIGNMENT_LHS ) ELLIPSES_FOR_TEST_TABLE* COLUMN_SEPARATOR_TOKEN  KEYWORD_CALLING_TEST
+//Same rule, but any additional lines due to line continuation (...) must be indented, for FOR loops.
+INDENTED_VARIABLE_ASSIGN_TO_KEYWORD ::= ( MULTI_ASSIGNMENT_LHS | SINGLE_ASSIGNMENT_LHS ) INDENTED_ELLIPSES_FOR_TEST_TABLE* COLUMN_SEPARATOR_TOKEN  INDENTED_KEYWORD_INVOCATION_TEST
+
+
+// An argument to a keyword can be a variable, a literal, an empty cell (\), or an integer.
+KEYWORD_ARGUMENT ::= VARIABLE | ROBOT_KEYWORD_ARGUMENT_TOKEN | EMPTY_CELL_TOKEN | INTEGER_TOKEN | ARRAY_VARIABLE_ACCESS_TOKEN | ROBOT_KEYWORD_TOKEN { methods=[getReference getReferences getName setName handleElementRename getNameIdentifier] }
+// Tags are tokenized specially by being after the [tags] setting or "Force Tags" setting.
+TAG ::= TAG_TOKEN
+
+EXECUTION_LINE ::= COLUMN_SEPARATOR_TOKEN ( KEYWORD_CALLING_TEST | VARIABLE_ASSIGN_TO_KEYWORD ) { pin = 2 }
+
+//AdditionalCharacters we can have at the end of any line.
+private END_OF_LINE ::= COLUMN_SEPARATOR_TOKEN | WHITESPACE_TOKEN | COMMENT_TOKEN
+ELLIPSES_LINE_TEST ::= COLUMN_SEPARATOR_TOKEN  ELLIPSES  { pin = 2 }
+
+private ELLIPSES_LINE_SETTINGS ::= COLUMN_SEPARATOR_TOKEN? WHITESPACE_TOKEN? ELLIPSES
+EMPTY_LINE  ::=  END_OF_LINE* NEWLINE_TOKEN { pin = 2 }
+ELLIPSES ::= ELLIPSES_TOKEN
+private ELLIPSES_FOR_TEST_TABLE    ::= EMPTY_LINE COLUMN_SEPARATOR_TOKEN ELLIPSES
+private INDENTED_ELLIPSES_FOR_TEST_TABLE  ::= END_OF_LINE* NEWLINE_TOKEN COLUMN_SEPARATOR_TOKEN EMPTY_CELL_TOKEN COLUMN_SEPARATOR_TOKEN ELLIPSES
+private ELLIPSES_FOR_SETTINGS_TABLE ::= EMPTY_LINE WHITESPACE_TOKEN? COLUMN_SEPARATOR_TOKEN? ELLIPSES
+
+FOR_VAR_IN_RANGE ::= FOR_LOOP_START_TOKEN  COLUMN_SEPARATOR_TOKEN SCALAR_VARIABLE COLUMN_SEPARATOR_TOKEN IN_RANGE_TOKEN
+SINGLE_BOUND_FOR_LOOP ::= FOR_VAR_IN_RANGE INDENTED_ELLIPSES_FOR_TEST_TABLE* COLUMN_SEPARATOR_TOKEN KEYWORD_ARGUMENT
+DOUBLE_BOUND_FOR_LOOP ::= FOR_VAR_IN_RANGE INDENTED_ELLIPSES_FOR_TEST_TABLE* COLUMN_SEPARATOR_TOKEN KEYWORD_ARGUMENT
+                                           INDENTED_ELLIPSES_FOR_TEST_TABLE* COLUMN_SEPARATOR_TOKEN KEYWORD_ARGUMENT
+DOUBLE_BOUND_FOR_LOOP_WITH_STEP ::= FOR_VAR_IN_RANGE INDENTED_ELLIPSES_FOR_TEST_TABLE* COLUMN_SEPARATOR_TOKEN KEYWORD_ARGUMENT
+                                                     INDENTED_ELLIPSES_FOR_TEST_TABLE* COLUMN_SEPARATOR_TOKEN KEYWORD_ARGUMENT
+                                                     INDENTED_ELLIPSES_FOR_TEST_TABLE* COLUMN_SEPARATOR_TOKEN KEYWORD_ARGUMENT
+
+FOR_LOOP_IN_RANGE ::= COLUMN_SEPARATOR_TOKEN (DOUBLE_BOUND_FOR_LOOP_WITH_STEP | DOUBLE_BOUND_FOR_LOOP | SINGLE_BOUND_FOR_LOOP )
+                      END_OF_LINE* FOR_LOOP_EXECUTION_LINE+ { pin=3 }
+
+FOR_VAR_IN ::= FOR_LOOP_START_TOKEN  INDENTED_ELLIPSES_FOR_TEST_TABLE* COLUMN_SEPARATOR_TOKEN SINGLE_VARIABLE_LIST  COLUMN_SEPARATOR_TOKEN  IN_TOKEN
+FOR_LOOP_VALUE_LIST ::= (KEYWORD_ARG_LIST | ELLIPSES_FOR_TEST_TABLE)+
+
+FOR_LOOP_IN ::= COLUMN_SEPARATOR_TOKEN  FOR_VAR_IN  FOR_LOOP_VALUE_LIST END_OF_LINE* FOR_LOOP_EXECUTION_LINE+ { pin=4 }
+
+private FOR_LOOP_EXECUTION_LINE ::= EMPTY_FOR_LOOP_LINE* NON_EMPTY_FOR_LOOP_LINE
+private NON_EMPTY_FOR_LOOP_LINE ::= NEWLINE_TOKEN COLUMN_SEPARATOR_TOKEN  EMPTY_CELL_TOKEN COLUMN_SEPARATOR_TOKEN ( INDENTED_KEYWORD_INVOCATION_TEST | INDENTED_VARIABLE_ASSIGN_TO_KEYWORD ) END_OF_LINE*
+private EMPTY_FOR_LOOP_LINE ::=     NEWLINE_TOKEN END_OF_LINE* & NEWLINE_TOKEN
+
+KEYWORD ::= ROBOT_KEYWORD_TOKEN { methods=[getName setName getNameIdentifier getReference getReferences handleElementRename toString]}
+
+KEYWORD_NAME ::= ROBOT_KEYWORD_NAME_TOKEN { methods=[getName setName getNameIdentifier getPresentation toString] }
+
+ERROR ::= INVALID_SYNTAX_TOKEN

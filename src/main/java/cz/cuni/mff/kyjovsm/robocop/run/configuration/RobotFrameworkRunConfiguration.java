@@ -10,14 +10,21 @@ import com.intellij.execution.process.ProcessTerminatedListener;
 import com.intellij.execution.runners.ExecutionEnvironment;
 import com.intellij.openapi.options.SettingsEditor;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.roots.ProjectRootManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
  *
  */
 public class RobotFrameworkRunConfiguration extends RunConfigurationBase {
+
+  private static final Logger logger = Logger.getLogger(RobotFrameworkRunConfiguration.class.getName());
+  private static String PROJECT_SDK = "";
 
   /**
    * @param project
@@ -26,6 +33,7 @@ public class RobotFrameworkRunConfiguration extends RunConfigurationBase {
    */
   protected RobotFrameworkRunConfiguration(@NotNull Project project, @Nullable ConfigurationFactory factory, @Nullable String name) {
     super(project, factory, name);
+    PROJECT_SDK = ProjectRootManager.getInstance(project).getProjectSdk().getName();
   }
 
   /**
@@ -137,7 +145,22 @@ public class RobotFrameworkRunConfiguration extends RunConfigurationBase {
        */
       @Override
       protected @NotNull ProcessHandler startProcess() throws ExecutionException {
-        GeneralCommandLine commandLine = new GeneralCommandLine(getOptions().getScriptName());
+
+        GeneralCommandLine commandLine = new GeneralCommandLine().withExePath(ProjectRootManager.getInstance(getEnvironment().getProject()).getProjectSdk().getHomePath());
+        commandLine.addParameter("-m");
+        commandLine.addParameter("robot");
+
+        String[] processedArgs = new RobotFrameworkArgumentProcessor().prepareArguments(getOptions().getTestParams(),
+                getOptions().getScriptName(),
+                getOptions().getAddListenerCheckBox(),
+                getOptions().getDryRunModeCheckBox(),
+                getOptions().getExternalListener());
+
+        for (String arg : processedArgs) {
+          commandLine.addParameter(arg);
+        }
+
+        commandLine.addParameter(getOptions().getScriptName());
         OSProcessHandler processHandler = ProcessHandlerFactory.getInstance().createColoredProcessHandler(commandLine);
         ProcessTerminatedListener.attach(processHandler);
         return processHandler;
