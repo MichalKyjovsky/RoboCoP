@@ -7,6 +7,9 @@ import com.intellij.openapi.fileTypes.SyntaxHighlighterFactory;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ *
+ */
 public class LibraryLanguage extends Language {
 
   public static final LibraryLanguage INSTANCE = new LibraryLanguage();
@@ -14,6 +17,9 @@ public class LibraryLanguage extends Language {
   @NonNls
   private static final String ID = "Python Library";
 
+  /**
+   *
+   */
   protected LibraryLanguage() {
     super(ID);
     SyntaxHighlighterFactory.LANGUAGE_FACTORY.addExplicitExtension(this, new SingleLazyInstanceSyntaxHighlighterFactory() {
@@ -24,6 +30,9 @@ public class LibraryLanguage extends Language {
     });
   }
 
+  /**
+   * @return
+   */
   @Override
   public boolean isCaseSensitive() {
     return true;

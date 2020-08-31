@@ -9,9 +9,12 @@ import cz.cuni.mff.kyjovsm.robocop.icons.RobotFrameworkIcons;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.swing.*;
+import javax.swing.Icon;
 import java.util.Map;
 
+/**
+ *
+ */
 public class RobotFrameworkColorSettingPage implements ColorSettingsPage {
 
   private static final AttributesDescriptor[] DESCRIPTORS = new AttributesDescriptor[] {
@@ -29,16 +32,25 @@ public class RobotFrameworkColorSettingPage implements ColorSettingsPage {
           new AttributesDescriptor("Variables", RobotFrameworkSyntaxHighlighter.VARIABLES)
   };
 
+  /**
+   * @return
+   */
   @Override
   public @Nullable Icon getIcon() {
     return RobotFrameworkIcons.ICON_MAIN;
   }
 
+  /**
+   * @return
+   */
   @Override
   public @NotNull SyntaxHighlighter getHighlighter() {
     return new RobotFrameworkSyntaxHighlighter();
   }
 
+  /**
+   * @return
+   */
   @Override
   public @NotNull String getDemoText() {
     return "*** Settings ***\n" +
@@ -68,21 +80,33 @@ public class RobotFrameworkColorSettingPage implements ColorSettingsPage {
             "    Directory Should Exist  ";
   }
 
+  /**
+   * @return
+   */
   @Override
   public @Nullable Map<String, TextAttributesKey> getAdditionalHighlightingTagToDescriptorMap() {
     return null;
   }
 
+  /**
+   * @return
+   */
   @Override
   public @NotNull AttributesDescriptor[] getAttributeDescriptors() {
     return DESCRIPTORS;
   }
 
+  /**
+   * @return
+   */
   @Override
   public @NotNull ColorDescriptor[] getColorDescriptors() {
     return ColorDescriptor.EMPTY_ARRAY;
   }
 
+  /**
+   * @return
+   */
   @Override
   public @NotNull String getDisplayName() {
     return "Robot Framework";

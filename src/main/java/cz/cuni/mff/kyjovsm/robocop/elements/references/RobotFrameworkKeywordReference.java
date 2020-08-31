@@ -7,10 +7,17 @@ import org.jetbrains.annotations.NotNull;
 
 public class RobotFrameworkKeywordReference extends PsiPolyVariantReferenceBase<PsiElement> {
 
+  /**
+   * @param psiElement
+   */
   public RobotFrameworkKeywordReference(@NotNull PsiElement psiElement) {
     super(psiElement);
   }
 
+  /**
+   * @param b
+   * @return
+   */
   @Override
   public @NotNull ResolveResult[] multiResolve(boolean b) {
     return new ResolveResult[0];
