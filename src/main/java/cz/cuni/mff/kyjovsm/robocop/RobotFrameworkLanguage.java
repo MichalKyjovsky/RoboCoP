@@ -8,11 +8,11 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
 /**
- *
+ * The base class for Robot Framework language.
  */
 public class RobotFrameworkLanguage extends Language {
     /**
-     *
+     * Singleton instance of the Robot Framework language.
      */
     public static final RobotFrameworkLanguage INSTANCE = new RobotFrameworkLanguage();
 
@@ -20,7 +20,8 @@ public class RobotFrameworkLanguage extends Language {
     private static final String ID = "RobotFramework";
 
     /**
-     *
+     * A constructor method passing Robot Framework language ID to the parent
+     * class and initializing SyntaxHighlighterFactory.
      */
     private RobotFrameworkLanguage() {
         super(ID);
@@ -33,7 +34,7 @@ public class RobotFrameworkLanguage extends Language {
     }
 
     /**
-     * @return
+     * @return True if the language is case sensitive, else False.
      */
     @Override
     public boolean isCaseSensitive() {
