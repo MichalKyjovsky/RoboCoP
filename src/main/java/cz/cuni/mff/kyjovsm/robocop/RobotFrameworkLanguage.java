@@ -19,6 +19,9 @@ public class RobotFrameworkLanguage extends Language {
     @NonNls
     private static final String ID = "RobotFramework";
 
+    /**
+     *
+     */
     private RobotFrameworkLanguage() {
         super(ID);
         SyntaxHighlighterFactory.LANGUAGE_FACTORY.addExplicitExtension(this, new SingleLazyInstanceSyntaxHighlighterFactory() {
@@ -29,6 +32,9 @@ public class RobotFrameworkLanguage extends Language {
         });
     }
 
+    /**
+     * @return
+     */
     @Override
     public boolean isCaseSensitive() {
         return true;

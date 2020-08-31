@@ -9,31 +9,49 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.Icon;
 
+/**
+ *
+ */
 public class LibraryFileType extends LanguageFileType {
     public static final LibraryFileType INSTANCE = new LibraryFileType();
 
+    /**
+     *
+     */
     private LibraryFileType() {
         super(LibraryLanguage.INSTANCE);
     }
 
+    /**
+     * @return
+     */
     @NotNull
     @Override
     public String getName() {
         return "Python Library.";
     }
 
+    /**
+     * @return
+     */
     @NotNull
     @Override
     public String getDescription() {
         return "Python library for robot framework";
     }
 
+    /**
+     * @return
+     */
     @NotNull
     @Override
     public String getDefaultExtension() {
         return "py";
     }
 
+    /**
+     * @return
+     */
     @Nullable
     @Override
     public Icon getIcon() {
