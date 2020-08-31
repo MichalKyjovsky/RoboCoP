@@ -27,9 +27,6 @@ buildSearchableOptions {
     enabled = false
 }
 
-runIde {
-    ideDirectory 'C:\\Program Files\\JetBrains\\PyCharm 2020.1\\'
-}
 
 patchPluginXml {
 
