@@ -13,7 +13,8 @@ import javax.swing.Icon;
 import java.util.Map;
 
 /**
- *
+ * Purpose of this class is to create a palette in the Setting section of IDE
+ * for Color Setting of the Robot Framework language.
  */
 public class RobotFrameworkColorSettingPage implements ColorSettingsPage {
 
@@ -33,7 +34,7 @@ public class RobotFrameworkColorSettingPage implements ColorSettingsPage {
   };
 
   /**
-   * @return
+   * @return Default icon representing Robot Framework language.
    */
   @Override
   public @Nullable Icon getIcon() {
@@ -41,7 +42,9 @@ public class RobotFrameworkColorSettingPage implements ColorSettingsPage {
   }
 
   /**
-   * @return
+   * @return Instance of RobotFrameworkSyntaxHighlighter responsible for
+   * assigning Token defined in grammar and keys defined by
+   * DefaultLanguageHighlighterColors class.
    */
   @Override
   public @NotNull SyntaxHighlighter getHighlighter() {
@@ -49,7 +52,8 @@ public class RobotFrameworkColorSettingPage implements ColorSettingsPage {
   }
 
   /**
-   * @return
+   * @return Text, which is being displayed in setting section and which
+   * serves as a presentation how the Syntax Highlighting works.
    */
   @Override
   public @NotNull String getDemoText() {

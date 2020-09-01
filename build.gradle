@@ -38,3 +38,7 @@ patchPluginXml {
 sourceSets {
     sourceSets.main.java.srcDirs 'src/main/gen'
 }
+
+test {
+    systemProperty "idea.home.path", "/path/to/community/"
+}
