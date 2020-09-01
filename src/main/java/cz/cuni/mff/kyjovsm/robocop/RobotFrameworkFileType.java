@@ -8,23 +8,24 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.Icon;
 
 /**
- *
+ * Class providing functionality of connection between the file type and
+ * the language passed to the constructor.
  */
 public class RobotFrameworkFileType extends LanguageFileType {
     /**
-     *
+     * Singleton instance of RobotFrameworkFileType.
      */
     public static final RobotFrameworkFileType INSTANCE = new RobotFrameworkFileType();
 
     /**
-     *
+     * Override the default language instance by RobotFrameworkLanguage.
      */
     private RobotFrameworkFileType() {
         super(RobotFrameworkLanguage.INSTANCE);
     }
 
     /**
-     * @return
+     * @return Name of the Robot Framework file type.
      */
     @NotNull
     @Override
@@ -38,11 +39,11 @@ public class RobotFrameworkFileType extends LanguageFileType {
     @NotNull
     @Override
     public String getDescription() {
-        return "Robot Framework file.";
+        return "Robot framework file, containing either variables, keywords or test suite.";
     }
 
     /**
-     * @return
+     * @return Returns extension for Robot Framework file type.
      */
     @NotNull
     @Override
@@ -51,7 +52,7 @@ public class RobotFrameworkFileType extends LanguageFileType {
     }
 
     /**
-     * @return
+     * @return Returns icon representing Robot Framework language.
      */
     @Nullable
     @Override
