@@ -6,16 +6,23 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import com.intellij.psi.search.FileTypeIndex;
 import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.jetbrains.python.PythonFileType;
-import com.jetbrains.python.psi.PyFile;
-import cz.cuni.mff.kyjovsm.robocop.psi.LibraryFile;
 import cz.cuni.mff.kyjovsm.robocop.psi.RobotFrameworkFile;
-import cz.cuni.mff.kyjovsm.robocop.psi.RobotFrameworkReferencedFile;
 
-import java.util.*;
+import java.util.Collection;
 
+/**
+ * Purpose of this class is to provide functionality of traversing over
+ * virtual file system and find the references defined in the Robot file.
+ */
 public class RobotFrameworkUtil {
+  /**
+   * @param project Reference to opened object.
+   * @param fileName Name of the file from which the references
+   *                 point to.
+   * @return Instance of the RobotFrameworkFile obtained by
+   * Go To Declaration action.
+   */
   public static RobotFrameworkFile findResourceFiles(Project project, String fileName) {
     Collection<VirtualFile> virtualFiles = FileTypeIndex.getFiles(RobotFrameworkFileType.INSTANCE, GlobalSearchScope.allScope(project));
     for (VirtualFile virtualFile : virtualFiles) {
@@ -27,6 +34,12 @@ public class RobotFrameworkUtil {
     return null;
   }
 
+  /**
+   * @param project Reference to opened object.
+   * @param fileName Name of the file from which the references
+   *                 point to.
+   * @return Instance of the PsiFile obtained by Go To Declaration action.
+   */
   public static PsiFile findLibraryReference(Project project, String fileName) {
     Collection<VirtualFile> virtualFiles =  FileTypeIndex.getFiles(PythonFileType.INSTANCE, GlobalSearchScope.allScope(project));
     for (VirtualFile virtualFile : virtualFiles) {

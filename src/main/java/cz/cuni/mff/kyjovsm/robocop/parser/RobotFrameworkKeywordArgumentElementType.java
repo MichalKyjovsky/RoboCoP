@@ -1,6 +1,10 @@
 package cz.cuni.mff.kyjovsm.robocop.parser;
 
-import com.intellij.psi.stubs.*;
+import com.intellij.psi.stubs.IStubElementType;
+import com.intellij.psi.stubs.IndexSink;
+import com.intellij.psi.stubs.StubElement;
+import com.intellij.psi.stubs.StubInputStream;
+import com.intellij.psi.stubs.StubOutputStream;
 import com.intellij.util.io.StringRef;
 import cz.cuni.mff.kyjovsm.robocop.RobotFrameworkLanguage;
 import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkKeywordArgumentStub;
@@ -11,12 +15,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
+/**
+ * Class for defining type and methods of KEYWORD_ARGUMENT for the lexer.
+ */
 public class RobotFrameworkKeywordArgumentElementType extends IStubElementType<RobotFrameworkKeywordArgumentStub, RobotFrameworkKeywordArgument> {
 
   public RobotFrameworkKeywordArgumentElementType(@NotNull String debugName) {
     super(debugName, RobotFrameworkLanguage.INSTANCE);
   }
-
   @Override
   public RobotFrameworkKeywordArgument createPsi(@NotNull RobotFrameworkKeywordArgumentStub stubElement) {
     return new RobotFrameworkKeywordArgumentImpl(stubElement, this);
