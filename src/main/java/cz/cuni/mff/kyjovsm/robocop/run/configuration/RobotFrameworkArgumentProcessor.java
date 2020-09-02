@@ -18,18 +18,18 @@ public class RobotFrameworkArgumentProcessor {
    * @return Processed and flatten arguments which can be redirected to the robot calling.
    */
   public String[] prepareArguments(String rawArguments, String scriptPath, boolean listener, boolean dryRun, String externalListener) {
-    if (dryRun && !rawArguments.contains("--dryrun")) {
-      rawArguments += " -dryrun ";
+    if (dryRun && rawArguments != null && !rawArguments.contains("--dryrun")) {
+      rawArguments += " --dryrun ";
     }
 
     if (listener && externalListener.length() > 0) {
       rawArguments += " --listener " + externalListener;
     }
 
-    if (!rawArguments.contains("--outputdir")) {
+    if (rawArguments != null && !rawArguments.contains("--outputdir")) {
       rawArguments += " --outputdir " + resolveParentDir(scriptPath);
     }
-    return rawArguments.split(" ");
+    return rawArguments != null ? rawArguments.split(" ")  : new String[0];
   }
 
   /**

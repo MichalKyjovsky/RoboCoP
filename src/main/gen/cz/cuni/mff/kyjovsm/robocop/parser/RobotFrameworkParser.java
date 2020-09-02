@@ -3,11 +3,28 @@ package cz.cuni.mff.kyjovsm.robocop.parser;
 
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
+
+import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkParserUtil.Parser;
+import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkParserUtil.TRUE_CONDITION;
+import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkParserUtil._AND_;
+import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkParserUtil._COLLAPSE_;
+import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkParserUtil._NONE_;
+import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkParserUtil._NOT_;
+import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkParserUtil.adapt_builder_;
+import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkParserUtil.consumeToken;
+import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkParserUtil.consumeTokens;
+import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkParserUtil.current_position_;
+import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkParserUtil.empty_element_parsed_guard_;
+import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkParserUtil.enter_section_;
+import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkParserUtil.eof;
+import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkParserUtil.exit_section_;
+import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkParserUtil.nextTokenIs;
+import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkParserUtil.parseTokens;
+import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkParserUtil.recursion_guard_;
+import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkParserUtil.report_error_;
 import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkTypes.*;
-import static cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkParserUtil.*;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.lang.ASTNode;
-import com.intellij.psi.tree.TokenSet;
 import com.intellij.lang.PsiParser;
 import com.intellij.lang.LightPsiParser;
 

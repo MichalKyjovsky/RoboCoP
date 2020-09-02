@@ -1,4 +1,4 @@
-package cz.cuni.mff.kyjovsm.robocop;
+package cz.cuni.mff.kyjovsm.robocop.highlighter;
 
 import com.intellij.openapi.fileTypes.SyntaxHighlighter;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterFactory;

@@ -6,7 +6,7 @@ import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * TODO: Add class description
+ * Class for defining types of tokens for lexer.
  */
 public class RobotFrameworkElementType extends IElementType {
   /**

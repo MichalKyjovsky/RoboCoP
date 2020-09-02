@@ -1,14 +1,12 @@
 package cz.cuni.mff.kyjovsm.robocop;
 
 import com.intellij.lang.Language;
-import com.intellij.openapi.fileTypes.SingleLazyInstanceSyntaxHighlighterFactory;
-import com.intellij.openapi.fileTypes.SyntaxHighlighter;
-import com.intellij.openapi.fileTypes.SyntaxHighlighterFactory;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 
 /**
- *
+ * Purpose of this class is to define Library files used in
+ * Robot Framework test scripts.
+ * TODO: Replace by PythonLanguage and resolve class loaders conflict
  */
 public class LibraryLanguage extends Language {
 
@@ -18,20 +16,16 @@ public class LibraryLanguage extends Language {
   private static final String ID = "Python Library";
 
   /**
-   *
+   * Constructor method in order to
+   * create singleton class.
    */
   protected LibraryLanguage() {
     super(ID);
-    SyntaxHighlighterFactory.LANGUAGE_FACTORY.addExplicitExtension(this, new SingleLazyInstanceSyntaxHighlighterFactory() {
-      @Override
-      protected @NotNull SyntaxHighlighter createHighlighter() {
-        return new RobotFrameworkSyntaxHighlighter();
-      }
-    });
   }
 
   /**
-   * @return
+   * @return Boolean value defining whether the Library file
+   * is case sensitive.
    */
   @Override
   public boolean isCaseSensitive() {

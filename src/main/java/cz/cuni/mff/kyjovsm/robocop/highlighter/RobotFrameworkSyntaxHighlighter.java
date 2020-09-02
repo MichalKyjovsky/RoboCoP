@@ -1,10 +1,11 @@
-package cz.cuni.mff.kyjovsm.robocop;
+package cz.cuni.mff.kyjovsm.robocop.highlighter;
 
 import com.intellij.lexer.Lexer;
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
 import com.intellij.psi.tree.IElementType;
+import cz.cuni.mff.kyjovsm.robocop.RobotFrameworkLexerAdapter;
 import cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkTypes;
 import org.jetbrains.annotations.NotNull;
 
