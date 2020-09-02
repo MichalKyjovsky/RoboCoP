@@ -7,8 +7,14 @@ import cz.cuni.mff.kyjovsm.robocop.psi.RobotFrameworkLibraryReference;
 import cz.cuni.mff.kyjovsm.robocop.psi.RobotFrameworkReferencedFile;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ *
+ */
 public class RobotFrameworkReferenceContributor extends PsiReferenceContributor {
 
+  /**
+   * @param registrar
+   */
   @Override
   public void registerReferenceProviders(PsiReferenceRegistrar registrar) {
     registrar.registerReferenceProvider(PlatformPatterns.psiElement(RobotFrameworkReferencedFile.class),

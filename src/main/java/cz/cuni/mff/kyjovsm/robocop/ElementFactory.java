@@ -9,11 +9,14 @@ import java.util.Collection;
 
 import static java.lang.String.format;
 
+/**
+ * Class providing methods for creation of RobotFrameworkFile.
+ */
 public class ElementFactory {
   public static RobotFrameworkKeywordName createKeywordTitle(Project project, String keywordDefName) {
     String template = "*** Keywords ***\n" +
             "%s\n" +
-            "  Log  Testing functionality:  INFO";
+            "  Log to console  Testing functionality";
     RobotFrameworkPsiFile file = createFile(project, format(template, keywordDefName));
     RobotFrameworkTable table = file.findChildByClass(RobotFrameworkTable.class);
     if (table == null || table.getKeywordsTable() == null) {
@@ -93,20 +96,13 @@ public class ElementFactory {
     return PsiTreeUtil.findChildOfType(file, RobotFrameworkArgumentDefinition.class);
   }
 
-  public static RobotFrameworkReferencedFile createRobotFrameworkReferencedFile(Project project, String fullPathOfNewResourceName) {
-    String template = "*** Settings ***\n" +
-            "Resource  %s\n";
-    RobotFrameworkPsiFile file = createFile(project, format(template, fullPathOfNewResourceName));
-    return PsiTreeUtil.findChildOfType(file, RobotFrameworkReferencedFile.class);
-  }
-
   public static RobotFrameworkReferencedFile createReferencedFile(Project project, String name) {
     final RobotFrameworkFile rfFile = createFileR(project, name);
     return (RobotFrameworkReferencedFile) rfFile.getFirstChild();
   }
 
   public static RobotFrameworkFile createFileR(Project project, String text) {
-    String name = "dummy.robot";
+    String name = "test_plugin.robot";
     return (RobotFrameworkFile) PsiFileFactory.getInstance(project).createFileFromText(name, RobotFrameworkFileType.INSTANCE, text);
   }
 

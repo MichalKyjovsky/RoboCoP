@@ -1,20 +1,24 @@
 package cz.cuni.mff.kyjovsm.robocop.parser;
 
-import com.intellij.lang.Language;
-import com.intellij.psi.stubs.*;
+import com.intellij.psi.stubs.IStubElementType;
+import com.intellij.psi.stubs.IndexSink;
+import com.intellij.psi.stubs.StubElement;
+import com.intellij.psi.stubs.StubInputStream;
+import com.intellij.psi.stubs.StubOutputStream;
 import com.intellij.util.io.StringRef;
 import cz.cuni.mff.kyjovsm.robocop.RobotFrameworkLanguage;
-import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkKeywordNameStubImpl;
 import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkKeywordStub;
 import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkKeywordStubImpl;
 import cz.cuni.mff.kyjovsm.robocop.psi.RobotFrameworkKeyword;
 import cz.cuni.mff.kyjovsm.robocop.psi.impl.RobotFrameworkKeywordImpl;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 
 
+/**
+ * Class for defining type and methods of KEYWORD_NAME for the lexer.
+ */
 public class RobotFrameworkKeywordElementType extends IStubElementType<RobotFrameworkKeywordStub, RobotFrameworkKeyword> {
   public RobotFrameworkKeywordElementType(@NotNull String debugName) {
     super(debugName, RobotFrameworkLanguage.INSTANCE);

@@ -9,19 +9,22 @@ import org.jetbrains.annotations.NotNull;
 import javax.swing.Icon;
 
 /**
- *
+ * A class providing basic functionalities when user hit the "Add New Configuration"
+ * button in the configuration setup dialog.
  */
 public class RobotFrameworkConfigurationType implements ConfigurationType {
   /**
-   * @return
+   * A getter method returning the name displayed for this configuration type.
+   * @return Name displayed, when listing through available configuration types.
    */
   @Override
   public @NotNull String getDisplayName() {
-    return "Robot Framework TC";
+    return "Robot Framework Test Suite";
   }
 
   /**
-   * @return
+   * A getter method returning the description displayed for this configuration type.
+   * @return The short description when this configuration type is used.
    */
   @Override
   public String getConfigurationTypeDescription() {
@@ -29,7 +32,9 @@ public class RobotFrameworkConfigurationType implements ConfigurationType {
   }
 
   /**
-   * @return
+   * A getter method returning the Icon dedicate to Robot Framework language.
+   * @return An instance of the loaded method describing the Robot Framework
+   * language.
    */
   @Override
   public Icon getIcon() {
@@ -37,7 +42,8 @@ public class RobotFrameworkConfigurationType implements ConfigurationType {
   }
 
   /**
-   * @return
+   * A getter method returning the unique ID of this configuration type.
+   * @return Unique ID describing this configuration type.
    */
   @Override
   public @NotNull String getId() {
@@ -45,7 +51,8 @@ public class RobotFrameworkConfigurationType implements ConfigurationType {
   }
 
   /**
-   * @return
+   * A getter method returning the Configuration Factory instance.
+   * @return Configuration factory instance.
    */
   @Override
   public ConfigurationFactory[] getConfigurationFactories() {

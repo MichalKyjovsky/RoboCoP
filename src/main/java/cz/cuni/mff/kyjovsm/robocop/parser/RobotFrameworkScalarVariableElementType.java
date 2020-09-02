@@ -1,7 +1,10 @@
 package cz.cuni.mff.kyjovsm.robocop.parser;
 
-import com.intellij.lang.Language;
-import com.intellij.psi.stubs.*;
+import com.intellij.psi.stubs.IStubElementType;
+import com.intellij.psi.stubs.IndexSink;
+import com.intellij.psi.stubs.StubElement;
+import com.intellij.psi.stubs.StubInputStream;
+import com.intellij.psi.stubs.StubOutputStream;
 import com.intellij.util.io.StringRef;
 import cz.cuni.mff.kyjovsm.robocop.RobotFrameworkLanguage;
 import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkScalarVariableStub;
@@ -9,10 +12,12 @@ import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkScalarVariableSt
 import cz.cuni.mff.kyjovsm.robocop.psi.RobotFrameworkScalarVariable;
 import cz.cuni.mff.kyjovsm.robocop.psi.impl.RobotFrameworkScalarVariableImpl;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 
+/**
+ * Class for defining type and methods of SCALAR_VARIABLE for the lexer.
+ */
 public class RobotFrameworkScalarVariableElementType extends IStubElementType<RobotFrameworkScalarVariableStub, RobotFrameworkScalarVariable> {
   public RobotFrameworkScalarVariableElementType(@NotNull String debugName) {
     super(debugName, RobotFrameworkLanguage.INSTANCE);

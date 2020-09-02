@@ -1,8 +1,10 @@
 package cz.cuni.mff.kyjovsm.robocop.elements;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
+import java.util.Arrays;
+
+/**
+ *
+ */
 public class BuiltInKeywords {
   public static final String[] BUILD_IN_KEYWORDS;
 
@@ -116,6 +118,10 @@ public class BuiltInKeywords {
     };
   }
 
+  /**
+   * @param keyword
+   * @return
+   */
   public static boolean isBuiltInKeyword(String keyword) {
     return Arrays.asList(BUILD_IN_KEYWORDS).contains(keyword);
   }

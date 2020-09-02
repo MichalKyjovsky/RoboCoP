@@ -27,9 +27,6 @@ buildSearchableOptions {
     enabled = false
 }
 
-runIde {
-    ideDirectory 'C:\\Program Files\\JetBrains\\PyCharm 2020.1\\'
-}
 
 patchPluginXml {
 
@@ -40,4 +37,8 @@ patchPluginXml {
 
 sourceSets {
     sourceSets.main.java.srcDirs 'src/main/gen'
+}
+
+test {
+    systemProperty "idea.home.path", "/path/to/community/"
 }

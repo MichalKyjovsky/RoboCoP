@@ -1,21 +1,23 @@
 package cz.cuni.mff.kyjovsm.robocop.parser;
 
-import com.intellij.lang.Language;
-import com.intellij.psi.stubs.*;
+import com.intellij.psi.stubs.IStubElementType;
+import com.intellij.psi.stubs.IndexSink;
+import com.intellij.psi.stubs.StubElement;
+import com.intellij.psi.stubs.StubInputStream;
+import com.intellij.psi.stubs.StubOutputStream;
 import com.intellij.util.io.StringRef;
 import cz.cuni.mff.kyjovsm.robocop.RobotFrameworkLanguage;
-import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkKeywordNameStub;
-import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkKeywordNameStubImpl;
 import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkScalarAssignmentStub;
 import cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkScalarAssignmentStubImpl;
-import cz.cuni.mff.kyjovsm.robocop.psi.RobotFrameworkKeywordName;
 import cz.cuni.mff.kyjovsm.robocop.psi.RobotFrameworkScalarAssignment;
 import cz.cuni.mff.kyjovsm.robocop.psi.impl.RobotFrameworkScalarAssignmentImpl;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 
+/**
+ * Class for defining type and methods of SCALAR_ASSIGNMENT for the lexer.
+ */
 public class RobotFrameworkScalarAssignmentElementType extends IStubElementType<RobotFrameworkScalarAssignmentStub, RobotFrameworkScalarAssignment> {
 
   public RobotFrameworkScalarAssignmentElementType(@NotNull String debugName) {
