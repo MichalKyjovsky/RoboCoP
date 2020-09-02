@@ -11,12 +11,12 @@
 |Issue Date | 02-Sep-2020 |
 |Developer| Michal Kyjovsky |
 
-## Instalation
+## Installation
 
 **NOTE:**
 - Steps below describes how to run the plugin locally from IntelliJ IDEA for development purposes, as for now it will be not published to the official JetBrains repository.  
 
-####**Prerequisites:**
+#### **Prerequisites:**
 - Installed ***JDK 11+***
 - Installed ***Gradle***
 - Installed ***Git***
