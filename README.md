@@ -21,7 +21,7 @@
 - Installed ***Gradle***
 - Installed ***Git***
 
-####**Steps:**
+#### **Steps:**
 - Clone the ***RoboCoP*** project into your local machine
 ```
  git clone https://github.com/MichalKyjovsky/RoboCoP.git
@@ -37,7 +37,7 @@
 - The PyCharm IDE will start in a development mode.
 
 ## Provided functionalities 
-####***Syntax highlighting***
+#### ***Syntax highlighting***
  - RoboCop plugin provides full language syntax highlighting for Robot Framework tokens defined by the language grammar.
   ![Darcula Syntax Highlighting](images/darcula_highlighting.PNG)
   ![Default Syntax Highlighting](images/default_highlighting.PNG)
@@ -46,14 +46,14 @@
  > Settings > Editor > Color scheme > Robot Framework
   ![Color Palette](images/color_pallete.PNG)
   
-####***Configuration execution***
+#### ***Configuration execution***
  - RoboCop plugin provides configurable execution in configuration section.
  - User can configure execution with all Robot Framework options, include an external listener, and execute test cases in dry-run mode.
  - **IMPORTANT NOTICE:** Python interpreter must be set in order to execute the ROBOT test scripts directly from IDE.
  ![Robot Configuration](images/configuration.PNG)
  ![IDE View](images/view.PNG)
 
-####***New Robot file action***
+#### ***New Robot file action***
  - RoboCop plugin also enables user to create the .robot file directly from the Actions menu.
  > File > New > New Robot File
  - Above described action enables to create two types of .robot files, either the Robot Framework Test Case
