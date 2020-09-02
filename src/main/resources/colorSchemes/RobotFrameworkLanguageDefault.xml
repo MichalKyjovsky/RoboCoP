@@ -1,0 +1,73 @@
+<?xml version='1.0'?>
+<list>
+    <option name="RF_HEADER">
+        <value>
+            <option name="FOREGROUND" value="c4b102"/>
+            <option name="FONT_TYPE" value="1"/>
+        </value>
+    </option>
+    <option name="RF_BRACKET_SETTING">
+        <value>
+            <option name="FOREGROUND" value="9e6c00"/>
+            <option name="BACKGROUND" value="e3fcff"/>
+            <option name="FONT_TYPE" value="1"/>
+        </value>
+    </option>
+    <option name="RF_NAMES">
+        <value>
+            <option name="FOREGROUND" value="0080b3"/>
+            <option name="FONT_TYPE" value="1"/>
+        </value>
+    </option>
+    <option name="RF_DEFINITIONS">
+        <value>
+            <option name="FOREGROUND" value="009e74"/>
+            <option name="FONT_TYPE" value="1"/>
+        </value>
+    </option>
+    <option name="RF_DOCUMENTATION">
+        <value>
+            <option name="FOREGROUND" value="666666"/>
+        </value>
+    </option>
+    <option name="RF_ARGUMENTS">
+        <value>
+            <option name="FOREGROUND" value="ffb121"/>
+            <option name="FONT_TYPE" value="2"/>
+        </value>
+    </option>
+    <option name="RF_TAGS">
+        <value>
+            <option name="FOREGROUND" value="0080b3"/>
+            <option name="FONT_TYPE" value="2"/>
+        </value>
+    </option>
+    <option name="ERROR">
+        <value>
+            <option name="FOREGROUND" value="f20000"/>
+            <option name="FONT_TYPE" value="1"/>
+        </value>
+    </option>
+    <option name="COMMENT">
+        <value>
+            <option name="FOREGROUND" value="666666"/>
+        </value>
+    </option>
+    <option name="INTEGER">
+        <value>
+            <option name="FOREGROUND" value="660000"/>
+        </value>
+    </option>
+    <option name="ASSIGNMENT">
+        <value>
+            <option name="FOREGROUND" value="028a9c"/>
+            <option name="FONT_TYPE" value="1"/>
+        </value>
+    </option>
+    <option name="VARIABLES">
+        <value>
+            <option name="FOREGROUND" value="028a9c"/>
+            <option name="FONT_TYPE" value="1"/>
+        </value>
+    </option>
+</list>

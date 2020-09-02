@@ -10,6 +10,7 @@ ${MESSAGE}  Two white spaces are fair enough!
 *** Test Cases ***
 My Test
     [Documentation]  Example test.
+    [Tags]  BID-RR-01
     Log  ${MESSAGE}
     My Keyword  ${CURDIR}
 

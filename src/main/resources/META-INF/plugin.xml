@@ -27,7 +27,7 @@
         <stubElementTypeHolder class="cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkTypes"/>
         <internalFileTemplate name="fileTemplates.internal.RobotFrameworkTestCasesFile"/>
         <internalFileTemplate name="fileTemplates.internal.RobotFrameworkKeywordsDefinitionFile"/>
-
+        <additionalTextAttributes scheme="Default" file="colorSchemes/RobotFrameworkLanguageDefault.xml"/>
     </extensions>
 
     <actions>
