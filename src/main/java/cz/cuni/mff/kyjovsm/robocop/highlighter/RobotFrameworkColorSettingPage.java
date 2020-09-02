@@ -1,4 +1,4 @@
-package cz.cuni.mff.kyjovsm.robocop;
+package cz.cuni.mff.kyjovsm.robocop.highlighter;
 
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.fileTypes.SyntaxHighlighter;
@@ -61,39 +61,39 @@ public class RobotFrameworkColorSettingPage implements ColorSettingsPage {
             "Documentation  Here comes the documentation.\n" +
             "...  ${\\n}Purpose of this template is to create a\n" +
             "...  ${\\n}basis for Robot Framework Test Suite.\n" +
-            "Library  Some Library\n" +
+            "Library  Selenium2Library\n" +
+            "Resource  ../Keywords/Utils/helper.robot \n" +
+            "Variable  ../Keywords/Utils/variables.robot \n" +
             "\n" +
             "*** Variables ***\n" +
             "${msg}=  Two white spaces are fair enough!\n" +
             "@{arr}  1  2  3  4\n" +
             "\n" +
             "*** Test Case ***\n" +
-            "My Test\n" +
+            "My Test One\n" +
             "    [Documentation]  Example test.\n" +
-            "Log Hello\n" +
-            "# My second keyword" +
+            "    Log  Hello  console=${True}\n" +
+            "    # My second keyword" +
             "    My Keyword  \n" +
             "\n" +
-            "Another Test\n" +
-            "    Should Be Equal    Two white spaces are fair enough!\n" +
+            "My Test Two\n" +
+            "    Should Be Equal As Strings  ${msg}  Two white spaces are fair enough!\n" +
             "    Should Be Equal As Integers  1  1\n" +
             "\n" +
             "*** Keywords ***\n" +
             "My Keyword\n" +
-            "    [Arguments]  \n" +
-            "    Directory Should Exist  ";
+            "    [Arguments]  ${dir}  \n" +
+            "    Directory Should Exist  ${dir}";
   }
 
-  /**
-   * @return
-   */
   @Override
   public @Nullable Map<String, TextAttributesKey> getAdditionalHighlightingTagToDescriptorMap() {
     return null;
   }
 
   /**
-   * @return
+   * @return Descriptors defined over the tags from grammar,
+   * which assigns particular color to the tag.
    */
   @Override
   public @NotNull AttributesDescriptor[] getAttributeDescriptors() {
@@ -101,7 +101,7 @@ public class RobotFrameworkColorSettingPage implements ColorSettingsPage {
   }
 
   /**
-   * @return
+   * @return New instance of ColorDescriptor[0].
    */
   @Override
   public @NotNull ColorDescriptor[] getColorDescriptors() {
@@ -109,7 +109,8 @@ public class RobotFrameworkColorSettingPage implements ColorSettingsPage {
   }
 
   /**
-   * @return
+   * @return Name of the  Robot Framework language
+   * to be displayed in Color Settings menu.
    */
   @Override
   public @NotNull String getDisplayName() {

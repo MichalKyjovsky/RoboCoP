@@ -16,71 +16,41 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 
 /**
- *
+ * Class for defining type and methods of SCALAR_ASSIGNMENT for the lexer.
  */
 public class RobotFrameworkScalarAssignmentElementType extends IStubElementType<RobotFrameworkScalarAssignmentStub, RobotFrameworkScalarAssignment> {
 
-  /**
-   * @param debugName
-   */
   public RobotFrameworkScalarAssignmentElementType(@NotNull String debugName) {
     super(debugName, RobotFrameworkLanguage.INSTANCE);
   }
 
-  /**
-   * @param robotFrameworkScalarAssignmentStub
-   * @return
-   */
   @Override
   public RobotFrameworkScalarAssignment createPsi(@NotNull RobotFrameworkScalarAssignmentStub robotFrameworkScalarAssignmentStub) {
     return new RobotFrameworkScalarAssignmentImpl(robotFrameworkScalarAssignmentStub, this);
   }
 
-  /**
-   * @param robotFrameworkScalarAssignment
-   * @param parentStub
-   * @return
-   */
   @NotNull
   @Override
   public RobotFrameworkScalarAssignmentStub createStub(@NotNull RobotFrameworkScalarAssignment robotFrameworkScalarAssignment, StubElement parentStub) {
     return new RobotFrameworkScalarAssignmentStubImpl(parentStub, this, StringRef.fromString(robotFrameworkScalarAssignment.getName()));
   }
 
-  /**
-   * @return
-   */
   @Override
   public @NotNull String getExternalId() {
     return String.format("Robot Framework Keyword Assignment: ", super.toString());
   }
 
-  /**
-   * @param robotFrameworkScalarAssignmentStub
-   * @param stubOutputStream
-   * @throws IOException
-   */
   @Override
   public void serialize(@NotNull RobotFrameworkScalarAssignmentStub robotFrameworkScalarAssignmentStub, @NotNull StubOutputStream stubOutputStream) throws IOException {
     stubOutputStream.writeName(robotFrameworkScalarAssignmentStub.getName());
   }
 
-  /**
-   * @param stubInputStream
-   * @param parentStub
-   * @return
-   * @throws IOException
-   */
   @NotNull
   @Override
   public RobotFrameworkScalarAssignmentStub deserialize(@NotNull StubInputStream stubInputStream, StubElement parentStub) throws IOException {
     return new RobotFrameworkScalarAssignmentStubImpl(parentStub, this, stubInputStream.readName());
   }
 
-  /**
-   * @param robotFrameworkScalarAssignmentStub
-   * @param indexSink
-   */
   @Override
   public void indexStub(@NotNull RobotFrameworkScalarAssignmentStub robotFrameworkScalarAssignmentStub, @NotNull IndexSink indexSink) {
     //TODO: Implement stub indexing

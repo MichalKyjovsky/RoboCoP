@@ -10,13 +10,13 @@ import java.util.Collection;
 import static java.lang.String.format;
 
 /**
- *
+ * Class providing methods for creation of RobotFrameworkFile.
  */
 public class ElementFactory {
   public static RobotFrameworkKeywordName createKeywordTitle(Project project, String keywordDefName) {
     String template = "*** Keywords ***\n" +
             "%s\n" +
-            "  Log  Testing functionality:  INFO";
+            "  Log to console  Testing functionality";
     RobotFrameworkPsiFile file = createFile(project, format(template, keywordDefName));
     RobotFrameworkTable table = file.findChildByClass(RobotFrameworkTable.class);
     if (table == null || table.getKeywordsTable() == null) {
@@ -29,22 +29,12 @@ public class ElementFactory {
     return null;
   }
 
-  /**
-   * @param project
-   * @param text
-   * @return
-   */
   public static RobotFrameworkPsiFile createFile(Project project, String text) {
     String name = "TestCase_N.robot";
     return (RobotFrameworkPsiFile) PsiFileFactory.getInstance(project)
             .createFileFromText(name, RobotFrameworkFileType.INSTANCE, text);
   }
 
-  /**
-   * @param project
-   * @param scalarVarName
-   * @return
-   */
   public static RobotFrameworkScalarDefaultArgValue createScalarDefaultArgValue(Project project, String scalarVarName) {
     String template = "*** Keywords ***\n" +
             "My CustomKeyword\n" +
@@ -54,11 +44,6 @@ public class ElementFactory {
     return PsiTreeUtil.findChildOfType(file, RobotFrameworkScalarDefaultArgValue.class);
   }
 
-  /**
-   * @param project
-   * @param text
-   * @return
-   */
   public static RobotFrameworkKeywordArgument createKeywordArg(Project project, String text) {
     String template = "*** Test Cases ***\n Test Case A\n  Keywords  %s\n";
     RobotFrameworkPsiFile file = createFile(project, format(template, text));
@@ -66,11 +51,6 @@ public class ElementFactory {
     return results.isEmpty() ? null : results.iterator().next();
   }
 
-  /**
-   * @param project
-   * @param text
-   * @return
-   */
   public static RobotFrameworkKeyword createKeyword(Project project, String text) {
     String template = "*** Test Cases ***\nSome Test Case\n    %s\n";
     RobotFrameworkPsiFile file = createFile(project, format(template, text));
@@ -91,11 +71,6 @@ public class ElementFactory {
     return null;
   }
 
-  /**
-   * @param project
-   * @param scalarVarName
-   * @return
-   */
   public static RobotFrameworkScalarAssignment createScalarAssignment(Project project, String scalarVarName) {
     String template = "*** Test Cases ***\n" +
             "My Test Case\n" +
@@ -104,11 +79,6 @@ public class ElementFactory {
     return PsiTreeUtil.findChildOfType(file, RobotFrameworkScalarAssignment.class);
   }
 
-  /**
-   * @param project
-   * @param scalarVarName
-   * @return
-   */
   public static RobotFrameworkScalarVariable createScalarVariable(Project project, String scalarVarName) {
     String template = "*** Test Case ***\n" +
             "Test Case\n" +
@@ -117,11 +87,6 @@ public class ElementFactory {
     return PsiTreeUtil.findChildOfType(file, RobotFrameworkScalarVariable.class);
   }
 
-  /**
-   * @param project
-   * @param scalarVarName
-   * @return
-   */
   public static RobotFrameworkArgumentDefinition createArgumentDef(Project project, String scalarVarName) {
     String template = "*** Keywords ***\n" +
             "My Keyword\n" +
@@ -137,7 +102,7 @@ public class ElementFactory {
   }
 
   public static RobotFrameworkFile createFileR(Project project, String text) {
-    String name = "dummy.robot";
+    String name = "test_plugin.robot";
     return (RobotFrameworkFile) PsiFileFactory.getInstance(project).createFileFromText(name, RobotFrameworkFileType.INSTANCE, text);
   }
 

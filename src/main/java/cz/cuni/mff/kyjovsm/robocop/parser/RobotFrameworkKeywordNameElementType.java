@@ -18,70 +18,41 @@ import java.io.IOException;
 
 
 /**
- *
+ * Class for defining type and methods of KEYWORD for the lexer.
  */
 public class RobotFrameworkKeywordNameElementType extends IStubElementType<RobotFrameworkKeywordNameStub, RobotFrameworkKeywordName> {
-  /**
-   * @param name
-   */
+
   public RobotFrameworkKeywordNameElementType(@NotNull String name) {
     super(name, RobotFrameworkLanguage.INSTANCE);
   }
 
-  /**
-   * @param robotFrameworkKeywordNameStub
-   * @return
-   */
   @Override
   public RobotFrameworkKeywordName createPsi(@NotNull RobotFrameworkKeywordNameStub robotFrameworkKeywordNameStub) {
     return new RobotFrameworkKeywordNameImpl(robotFrameworkKeywordNameStub, this);
   }
 
-  /**
-   * @param robotFrameworkKeywordName
-   * @param parentStub
-   * @return
-   */
   @NotNull
   @Override
   public RobotFrameworkKeywordNameStub createStub(@NotNull RobotFrameworkKeywordName robotFrameworkKeywordName, StubElement parentStub) {
     return new RobotFrameworkKeywordNameStubImpl(parentStub, this, StringRef.fromString(robotFrameworkKeywordName.getName()));
   }
 
-  /**
-   * @return
-   */
   @Override
   public @NotNull String getExternalId() {
     return String.format("Robot Framework Keyword: ", super.toString());
   }
 
-  /**
-   * @param robotFrameworkKeywordNameStub
-   * @param stubOutputStream
-   * @throws IOException
-   */
   @Override
   public void serialize(@NotNull RobotFrameworkKeywordNameStub robotFrameworkKeywordNameStub, @NotNull StubOutputStream stubOutputStream) throws IOException {
     stubOutputStream.writeName(robotFrameworkKeywordNameStub.getName());
   }
 
-  /**
-   * @param stubInputStream
-   * @param parentStub
-   * @return
-   * @throws IOException
-   */
   @NotNull
   @Override
   public RobotFrameworkKeywordNameStub deserialize(@NotNull StubInputStream stubInputStream, StubElement parentStub) throws IOException {
     return new RobotFrameworkKeywordNameStubImpl(parentStub, this, stubInputStream.readName());
   }
 
-  /**
-   * @param robotFrameworkKeywordNameStub
-   * @param indexSink
-   */
   @Override
   public void indexStub(@NotNull RobotFrameworkKeywordNameStub robotFrameworkKeywordNameStub, @NotNull IndexSink indexSink) {
     //TODO: Implement stub indexing

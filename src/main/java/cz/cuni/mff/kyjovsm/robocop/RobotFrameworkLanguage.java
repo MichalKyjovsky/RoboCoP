@@ -4,6 +4,7 @@ import com.intellij.lang.Language;
 import com.intellij.openapi.fileTypes.SingleLazyInstanceSyntaxHighlighterFactory;
 import com.intellij.openapi.fileTypes.SyntaxHighlighter;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterFactory;
+import cz.cuni.mff.kyjovsm.robocop.highlighter.RobotFrameworkSyntaxHighlighter;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 
