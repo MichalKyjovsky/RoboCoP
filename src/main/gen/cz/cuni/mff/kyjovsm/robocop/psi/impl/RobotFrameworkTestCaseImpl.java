@@ -19,7 +19,7 @@ import com.intellij.psi.tree.IElementType;
 
 public class RobotFrameworkTestCaseImpl extends StubBasedPsiElementBase<RobotFrameworkTestCaseStub> implements RobotFrameworkTestCase {
 
-  public RobotFrameworkTestCaseImpl(@NotNull T stub, @NotNull IStubElementType type) {
+  public RobotFrameworkTestCaseImpl(@NotNull RobotFrameworkTestCaseStub stub, @NotNull IStubElementType type) {
     super(stub, type);
   }
 
@@ -27,7 +27,7 @@ public class RobotFrameworkTestCaseImpl extends StubBasedPsiElementBase<RobotFra
     super(node);
   }
 
-  public RobotFrameworkTestCaseImpl(T stub, IElementType type, ASTNode node) {
+  public RobotFrameworkTestCaseImpl(RobotFrameworkTestCaseStub stub, IElementType type, ASTNode node) {
     super(stub, type, node);
   }
 

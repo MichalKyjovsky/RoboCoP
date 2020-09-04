@@ -19,7 +19,7 @@ import com.intellij.psi.tree.IElementType;
 
 public class RobotFrameworkScalarAssignmentImpl extends StubBasedPsiElementBase<RobotFrameworkScalarAssignmentStub> implements RobotFrameworkScalarAssignment {
 
-  public RobotFrameworkScalarAssignmentImpl(@NotNull T stub, @NotNull IStubElementType type) {
+  public RobotFrameworkScalarAssignmentImpl(@NotNull RobotFrameworkScalarAssignmentStub stub, @NotNull IStubElementType type) {
     super(stub, type);
   }
 
@@ -27,7 +27,7 @@ public class RobotFrameworkScalarAssignmentImpl extends StubBasedPsiElementBase<
     super(node);
   }
 
-  public RobotFrameworkScalarAssignmentImpl(T stub, IElementType type, ASTNode node) {
+  public RobotFrameworkScalarAssignmentImpl(RobotFrameworkScalarAssignmentStub stub, IElementType type, ASTNode node) {
     super(stub, type, node);
   }
 

@@ -19,7 +19,7 @@ import com.intellij.psi.tree.IElementType;
 
 public class RobotFrameworkKeywordArgumentImpl extends StubBasedPsiElementBase<RobotFrameworkKeywordArgumentStub> implements RobotFrameworkKeywordArgument {
 
-  public RobotFrameworkKeywordArgumentImpl(@NotNull T stub, @NotNull IStubElementType type) {
+  public RobotFrameworkKeywordArgumentImpl(@NotNull RobotFrameworkKeywordArgumentStub stub, @NotNull IStubElementType type) {
     super(stub, type);
   }
 
@@ -27,7 +27,7 @@ public class RobotFrameworkKeywordArgumentImpl extends StubBasedPsiElementBase<R
     super(node);
   }
 
-  public RobotFrameworkKeywordArgumentImpl(T stub, IElementType type, ASTNode node) {
+  public RobotFrameworkKeywordArgumentImpl(RobotFrameworkKeywordArgumentStub stub, IElementType type, ASTNode node) {
     super(stub, type, node);
   }
 
