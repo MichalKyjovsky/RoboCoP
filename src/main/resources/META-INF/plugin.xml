@@ -1,0 +1,48 @@
+<idea-plugin>
+    <id>cz.cuni.mff.kyjovsm.robocop</id>
+    <name>Robocop</name>
+    <vendor email="michalkyjovsky98@gmail.com" url="">Michal Kyjovsky</vendor>
+
+    <description><![CDATA[
+    Basic Robot Framework support for PyCharm.
+    ]]></description>
+
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.modules.python</depends>
+
+
+    <extensions defaultExtensionNs="com.intellij">
+        <psi.referenceContributor implementation="cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkReferenceContributor"/>
+        <colorSettingsPage implementation="cz.cuni.mff.kyjovsm.robocop.highlighter.RobotFrameworkColorSettingPage"/>
+        <lang.syntaxHighlighterFactory language="RobotFramework"
+                                       implementationClass="cz.cuni.mff.kyjovsm.robocop.highlighter.RobotFrameworkSyntaxHighlighterFactory"/>
+        <fileType name="Robot Framework File" implementationClass="cz.cuni.mff.kyjovsm.robocop.RobotFrameworkFileType" fieldName="INSTANCE"
+                  language="RobotFramework" extensions="robot"/>
+        <configurationType implementation="cz.cuni.mff.kyjovsm.robocop.run.configuration.RobotFrameworkConfigurationType"/>
+        <lang.parserDefinition language="RobotFramework"
+                               implementationClass="cz.cuni.mff.kyjovsm.robocop.RobotFrameworkParserDefinition"/>
+        <stubElementTypeHolder class="cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkTypes"/>
+        <internalFileTemplate name="fileTemplates.internal.RobotFrameworkTestCasesFile"/>
+        <internalFileTemplate name="fileTemplates.internal.RobotFrameworkKeywordsDefinitionFile"/>
+        <additionalTextAttributes scheme="Default" file="colorSchemes/RobotFrameworkLanguageDefault.xml"/>
+
+        <stubElementTypeHolder class="cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkTypes"/>
+        <stubIndex
+                implementation="cz.cuni.mff.kyjovsm.robocop.elements.stubs.stubindex.RobotFrameworkKeywordArgumentIndex"/>
+
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+
+
+        <action id="cz.cuni.mff.kyjovsm.robocop.actions.NewRobotFrameworkFileAction"
+                class="cz.cuni.mff.kyjovsm.robocop.actions.NewRobotFrameworkFileAction" text="New Robot File"
+                description="Creates either a new robot framework test suite or keywords definition file">
+            <add-to-group group-id="NewXml" anchor="last"/>
+        </action>
+    </actions>
+</idea-plugin>
