@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"cz.cuni.mff.kyjovsm.robocop"},{"l":"cz.cuni.mff.kyjovsm.robocop.actions"},{"l":"cz.cuni.mff.kyjovsm.robocop.icons"},{"l":"cz.cuni.mff.kyjovsm.robocop.psi"},{"l":"cz.cuni.mff.kyjovsm.robocop.runConfiguration"}]
