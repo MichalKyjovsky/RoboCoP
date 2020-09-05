@@ -12,7 +12,7 @@ import javax.swing.Icon;
  *
  */
 public class RobotFrameworkPsiFile extends PsiFileBase {
-  protected RobotFrameworkPsiFile(@NotNull FileViewProvider viewProvider) {
+  public RobotFrameworkPsiFile(@NotNull FileViewProvider viewProvider) {
     super(viewProvider, RobotFrameworkLanguage.INSTANCE);
   }
 

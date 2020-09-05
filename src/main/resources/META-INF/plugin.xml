@@ -30,8 +30,6 @@
         <additionalTextAttributes scheme="Default" file="colorSchemes/RobotFrameworkLanguageDefault.xml"/>
 
         <stubElementTypeHolder class="cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkTypes"/>
-        <stubIndex
-                implementation="cz.cuni.mff.kyjovsm.robocop.elements.stubs.stubindex.RobotFrameworkKeywordArgumentIndex"/>
 
     </extensions>
 

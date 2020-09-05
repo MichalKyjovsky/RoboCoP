@@ -17,6 +17,7 @@
 
     implements("KEYWORD")=["cz.cuni.mff.kyjovsm.robocop.elements.references.RobotFrameworkNamedElement"
                      "com.intellij.psi.StubBasedPsiElement<cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkKeywordStub>"]
+    mixin("KEYWORD")=""
     extends("KEYWORD")="com.intellij.extapi.psi.StubBasedPsiElementBase<cz.cuni.mff.kyjovsm.robocop.elements.stubs.RobotFrameworkKeywordStub>"
     elementTypeClass("KEYWORD")="cz.cuni.mff.kyjovsm.robocop.parser.RobotFrameworkKeywordElementType"
 
